@@ -1,6 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			auth: false,
+			token: "",
+			nombre: null,
+		
 			message: null,
 			demo: [
 				{
@@ -16,7 +20,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
+			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
+			signup: (nickname, email, pass) => {
+				fetch("", {
+					method: 'POST',
+					body: JSON.stringify({nickname, email, pass}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+				.then(res => {
+					if(res.status == 200){
+						setStore({auth: true})
+						setStore({nombre: nickname})
+					} 
+					else {
+						return "Algo fue mal en el fetch del signup"
+					}
+					return res.json
+				})
+				.then(data => {
+					localStorage.setItem("token", data)
+					setStore({token: data})
+				})
+			},
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

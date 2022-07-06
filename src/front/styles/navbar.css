@@ -1,0 +1,27 @@
+/* NAVBAR */
+
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Finlandica:ital@1&family=Roboto+Slab&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,900&family=Square+Peg&display=swap');
+
+.radius{
+    border-radius: 30px;
+}
+.nav-radius{
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.navimg{
+    border: 1px inset black;
+    border-radius: 100px;
+    width: 150px;
+    height: 150px; 
+}
+
+.navbar-width{
+    max-width: 1140px;
+    font-family: 'Bree Serif', serif;
+}
+
+.navbar-color{
+    background-color: #31312f
+}

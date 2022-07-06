@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../../styles/footer.css";
 
 export const Footer = () => (
 
-	<div className="navbar-width mx-auto">
+	<div className="footer-width mx-auto">
 
 		<div>
-			<h1 className="bg-dark text-white text-center mb-0 py-3">BEER CLUB</h1>
+			<h1 className="navbar-color text-white text-center mb-0 py-3">BEER CLUB</h1>
 		</div>
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-color">
         <div className="container-fluid mx-4 my-3 border-navbar-footer">
           <div className="navbar-nav d-flex justify-content-start my-2">
             <li className="nav-item mx-4">
@@ -29,7 +30,7 @@ export const Footer = () => (
 		<div className="navbar-nav d-flex justify-content-center my-2">
             <li className="nav-item mx-4">
               <Link className="nav-link text-white" aria-current="page" to="/">
-			  <FontAwesomeIcon icon="fa-brands fa-instagram" />
+			  {/* <FontAwesomeIcon icon="fa-brands fa-instagram" /> */}
               </Link>
             </li>
 		
@@ -54,7 +55,7 @@ export const Footer = () => (
       </nav>
 
 	<div>
-		<p className="bg-dark text-white text-center py-3">© 2022 BEER CLUB</p>
+		<p className="navbar-color text-white text-center py-3">© 2022 BEER CLUB</p>
 	</div>
 
     </div>

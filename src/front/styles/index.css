@@ -1,2 +1,6 @@
 /* FUENTE DEFAULT */
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Finlandica:ital@1&family=Roboto+Slab&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,900&family=Square+Peg&display=swap');
+
+.backgroundColor{
+    background-color: rgb(204, 204, 204);
+}

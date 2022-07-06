@@ -5,3 +5,10 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+.home-width{
+    max-width: 1140px;
+    font-family: 'Bree Serif', serif;
+    /* border-left: 3px solid #ffbb33;
+    border-right: 3px solid #ffbb33; */
+}

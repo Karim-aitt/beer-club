@@ -21,10 +21,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
-			signup: (nickname, email, pass) => {
+			signup: (nickname, name, surname, email, pass,) => {
 				fetch("", {
 					method: 'POST',
-					body: JSON.stringify({nickname, email, pass}),
+					body: JSON.stringify({nickname, name, surname, email, pass}),
 					headers: {
 						'Content-Type': 'application/json'
 					}
@@ -35,9 +35,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({nombre: nickname})
 					} 
 					else {
-						return "Algo fue mal en el fetch del signup"
+						return "Algo fue mal en el back del signup"
 					}
 					return res.json
+				})
+				.then(data => {
+					localStorage.setItem("token", data)
+					setStore({token: data})
+				})
+			},
+
+			login: (email, pass) => {
+				fetch("", {
+					method: 'POST',
+					body: JSON.stringify({email, password}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+				.then(res => {
+					if (res.status == 200){
+						setStore({auth: true})
+						
+					} else {
+						alert("Usuario o clave incorrectas")
+						return "Usuario o clave incorrectas"
+					}
+					return res.json()
 				})
 				.then(data => {
 					localStorage.setItem("token", data)

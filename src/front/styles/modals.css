@@ -9,3 +9,7 @@
     border-bottom: 1px solid black;
 }
 
+.inputStyle:focus{
+    /* outline: none; */
+    outline-color: green;
+}

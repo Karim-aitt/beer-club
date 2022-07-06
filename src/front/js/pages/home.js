@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+
+import { Card } from "../component/card"
+
 import "../../styles/home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="text-center mt-5">
-      <p>holaaa</p>
+    <div className="home-width mx-auto py-3 bg-white">
+      <Card />
     </div>
   );
 };

@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 
 import { Register } from "./registerModal";
 import { Login } from "./loginModal";
+import { Navigate } from "react-router-dom";
 
 import logo from "../../img/beerClubLogo.png";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+
+  const myAuthFlag = false;  //Si esta flag esta en true, se muestra el link My Account que al clickar te redirecciona a user page
+
   return (
     <div className="navbar-width mx-auto">
       <nav className="navbar navbar-expand-lg navbar-color">
@@ -26,9 +30,9 @@ export const Navbar = () => {
               </Link>
             </li>
           </div>
-
+          {/* Esto es el modal de registro de usuarios en forma de componente, hay que poner un ternario con una flag para hacerlo inactivo cuando esta logueado */}
           <Register />
-          {/* Esto es el modal de registro de usuarios en forma de componente */}
+          
 
           <div className="navbar-nav d-flex justify-content-end">
             <li className="nav-item mx-5 ">
@@ -40,14 +44,16 @@ export const Navbar = () => {
                 data-bs-toggle="modal"
                 data-bs-target="#loginModal"
               >
-                Login
-                {/* Aqui hay que poner un ternario si la flag es false "Login" si es true "My Account" */}
+                {myAuthFlag == false ? "Login" : <Link className="text-decoration-none text-white" to="PONER AQUI EL LINK A LA PAGINA DE USUARIO">My Account</Link>} 
+                {/* Poner en el to el link a la pagina de usuario */}
+                {/* Aqui hay que poner un ternario si la flag myAuthFlag es false "Login" si es true "My Account" */}
               </Link>
             </li>
           </div>
 
-          <Login />
+          {myAuthFlag == false ? <Login /> : ""}
           {/* Esto es el modal en forma de componente */}
+
         </div>
       </nav>
 

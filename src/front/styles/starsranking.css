@@ -1,0 +1,13 @@
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 25px;
+  }
+  .fa {
+    color: #ffbb33;
+  }
+  .far {
+    color: #ccc;
+  }

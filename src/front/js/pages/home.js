@@ -10,7 +10,7 @@ export const Home = () => {
 
   return (
     <div className="home-width mx-auto py-3 bg-white">
-      <Card />
+      <Card rank="1"/>
     </div>
   );
 };

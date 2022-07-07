@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			login: (email, pass) => {
 				fetch("", {
-					method: 'POST',
+					method: 'POST', // POR QUE ES POST?
 					body: JSON.stringify({email, password}),
 					headers: {
 						'Content-Type': 'application/json'

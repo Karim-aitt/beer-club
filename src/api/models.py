@@ -10,7 +10,7 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     surnames = db.Column(db.String, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80),  nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False)
 
     def __repr__(self):

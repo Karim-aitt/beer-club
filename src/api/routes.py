@@ -11,19 +11,27 @@ api = Blueprint('api', __name__)
 ##-------------------------------TABLE USER-------------------------------##
 ##------------------------------------------------------------------------##
 
+
+##--------------------------------------------------------------------------##
+##-------------------------------FRONT SIGNUP-------------------------------##
+##--------------------------------------------------------------------------##
+
     #___________________________CREATE USER___________________________#
 
 @api.route('/signup', methods=['POST'])
 def add_Signup():
    
     body = request.get_json()
+
     user_check_email = User.query.filter_by(email=body['email']).first()
     if user_check_email != None:
-        raise APIException('Ya existe este email')
+        # raise APIException('Ya existe este email')
+        return jsonify("Ya existe este email"), 402
     
     user_check_nickname = User.query.filter_by(nickname=body['nickname']).first()
     if user_check_nickname != None:
-        raise APIException('Ya existe este nickname')
+        # raise APIException('Ya existe este nickname')
+        return jsonify("Ya existe este nickname"), 403
 
     hashed = bcrypt.hashpw(request.json.get('password').encode('utf-8'), bcrypt.gensalt())
 
@@ -42,6 +50,33 @@ def add_Signup():
     # token = create_access_token(identity=data)
     # db.session.commit()
     # return jsonify(token)
+
+##--------------------------------------------------------------------------##
+##-------------------------------FRONT LOGIN-------------------------------##
+##--------------------------------------------------------------------------##
+
+    #___________________________GET USER___________________________#
+
+@api.route('/login' , methods=['POST']) 
+def login_user():
+    # users = User.query.all()
+    # all_users = list(map(lambda users: users.serialize(),users))
+
+    body = request.get_json()
+    user_check_email = body["email"] 
+    user_check_password = body["password"]
+
+    user = User.query.filter_by(email=user_check_email).first()
+
+    if user is None:
+        raise APIException('Usuario no encontrado')
+    if user.password != user_check_password:
+        raise APIException('Clave incorrecta')
+    # user_check_email = User.query.filter_by(email=body['email']).first()
+    # if user_check_password == password and user_check_email == email:
+    db.session.commit
+
+    return jsonify('accede')
 
         #___________________________UPDATE BEER___________________________#
 

@@ -62,7 +62,7 @@ def add_Signup():
 ##-------------------------------FRONT LOGIN-------------------------------##
 ##--------------------------------------------------------------------------##
 
-    #___________________________GET USER___________________________#
+    #___________________________POST USER___________________________#
 
 @api.route('/login' , methods=['POST']) 
 def login_user():
@@ -95,6 +95,29 @@ def login_user():
 
 
     return jsonify(data), 200
+
+##--------------------------------------------------------------------------##
+##--------------------------FORGOT YOUR PASSWORD ?--------------------------##
+##--------------------------------------------------------------------------##
+
+    #___________________________POST EMAIL FOR PASSWORD___________________________#
+
+@api.route('/password' , methods=['POST']) 
+def forgot_password():
+    # users = User.query.all()
+    # all_users = list(map(lambda users: users.serialize(),users))
+
+    body = request.get_json()
+
+    user_check_email = body['email'] 
+
+    user = User.query.filter_by(email=user_check_email).first()
+
+    if user.email != user_check_email:
+        raise APIException('Usuario no encontrado1')
+        
+
+        return jsonify("enviado"), 200
 
         #___________________________UPDATE USER___________________________#
 

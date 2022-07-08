@@ -4,12 +4,17 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment
 from api.utils import generate_sitemap, APIException
-import bcrypt
+import  bcrypt
 api = Blueprint('api', __name__)
 
 ##------------------------------------------------------------------------##
 ##-------------------------------TABLE USER-------------------------------##
 ##------------------------------------------------------------------------##
+
+
+##--------------------------------------------------------------------------##
+##-------------------------------FRONT SIGNUP-------------------------------##
+##--------------------------------------------------------------------------##
 
     #___________________________CREATE USER___________________________#
 
@@ -17,6 +22,7 @@ api = Blueprint('api', __name__)
 def add_Signup():
    
     body = request.get_json()
+
     user_check_email = User.query.filter_by(email=body['email']).first()
     if user_check_email != None:
         # raise APIException('Ya existe este email')
@@ -44,6 +50,33 @@ def add_Signup():
     # token = create_access_token(identity=data)
     # db.session.commit()
     # return jsonify(token)
+
+##--------------------------------------------------------------------------##
+##-------------------------------FRONT LOGIN-------------------------------##
+##--------------------------------------------------------------------------##
+
+    #___________________________GET USER___________________________#
+
+@api.route('/login' , methods=['POST']) 
+def login_user():
+    # users = User.query.all()
+    # all_users = list(map(lambda users: users.serialize(),users))
+
+    body = request.get_json()
+    user_check_email = body["email"] 
+    user_check_password = body["password"]
+
+    user = User.query.filter_by(email=user_check_email).first()
+
+    if user is None:
+        raise APIException('Usuario no encontrado')
+    if user.password != user_check_password:
+        raise APIException('Clave incorrecta')
+    # user_check_email = User.query.filter_by(email=body['email']).first()
+    # if user_check_password == password and user_check_email == email:
+    db.session.commit
+
+    return jsonify('accede')
 
         #___________________________UPDATE BEER___________________________#
 

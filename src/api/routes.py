@@ -5,7 +5,11 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment
 from api.utils import generate_sitemap, APIException
 import  bcrypt
-from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 api = Blueprint('api', __name__)
 
 # generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
@@ -44,19 +48,22 @@ def add_Signup():
 
     user = User(nickname=body["nickname"],name=body["name"],surnames=body["surnames"],email=body["email"],password=hashed.decode('utf-8'),is_active=True)
     
+    data = {
+        'email': user.email,
+        'nickname': user.nickname,
+        'name': user.name,
+        'surname': user.surnames
+    }
+    token = create_access_token(identity=data)
+    db.session.commit()
+
 
     db.session.add(user)
     db.session.commit()
 
-    return jsonify("ok"), 201
+    return jsonify(token),201
 
-    # data = {
-    # 'email': user.email,
-    # 'user_id': user.id
-    # }
-    # token = create_access_token(identity=data)
-    # db.session.commit()
-    # return jsonify(token)
+
 
 ##--------------------------------------------------------------------------##
 ##-------------------------------FRONT LOGIN-------------------------------##
@@ -93,6 +100,9 @@ def login_user():
         'surname': user.surnames
     }
 
+    token = create_access_token(identity=data)
+    db.session.commit()
+    return jsonify(token)
 
     return jsonify(data), 200
 
@@ -121,7 +131,7 @@ def forgot_password():
 
         #___________________________UPDATE USER___________________________#
 
-@api.route('/user/<int:id>' , methods=['PUT'])
+@api.route('/users/<int:id>' , methods=['PUT'])
 def update_user(id):
             
             user = User.query.get(id)
@@ -141,6 +151,18 @@ def update_user(id):
 
             return jsonify(user.serialize())
 
+        #___________________________DELETE USER___________________________#
+
+@api.route('/users/<int:id>', methods=['DELETE'])
+def delete_user(id):
+
+    user = User.query.get(id)
+    if id is None:
+        raise APIException("USER DELETE", 201)
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify(user.serialize())
 
     ##------------------------------------------------------------------------##
     ##-------------------------------TABLE BEER-------------------------------##
@@ -148,7 +170,7 @@ def update_user(id):
 
     #___________________________CREATE BEER___________________________#
 
-@api.route('/beer', methods=['POST'])
+@api.route('/createbeer', methods=['POST'])
 def add_Beer():
    
     if request.method == 'POST':
@@ -169,7 +191,7 @@ def add_Beer():
 
     #___________________________UPDATE BEER___________________________#
 
-@api.route('/beer/<int:id>' , methods=['PUT' , 'DELETE'])
+@api.route('/beers/<int:id>' , methods=['PUT'])
 def update_beer(id):
 
         beer = Beer.query.get(id)
@@ -195,6 +217,19 @@ def update_beer(id):
 
         return jsonify(beer.serialize())
 
+        #___________________________DELETE BEER___________________________#
+
+@api.route('/beers/<int:id>', methods=['DELETE'])
+def delete_beer(id):
+
+    beer = Beer.query.get(id)
+    if id is None:
+        raise APIException("BEER DELETE", 201)
+    db.session.delete(beer)
+    db.session.commit()
+
+    return jsonify(beer.serialize())
+
     #____________LIST BEER____________#
 
 @api.route('/beers' , methods=['GET']) 
@@ -202,6 +237,12 @@ def list_beer():
     beers = Beer.query.all()
     all_beers = list(map(lambda beers: beers.serialize(),beers))
     return jsonify(all_beers)
+
+@api.route('/users' , methods=['GET']) 
+def list_user():
+    users = User.query.all()
+    all_users = list(map(lambda users: users.serialize(),users))
+    return jsonify(all_users)
 
     # elif request.method == 'GET':
     # task = Task.query.get(task_id)

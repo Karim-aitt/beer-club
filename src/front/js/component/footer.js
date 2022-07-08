@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../styles/footer.css";
 
 export const Footer = () => (
@@ -29,11 +28,15 @@ export const Footer = () => (
 
 		<div className="navbar-nav d-flex justify-content-center my-2">
             <li className="nav-item mx-4">
-              <Link className="nav-link text-white" aria-current="page" to="/">
-			  {/* <FontAwesomeIcon icon="fa-brands fa-instagram" /> */}
-              </Link>
+              <a className="nav-link text-white" aria-current="page" href="https://www.instagram.com">
+                <i className="fab fa-instagram me-5 fs-3"></i>
+              </a>
             </li>
-		
+            <li className="nav-item mx-4">
+              <a className="nav-link text-white" aria-current="page" href="https://www.twitter.com">
+                <i className="fab fa-twitter ms-5 fs-3"></i>
+              </a>
+            </li>
 		</div>
 
           <div className="navbar-nav d-flex justify-content-end">

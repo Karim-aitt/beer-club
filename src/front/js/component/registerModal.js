@@ -12,16 +12,16 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   
+  //inputs de los formularios
   const [confirmPass, setConfirmPass] = useState("");
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [surname, setSurname] = useState("");
-  const [allDone, setAllDone] = useState(false)
-
-  
+ 
   //FLAGS
   const [allfill, setAllfill] = useState(false);  //flag de "rellenar todos los campos"
   const [passMatch, setPassMatch] = useState(false); //flag de "la password no coincide"
+  const [allDone, setAllDone] = useState(false)  //flag Registro completado
 
   return (
     <div

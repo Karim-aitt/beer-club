@@ -40,6 +40,7 @@ def add_Signup():
         # raise APIException('Ya existe este nickname')
         return jsonify("Ya existe este nickname"), 403
     
+    # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer enconde !!!!!!!
     user_password = request.json.get('password')
     hashed = bcrypt.hashpw(user_password.encode('utf-8'), bcrypt.gensalt())
     
@@ -84,7 +85,8 @@ def login_user():
 
     if user is None:
         raise APIException('Usuario no encontrado /routes login l 72')
-    
+
+    # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer enconde !!!!!!!
     passwordCheck = bcrypt.checkpw(user_check_password.encode('utf-8'), user.password.encode('utf-8'))
     print('esto es passwordCheck', passwordCheck)
     if passwordCheck is False:

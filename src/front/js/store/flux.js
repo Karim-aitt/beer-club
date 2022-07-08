@@ -53,8 +53,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return res.json
 				})
 				.then(data => {
-					// localStorage.setItem("token", data)
-					// setStore({token: data})
+					localStorage.setItem("token", data)
+					setStore({token: data})
 				})
 				.catch((error) => {
 					if(error == "Ya existe ese email"){
@@ -86,7 +86,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					localStorage.setItem("token", data)
 					setStore({token: data})
-					// document.getElementById("loginModal").modal("hide")
+					
+					const modal = document.getElementById("loginModal")
+					const m = bootstrap.Modal.getInstance(modal)
+					m.hide()
 					// document.getElementById("loginModal").data-dismiss("modal");
 					
 				})

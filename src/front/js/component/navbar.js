@@ -50,8 +50,9 @@ export const Navbar = () => {
             </li>
           </div>
 
-          {store.myAuthFlag == false ? <Login /> : ""}
           {/* Esto es el modal en forma de componente */}
+          <Login />
+          
 
         </div>
       </nav>

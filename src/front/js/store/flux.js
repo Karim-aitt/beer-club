@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			myAuthFlag: false,
 			token: "",
-			nombre: null,
+			nombre: "",
 			userExist: false,
 			emailExist: false,
 			loginEmailPassMatch: false,
@@ -47,6 +47,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({userExist: true})
 						setStore({emailExist: false})
 					}
+					else if(res.status == 400 || res.status == 500){
+						alert("Error raro del back")
+					}
 					return res.json
 				})
 				.then(data => {
@@ -71,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(res => {
 					if (res.status == 200 || res.status == 201){
 						setStore({myAuthFlag: true})
-						setStore({nombre: nickname})
+						setStore({nombre: res.nickname})
 						setStore({loginEmailPassMatch: false})
 
 					} else {

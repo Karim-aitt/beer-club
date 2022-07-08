@@ -5,7 +5,10 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment
 from api.utils import generate_sitemap, APIException
 import  bcrypt
+from flask_bcrypt import Bcrypt
 api = Blueprint('api', __name__)
+
+# generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
 
 ##------------------------------------------------------------------------##
 ##-------------------------------TABLE USER-------------------------------##
@@ -32,10 +35,14 @@ def add_Signup():
     if user_check_nickname != None:
         # raise APIException('Ya existe este nickname')
         return jsonify("Ya existe este nickname"), 403
+    
+    user_password = request.json.get('password')
+    hashed = bcrypt.hashpw(user_password.encode('utf-8'), bcrypt.gensalt())
+    
+    
+    # hashed = generador.generate_password_hash(request.json.get('password')) // de flask_bcrypt -> no usar
 
-    hashed = bcrypt.hashpw(request.json.get('password').encode('utf-8'), bcrypt.gensalt())
-
-    user = User(nickname=body["nickname"],name=body["name"],surnames=body["surnames"],email=body["email"],password=hashed,is_active=True)
+    user = User(nickname=body["nickname"],name=body["name"],surnames=body["surnames"],email=body["email"],password=hashed.decode('utf-8'),is_active=True)
     
 
     db.session.add(user)
@@ -65,13 +72,14 @@ def login_user():
     body = request.get_json()
     user_check_email = body['email'] 
     user_check_password = body['password']
-    user = User.query.filter_by(email=user_check_email).first()
     
-    # generador = bcrypt()
-    # passwordCheck = hacer comparacion de password en database con password pasada del front
+    user = User.query.filter_by(email=user_check_email).first()
 
     if user is None:
         raise APIException('Usuario no encontrado /routes login l 72')
+    
+    passwordCheck = bcrypt.checkpw(user_check_password.encode('utf-8'), user.password.encode('utf-8'))
+    print('esto es passwordCheck', passwordCheck)
     if passwordCheck is False:
         raise APIException('Clave incorrecta /routes login l 74')
     # user_check_email = User.query.filter_by(email=body['email']).first()

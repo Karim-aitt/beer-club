@@ -63,20 +63,30 @@ def login_user():
     # all_users = list(map(lambda users: users.serialize(),users))
 
     body = request.get_json()
-    user_check_email = body["email"] 
-    user_check_password = body["password"]
-
+    user_check_email = body['email'] 
+    user_check_password = body['password']
     user = User.query.filter_by(email=user_check_email).first()
+    
+    # generador = bcrypt()
+    # passwordCheck = hacer comparacion de password en database con password pasada del front
 
     if user is None:
-        raise APIException('Usuario no encontrado')
-    if user.password != user_check_password:
-        raise APIException('Clave incorrecta')
+        raise APIException('Usuario no encontrado /routes login l 72')
+    if passwordCheck is False:
+        raise APIException('Clave incorrecta /routes login l 74')
     # user_check_email = User.query.filter_by(email=body['email']).first()
     # if user_check_password == password and user_check_email == email:
-    db.session.commit
+    # db.session.commit()
 
-    return jsonify('accede')
+    data = {
+        'email': user.email,
+        'nickname': user.nickname,
+        'name': user.name,
+        'surname': user.surnames
+    }
+
+
+    return jsonify(data), 200
 
         #___________________________UPDATE BEER___________________________#
 

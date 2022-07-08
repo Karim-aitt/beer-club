@@ -72,9 +72,13 @@ export const Login = () => {
                 // } 
                 else {
                   setAllfill(false)
-                  // actions.login(email, pass)
+
+                  actions.login(email, pass)
+
                   setEmail("");
                   setPass("");
+                  
+                  
                 }
               }} 
             >

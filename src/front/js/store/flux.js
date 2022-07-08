@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			auth: false,
+			myAuthFlag: false,
 			token: "",
 			nombre: null,
 			userExist: false,
@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
-				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu52.gitpod.io/api/signup", {
+				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu51.gitpod.io/api/signup", {
 					method: 'POST',
 					body: JSON.stringify({nickname, name, surnames, email, password}),
 					headers: {
@@ -55,13 +55,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch((error) => {
 					if(error == "Ya existe ese email"){
-						alert("Ya existe este email")
-					} else {alert("Ya existe ese Nickname")}
+						alert("Error en el fetch - flux 58 saltó")
+					} else {alert("Error en el fetch - flux 59 saltó")}
 				})
 			},
 
 			login: (email, password) => {
-				fetch("", {
+				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu51.gitpod.io/api/login", {
 					method: 'POST', // POR QUE ES POST?
 					body: JSON.stringify({email, password}),
 					headers: {
@@ -70,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(res => {
 					if (res.status == 200 || res.status == 201){
-						// setStore({auth: true})
+						setStore({myAuthFlag: true})
 						setStore({nombre: nickname})
 						setStore({loginEmailPassMatch: false})
 
@@ -83,6 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					localStorage.setItem("token", data)
 					setStore({token: data})
+					// document.getElementById("loginModal").modal("hide")
+					// document.getElementById("loginModal").data-dismiss("modal");
+					
 				})
 			},
 

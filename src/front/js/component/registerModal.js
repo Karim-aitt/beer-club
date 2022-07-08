@@ -16,8 +16,9 @@ export const Register = () => {
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [surname, setSurname] = useState("");
+  const [allDone, setAllDone] = useState(false)
 
-
+  
   //FLAGS
   const [allfill, setAllfill] = useState(false);  //flag de "rellenar todos los campos"
   const [passMatch, setPassMatch] = useState(false); //flag de "la password no coincide"
@@ -41,6 +42,7 @@ export const Register = () => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+            
             ></button>
           </div>
           <div className="modal-body p-2">
@@ -107,6 +109,8 @@ export const Register = () => {
 
           {store.userExist == true ? <p className="d-flex flex-column me-auto text-danger">Nickname already in use</p> : ""}
           {store.emailExist == true ? <p className="d-flex flex-column me-auto text-danger">Email already in use</p> : ""}
+
+          {allDone == true ? <p className="d-flex flex-column me-auto text-success">Register completed</p> : ""}
           
             <button
               type="button"
@@ -139,13 +143,21 @@ export const Register = () => {
                 else {
                   setAllfill(false)
                   setPassMatch(false)
+                  setAllDone(true)
                   
-                  actions.signup(nickname, username, surname, email, pass)
+                  actions.signup(nickname, username, surname, email, pass) //Envio al fetch de flux
+
+                  // Reset de variables para que los inputs aparezcan vacios de nuevo
                   setNickname("");
                   setEmail("");
                   setPass("");
                   setConfirmPass("");
+                  setUsername("")
+                  setSurname("")
+
+                  // Reset del EmailValidation
                   setEmailValidation(false)
+                  store.myAuthFlag = true;
                 }
               }} 
             >

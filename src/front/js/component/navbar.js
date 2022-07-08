@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useContext} from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 import { Register } from "./registerModal";
@@ -10,8 +11,9 @@ import logo from "../../img/beerClubLogo.png";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
 
-  const myAuthFlag = true;  //Si esta flag esta en true, se muestra el link My Account que al clickar te redirecciona a user page
+  // store.myAuthFlag  Si esta flag esta en true (default false), se muestra el link My Account que al clickar te redirecciona a user page y se sustituye Signup por Bienvenido
 
   return (
     <div className="navbar-width mx-auto">
@@ -24,10 +26,10 @@ export const Navbar = () => {
                 aria-current="page"
                 to="#"
                 type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#registerModal"
+                data-bs-toggle={store.myAuthFlag == false ? "modal" : ""}
+                data-bs-target={store.myAuthFlag == false ?"#registerModal" : ""}
               >
-                Signup
+                {store.myAuthFlag == false ? "Signup" : "Bienvenido"}
               </Link>
             </li>
           </div>
@@ -39,16 +41,16 @@ export const Navbar = () => {
             <li className="nav-item mx-5 ">
               <Link
                 className="nav-link text-white border border-danger py-0 px-4 radius"
-                to={myAuthFlag == false ? "/#" : "/userpage"}
-                data-bs-toggle={myAuthFlag == false ? "modal" : ""}
-                data-bs-target={myAuthFlag == false ?"#loginModal" : ""}
+                to={store.myAuthFlag == false ? "/#" : "/userpage"}
+                data-bs-toggle={store.myAuthFlag == false ? "modal" : ""}
+                data-bs-target={store.myAuthFlag == false ? "#loginModal" : ""}
               >
-                {myAuthFlag == false ? "Login" : "My Account"}
+                {store.myAuthFlag == false ? "Login" : "My Account"}
               </Link>
             </li>
           </div>
 
-          {myAuthFlag == false ? <Login /> : ""}
+          {store.myAuthFlag == false ? <Login /> : ""}
           {/* Esto es el modal en forma de componente */}
 
         </div>

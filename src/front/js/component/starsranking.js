@@ -8,23 +8,23 @@ export const Stars = () => {
     const [hover, setHover] = useState(0);
 
 
-    useEffect((user_id, cerveza_id, rating) => {
+    // useEffect((user_id, cerveza_id, rating) => {
 			
-        fetch("", {
-            method: 'POST',
-            body: JSON.stringify({user_id, cerveza_id, rating}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => {
-            if(res.status == 200){
+    //     fetch("", {
+    //         method: 'POST',
+    //         body: JSON.stringify({user_id, cerveza_id, rating}),
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //     .then(res => {
+    //         if(res.status == 200){
                 
-            }
-        })
-        .then(data => {data})
+    //         }
+    //     })
+    //     .then(data => {data})
 			
-    }, [rating])
+    // }, [rating])
     
     return (
       <div className="star-rating">

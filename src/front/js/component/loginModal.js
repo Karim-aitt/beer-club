@@ -52,7 +52,9 @@ export const Login = () => {
             </form>
           </div>
           <div className="modal-footer">
-          {allfill == true ? <p className="d-flex mx-auto text-danger">Debes de rellenar todos los campos</p> : ""}
+          {allfill == true ? <p className="d-flex mx-auto text-danger">You must fill all fields</p> : ""}
+          {store.loginEmailPassMatch == true ? <p className="d-flex mx-auto text-danger">Email or password is wrong</p> : ""}
+          {/* falta por hacer la validacion en el back con el login como con el register */}
             <button
               type="button"
               className="btn border border-2 border-success py-0 px-4 radius"
@@ -64,7 +66,7 @@ export const Login = () => {
                 ) {
                   setAllfill(true)
                 
-                } 
+                }
                 // else if (pass) {
                 //   alert("Your password doesn't match");
                 // } 

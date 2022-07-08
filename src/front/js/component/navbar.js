@@ -5,12 +5,13 @@ import { Register } from "./registerModal";
 import { Login } from "./loginModal";
 import { Navigate } from "react-router-dom";
 
+
 import logo from "../../img/beerClubLogo.png";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
 
-  const myAuthFlag = false;  //Si esta flag esta en true, se muestra el link My Account que al clickar te redirecciona a user page
+  const myAuthFlag = true;  //Si esta flag esta en true, se muestra el link My Account que al clickar te redirecciona a user page
 
   return (
     <div className="navbar-width mx-auto">
@@ -38,15 +39,11 @@ export const Navbar = () => {
             <li className="nav-item mx-5 ">
               <Link
                 className="nav-link text-white border border-danger py-0 px-4 radius"
-                aria-current="page"
-                to="#"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#loginModal"
+                to={myAuthFlag == false ? "/#" : "/userpage"}
+                data-bs-toggle={myAuthFlag == false ? "modal" : ""}
+                data-bs-target={myAuthFlag == false ?"#loginModal" : ""}
               >
-                {myAuthFlag == false ? "Login" : <Link className="text-decoration-none text-white" to="PONER AQUI EL LINK A LA PAGINA DE USUARIO">My Account</Link>} 
-                {/* Poner en el to el link a la pagina de usuario */}
-                {/* Aqui hay que poner un ternario si la flag myAuthFlag es false "Login" si es true "My Account" */}
+                {myAuthFlag == false ? "Login" : "My Account"}
               </Link>
             </li>
           </div>

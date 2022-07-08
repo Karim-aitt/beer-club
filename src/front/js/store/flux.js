@@ -4,6 +4,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			auth: false,
 			token: "",
 			nombre: null,
+			userExist: false,
+			emailExist: false,
+			loginEmailPassMatch: false,
 		
 			message: null,
 			demo: [
@@ -21,31 +24,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
-			signup: (nickname, name, surname, email, pass,) => {
-				fetch("", {
+			signup: (nickname, name, surnames, email, password,) => {
+				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu52.gitpod.io/api/signup", {
 					method: 'POST',
-					body: JSON.stringify({nickname, name, surname, email, pass}),
+					body: JSON.stringify({nickname, name, surnames, email, password}),
 					headers: {
 						'Content-Type': 'application/json'
 					}
 				})
 				.then(res => {
-					if(res.status == 200){
+					if(res.status == 200 || res.status == 201){
 						setStore({auth: true})
 						setStore({nombre: nickname})
+						setStore({userExist: false})
+						// setStore({auth: true})
 					} 
-					else {
-						return "Algo fue mal en el back del signup"
+					else if(res.status == 402){
+						setStore({emailExist: true})
+						setStore({userExist: false})
+					
+					}else if(res.status == 403){
+						setStore({userExist: true})
+						setStore({emailExist: false})
 					}
 					return res.json
 				})
 				.then(data => {
-					localStorage.setItem("token", data)
-					setStore({token: data})
+					// localStorage.setItem("token", data)
+					// setStore({token: data})
+				})
+				.catch((error) => {
+					if(error == "Ya existe ese email"){
+						alert("Ya existe este email")
+					} else {alert("Ya existe ese Nickname")}
 				})
 			},
 
-			login: (email, pass) => {
+			login: (email, password) => {
 				fetch("", {
 					method: 'POST', // POR QUE ES POST?
 					body: JSON.stringify({email, password}),
@@ -54,11 +69,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				.then(res => {
-					if (res.status == 200){
-						setStore({auth: true})
-						
+					if (res.status == 200 || res.status == 201){
+						// setStore({auth: true})
+						setStore({nombre: nickname})
+						setStore({loginEmailPassMatch: false})
+
 					} else {
-						alert("Usuario o clave incorrectas")
+						setStore({loginEmailPassMatch: true}) // Para validar en form loginModal linea: 56
 						return "Usuario o clave incorrectas"
 					}
 					return res.json()

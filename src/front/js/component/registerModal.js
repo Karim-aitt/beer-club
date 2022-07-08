@@ -5,9 +5,13 @@ import { Navigate } from "react-router-dom";
 import "../../styles/modals.css";
 
 export const Register = () => {
+  const validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  const [emailValidation, setEmailValidation] = useState(false);
+
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  
   const [confirmPass, setConfirmPass] = useState("");
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
@@ -94,8 +98,16 @@ export const Register = () => {
             </form>
           </div>
           <div className="modal-footer">
-          {allfill == true ? <p className="d-flex mx-auto text-danger">Debes de rellenar todos los campos</p> : ""}
-          {passMatch == true ? <p className="d-flex mx-auto text-danger">Passwords doesn't match</p> : ""}
+            {/* VALIDACIONES DE INPUTS */}
+
+          {allfill == true ? <p className="me-auto text-danger">Must fill all fields</p> : ""}
+          {passMatch == true ? <p className="d-flex flex-column me-auto text-danger">Passwords doesn't match</p> : ""}
+          {pass.length < 8 && pass != "" ? <p className="me-auto text-danger">Passwords must have 8 characters at least</p> : ""}
+          {emailValidation == true ? <p className="d-flex flex-column me-auto text-danger">Email has to be in email format</p> : ""}
+
+          {store.userExist == true ? <p className="d-flex flex-column me-auto text-danger">Nickname already in use</p> : ""}
+          {store.emailExist == true ? <p className="d-flex flex-column me-auto text-danger">Email already in use</p> : ""}
+          
             <button
               type="button"
               className="btn border border-2 border-success py-0 px-4 radius"
@@ -115,16 +127,25 @@ export const Register = () => {
                     setPassMatch(true)
                   }
                   setPassMatch(true)
-                  
-                } else {
+                } 
+
+                else if (pass.length < 8 && pass != ""){
+                  return "Pass must have 8 characters at least"
+                } 
+                else if (!email.match(validRegexEmail)){
+                  setEmailValidation(true)
+                }
+                
+                else {
                   setAllfill(false)
                   setPassMatch(false)
                   
-                  // actions.signup(nickname, email, pass)
+                  actions.signup(nickname, username, surname, email, pass)
                   setNickname("");
                   setEmail("");
                   setPass("");
                   setConfirmPass("");
+                  setEmailValidation(false)
                 }
               }} 
             >

@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment
 from api.utils import generate_sitemap, APIException
-import  bcrypt
+import bcrypt
 api = Blueprint('api', __name__)
 
 ##------------------------------------------------------------------------##
@@ -19,11 +19,13 @@ def add_Signup():
     body = request.get_json()
     user_check_email = User.query.filter_by(email=body['email']).first()
     if user_check_email != None:
-        raise APIException('Ya existe este email')
+        # raise APIException('Ya existe este email')
+        return jsonify("Ya existe este email"), 402
     
     user_check_nickname = User.query.filter_by(nickname=body['nickname']).first()
     if user_check_nickname != None:
-        raise APIException('Ya existe este nickname')
+        # raise APIException('Ya existe este nickname')
+        return jsonify("Ya existe este nickname"), 403
 
     hashed = bcrypt.hashpw(request.json.get('password').encode('utf-8'), bcrypt.gensalt())
 

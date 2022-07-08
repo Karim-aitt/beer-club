@@ -10,6 +10,6 @@
 }
 
 .inputStyle:focus{
-    /* outline: none; */
-    outline-color: green;
+    outline: none;
+    /* outline-color: green; */
 }

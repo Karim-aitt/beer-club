@@ -88,33 +88,27 @@ def login_user():
 
     return jsonify(data), 200
 
-        #___________________________UPDATE BEER___________________________#
+        #___________________________UPDATE USER___________________________#
 
-# @api.route('/beer/<int:id>' , methods=['PUT' , 'DELETE'])
-# def update_beer(id):
+@api.route('/user/<int:id>' , methods=['PUT'])
+def update_user(id):
+            
+            user = User.query.get(id)
+        
+            body = request.get_json()
 
-#         user = User.query.get(id)
-       
-#         body = request.get_json()
+            if "nickname" in body:
+                user.nickname = body["nickname"]
+            elif "name" in body:
+                user.name = body["name"]
+            elif "surnames" in body:
+                user.surnames = body["surnames"]
+            elif "email" in body:
+                user.email = body["email"]
 
-#         if "image" in body:
-#             beer.image = body["image"]
-#         elif "name" in body:
-#             beer.name = body["name"]
-#         elif "smell" in body:
-#             beer.smell = body["smell"]
-#         elif "source" in body:
-#             beer.source = body["source"]
-#         elif "alcohol" in body:
-#             beer.alcohol = body["alcohol"]
-#         elif "company" in body:
-#             beer.company = body["company"]
-#         elif "description" in body:
-#             beer.description = body["description"]
+            db.session.commit()
 
-#         db.session.commit()
-
-#         return jsonify(beer.serialize())
+            return jsonify(user.serialize())
 
 
     ##------------------------------------------------------------------------##

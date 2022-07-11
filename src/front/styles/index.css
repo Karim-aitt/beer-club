@@ -4,3 +4,19 @@
 .backgroundColor{
     background-color: rgb(204, 204, 204);
 }
+
+.scrollmenu-x{
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    
+}
+
+.scrollmenu-y{
+    overflow-y: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    max-height: 500px;
+}

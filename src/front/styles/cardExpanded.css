@@ -1,0 +1,14 @@
+.custom-style-expanded{
+    width: 208px;
+    min-width: 208px;
+    margin: 20px auto;
+}
+
+.color-bg{
+    background-color: rgb(250, 199, 16);
+}
+
+.custom-img{
+    max-height: 90%;
+    max-width: 170%;
+}

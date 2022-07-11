@@ -1,3 +1,5 @@
+import config from "../../js/config.js"
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -25,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
-				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu51.gitpod.io/api/signup", {
+				fetch(`${config.hostname}/api/signup`, {
 					method: 'POST',
 					body: JSON.stringify({nickname, name, surnames, email, password}),
 					headers: {
@@ -34,8 +36,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(res => {
 					if(res.status == 200 || res.status == 201){
-						setStore({auth: true})
-						setStore({nombre: nickname})
+						setStore({myAuthFlag: true})
+						setStore({nombre: res.nickname})
 						setStore({userExist: false})
 						// setStore({auth: true})
 					} 
@@ -57,15 +59,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data})
 				})
 				.catch((error) => {
-					if(error == "Ya existe ese email"){
-						alert("Error en el fetch - flux 58 saltó")
-					} else {alert("Error en el fetch - flux 59 saltó")}
+					alert("Error en el fetch - flux 60 saltó")
 				})
 			},
 
 			login: (email, password) => {
-				fetch("https://3001-4geeksacade-reactflaskh-v55n8uemtu2.ws-eu51.gitpod.io/api/login", {
-					method: 'POST', // POR QUE ES POST?
+				fetch(`${config.hostname}/api/login`, {
+					method: 'POST',
 					body: JSON.stringify({email, password}),
 					headers: {
 						'Content-Type': 'application/json'
@@ -85,14 +85,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(data => {
 					localStorage.setItem("token", data)
-					setStore({token: data})
+					// setStore({token: data})
 					
 					const modal = document.getElementById("loginModal")
 					const m = bootstrap.Modal.getInstance(modal)
 					m.hide()
-					// document.getElementById("loginModal").data-dismiss("modal");
+					
 					
 				})
+			},
+
+			createbeer: (image, name, smell, source, alcohol, company, description) => {
+				let tokenRequired = localStorage.getItem("token")
+
+				fetch(`${config.hostname}/api/createbeer`, {
+					method: 'POST',
+					body: JSON.stringify({image, name, smell, source, alcohol, company, description}),
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': "Bearer " + tokenRequired
+					}
+				})
+				.then(res => {
+					if(res.status == 200 || res.status == 201){
+						const modal = document.getElementById("createbeerModal")
+						const m = bootstrap.Modal.getInstance(modal)
+						m.hide()
+					} else (alert("Error en backend"))
+				})
+
+			},
+
+			logout: () => {
+				localStorage.removeItem('token')
+				setStore({myAuthFlag: false})
+			},
+
+			
+
+			setmyAuthFlag: (value) => {
+				setStore({myAuthFlag: value})
 			},
 
 			exampleFunction: () => {

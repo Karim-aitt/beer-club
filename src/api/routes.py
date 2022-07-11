@@ -53,7 +53,8 @@ def add_Signup():
         'email': user.email,
         'nickname': user.nickname,
         'name': user.name,
-        'surname': user.surnames
+        'surname': user.surnames,
+        'id': user.id
     }
     token = create_access_token(identity=data)
     db.session.commit()
@@ -96,6 +97,7 @@ def login_user():
     # db.session.commit()
 
     data = {
+        "id": user.id,
         'email': user.email,
         'nickname': user.nickname,
         'name': user.name,
@@ -103,10 +105,7 @@ def login_user():
     }
 
     token = create_access_token(identity=data)
-    db.session.commit()
-    return jsonify(token)
-
-    return jsonify(data), 200
+    return jsonify(token), 200
 
 ##--------------------------------------------------------------------------##
 ##--------------------------FORGOT YOUR PASSWORD ?--------------------------##
@@ -172,8 +171,18 @@ def delete_user(id):
 
     #___________________________CREATE BEER___________________________#
 
+@api.route('/validation', methods=['GET'])
+@jwt_required()
+def validation_token():
+    return jsonify(True)
+
 @api.route('/createbeer', methods=['POST'])
+@jwt_required()
+
 def add_Beer():
+
+    user = get_jwt_identity()
+    print(user)
    
     if request.method == 'POST':
 
@@ -184,7 +193,7 @@ def add_Beer():
         if beer_check_name != None:
             raise APIException('Ya existe este nombre de cerveza')
 
-        beer = Beer(image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
+        beer = Beer(user_id=user['id'], image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
 
         db.session.add(beer)
         db.session.commit()

@@ -4,7 +4,7 @@ import "../../styles/banner.css";
 
 export const Bodybar = () => {
   return (
-    <div className="navbar-width text-white bodybar-color mx-auto d-flex align-items-center py-3">
+    <div className="navbar-width text-white bodybar-color mx-auto d-flex align-items-center py-3 mt-0">
       <div className="">
         <h5 className="ms-5">
           Encuentra la mejor cerveza artesanal, solo aquí:

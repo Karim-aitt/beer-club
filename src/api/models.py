@@ -100,7 +100,7 @@ class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     beer_id = db.Column(db.Integer, db.ForeignKey('beer.id'))
-    punctuation = db.Column(db.Integer,)
+    punctuation = db.Column(db.Integer)
     user = db.relationship('User')
     beer = db.relationship('Beer')
 
@@ -121,7 +121,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     beer_id = db.Column(db.Integer, db.ForeignKey('beer.id'))
     comment = db.Column(db.String, nullable=False)
-    creation_date = db.Column(db.Date, nullable=False)
+    creation_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user = db.relationship('User')
     beer = db.relationship('Beer')
 

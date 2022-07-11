@@ -14,39 +14,47 @@ api = Blueprint('api', __name__)
 
 # generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
 
+
 ##------------------------------------------------------------------------##
 ##-------------------------------TABLE USER-------------------------------##
 ##------------------------------------------------------------------------##
+
+
+#__________________________________LIST USER__________________________________#
+
+@api.route('/users' , methods=['GET']) 
+def list_user():
+    users = User.query.all()
+    all_users = list(map(lambda users: users.serialize(),users))
+    return jsonify(all_users)
 
 
 ##--------------------------------------------------------------------------##
 ##-------------------------------FRONT SIGNUP-------------------------------##
 ##--------------------------------------------------------------------------##
 
-    #___________________________CREATE USER___________________________#
+
+#__________________________________CREATE USER__________________________________#
 
 @api.route('/signup', methods=['POST'])
 def add_Signup():
    
     body = request.get_json()
-
     user_check_email = User.query.filter_by(email=body['email']).first()
+
     if user_check_email != None:
-        # raise APIException('Ya existe este email')
         return jsonify("Ya existe este email"), 402
     
     user_check_nickname = User.query.filter_by(nickname=body['nickname']).first()
+
     if user_check_nickname != None:
-        # raise APIException('Ya existe este nickname')
         return jsonify("Ya existe este nickname"), 403
     
     # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer enconde !!!!!!!
     user_password = request.json.get('password')
     hashed = bcrypt.hashpw(user_password.encode('utf-8'), bcrypt.gensalt())
-    
-    
-    # hashed = generador.generate_password_hash(request.json.get('password')) // de flask_bcrypt -> no usar
 
+    # hashed = generador.generate_password_hash(request.json.get('password')) // de flask_bcrypt -> no usar
     user = User(nickname=body["nickname"],name=body["name"],surnames=body["surnames"],email=body["email"],password=hashed.decode('utf-8'),is_active=True)
     
     data = {
@@ -56,34 +64,29 @@ def add_Signup():
         'surname': user.surnames,
         'id': user.id
     }
+
     token = create_access_token(identity=data)
     db.session.commit()
 
-
     db.session.add(user)
     db.session.commit()
-
     return jsonify(token),201
 
 
-
 ##--------------------------------------------------------------------------##
-##-------------------------------FRONT LOGIN-------------------------------##
+##-------------------------------FRONT LOGIN -------------------------------##
 ##--------------------------------------------------------------------------##
 
-    #___________________________POST USER___________________________#
+#__________________________________POST USER__________________________________#
 
 @api.route('/login' , methods=['POST']) 
 def login_user():
-    # users = User.query.all()
-    # all_users = list(map(lambda users: users.serialize(),users))
 
     body = request.get_json()
     user_check_email = body['email'] 
     user_check_password = body['password']
     
     user = User.query.filter_by(email=user_check_email).first()
-
     if user is None:
         raise APIException('Usuario no encontrado /routes login l 72')
 
@@ -92,9 +95,6 @@ def login_user():
     print('esto es passwordCheck', passwordCheck)
     if passwordCheck is False:
         raise APIException('Clave incorrecta /routes login l 74')
-    # user_check_email = User.query.filter_by(email=body['email']).first()
-    # if user_check_password == password and user_check_email == email:
-    # db.session.commit()
 
     data = {
         "id": user.id,
@@ -107,128 +107,132 @@ def login_user():
     token = create_access_token(identity=data)
     return jsonify(token), 200
 
-##--------------------------------------------------------------------------##
-##--------------------------FORGOT YOUR PASSWORD ?--------------------------##
-##--------------------------------------------------------------------------##
 
-    #___________________________POST EMAIL FOR PASSWORD___________________________#
+##------------------------------------------------------------------------------##
+##----------------------------FORGOT YOUR PASSWORD ?----------------------------##
+##------------------------------------------------------------------------------##
+
+
+#__________________________________POST EMAIL FOR PASSWORD__________________________________#
 
 @api.route('/password' , methods=['POST']) 
 def forgot_password():
-    # users = User.query.all()
-    # all_users = list(map(lambda users: users.serialize(),users))
-
     body = request.get_json()
-
     user_check_email = body['email'] 
-
     user = User.query.filter_by(email=user_check_email).first()
+    
+    if user is None and user != user_check_email:
+        raise APIException('Email no encontrado')
+ 
+    return jsonify("enviado"), 200
 
-    if user.email != user_check_email:
-        raise APIException('Usuario no encontrado1')
-        
 
-        return jsonify("enviado"), 200
+##--------------------------------------------------------------------------##
+##----------------------------FRONT PAGE PROFILE----------------------------##
+##--------------------------------------------------------------------------##
 
-        #___________________________UPDATE USER___________________________#
+
+#__________________________________UPDATE USER__________________________________#
 
 @api.route('/users/<int:id>' , methods=['PUT'])
 def update_user(id):
-            
-            user = User.query.get(id)
-        
-            body = request.get_json()
 
-            if "nickname" in body:
-                user.nickname = body["nickname"]
-            elif "name" in body:
-                user.name = body["name"]
-            elif "surnames" in body:
-                user.surnames = body["surnames"]
-            elif "email" in body:
-                user.email = body["email"]
+    user = User.query.get(id)
+    body = request.get_json()
 
-            db.session.commit()
+    if "nickname" in body:
+        user.nickname = body["nickname"]
+    elif "name" in body:
+        user.name = body["name"]
+    elif "surnames" in body:
+        user.surnames = body["surnames"]
+    elif "email" in body:
+        user.email = body["email"]
 
-            return jsonify(user.serialize())
+    db.session.commit()
+    return jsonify(user.serialize())
 
-        #___________________________DELETE USER___________________________#
+#__________________________________DELETE USER__________________________________#
 
 @api.route('/users/<int:id>', methods=['DELETE'])
 def delete_user(id):
-
     user = User.query.get(id)
+
     if id is None:
         raise APIException("USER DELETE", 201)
+    
     db.session.delete(user)
     db.session.commit()
-
     return jsonify(user.serialize())
 
-    ##------------------------------------------------------------------------##
-    ##-------------------------------TABLE BEER-------------------------------##
-    ##------------------------------------------------------------------------##
 
-    #___________________________CREATE BEER___________________________#
 
-@api.route('/validation', methods=['GET'])
-@jwt_required()
-def validation_token():
-    return jsonify(True)
+    # body = request.get_json()
+    # user_check_email = User.query.filter_by(email=body['email']).first()
 
-@api.route('/createbeer', methods=['POST'])
-@jwt_required()
+    # if user_check_email != None:
+    #     return jsonify("Ya existe este email"), 402
+
+##----------------------------------------------------------------------------##
+##---------------------------------TABLE BEER---------------------------------##
+##----------------------------------------------------------------------------##
+
+
+#__________________________________LIST BEER__________________________________#
+
+@api.route('/beers' , methods=['GET']) 
+def list_beer():
+
+    beers = Beer.query.all()
+    all_beers = list(map(lambda beers: beers.serialize(),beers))
+    return jsonify(all_beers)
+
+#__________________________________CREATE BEER__________________________________#
+
+@api.route('/beers', methods=['POST'])
 
 def add_Beer():
-
-    user = get_jwt_identity()
+    user = jwt_required()
     print(user)
-   
-    if request.method == 'POST':
+    body = request.get_json()
+    beer_check_name = Beer.query.filter_by(name=body['name']).first()
+    if beer_check_name != None:
+        raise APIException('Ya existe este nombre de cerveza')
 
-        body = request.get_json()
+    beer = Beer(image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
+  #user_id=user.id
+    db.session.add(beer)
+    db.session.commit()
+    return jsonify("ok"), 201
 
-        beer_check_name = Beer.query.filter_by(name=body['name']).first()
-
-        if beer_check_name != None:
-            raise APIException('Ya existe este nombre de cerveza')
-
-        beer = Beer(user_id=user['id'], image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
-
-        db.session.add(beer)
-        db.session.commit()
-
-        return jsonify("ok"), 201
-
-    #___________________________UPDATE BEER___________________________#
+#__________________________________UPDATE BEER__________________________________#
 
 @api.route('/beers/<int:id>' , methods=['PUT'])
 def update_beer(id):
 
-        beer = Beer.query.get(id)
-       
-        body = request.get_json()
+    beer = Beer.query.get(id)
+    
+    body = request.get_json()
+    if "image" in body:
+        beer.image = body["image"]
+    elif "name" in body:
+        beer.name = body["name"]
+    elif "smell" in body:
+        beer.smell = body["smell"]
+    elif "source" in body:
+        beer.source = body["source"]
+    elif "alcohol" in body:
+        beer.alcohol = body["alcohol"]
+    elif "company" in body:
+        beer.company = body["company"]
+    elif "description" in body:
+        beer.description = body["description"]
 
-        if "image" in body:
-            beer.image = body["image"]
-        elif "name" in body:
-            beer.name = body["name"]
-        elif "smell" in body:
-            beer.smell = body["smell"]
-        elif "source" in body:
-            beer.source = body["source"]
-        elif "alcohol" in body:
-            beer.alcohol = body["alcohol"]
-        elif "company" in body:
-            beer.company = body["company"]
-        elif "description" in body:
-            beer.description = body["description"]
+    db.session.commit()
 
-        db.session.commit()
+    return jsonify(beer.serialize())
 
-        return jsonify(beer.serialize())
-
-        #___________________________DELETE BEER___________________________#
+#__________________________________DELETE BEER__________________________________#
 
 @api.route('/beers/<int:id>', methods=['DELETE'])
 def delete_beer(id):
@@ -238,37 +242,245 @@ def delete_beer(id):
         raise APIException("BEER DELETE", 201)
     db.session.delete(beer)
     db.session.commit()
-
     return jsonify(beer.serialize())
 
-    #____________LIST BEER____________#
 
-@api.route('/beers' , methods=['GET']) 
-def list_beer():
-    beers = Beer.query.all()
-    all_beers = list(map(lambda beers: beers.serialize(),beers))
-    return jsonify(all_beers)
+##--------------------------------------------------------------------------------##
+##---------------------------------TABLE CATEGORY---------------------------------##
+##--------------------------------------------------------------------------------##
 
-@api.route('/users' , methods=['GET']) 
-def list_user():
-    users = User.query.all()
-    all_users = list(map(lambda users: users.serialize(),users))
-    return jsonify(all_users)
 
-    # elif request.method == 'GET':
-    # task = Task.query.get(task_id)
-    # if task is None:
-    #         raise APIException("Tarea no encontrada", 404)
+#__________________________________CREATE CATEGORY__________________________________#
 
-    # return jsonify(task.serialize())
+@api.route('/category' , methods=['POST'])
+def create_category():
 
-#____________C____________#
+        body = request.get_json()
 
-# @api.route('/login', methods=['GET'])
-# def Login():
+        category_check_name = Category.query.filter_by(name=body['name']).first()
+        if category_check_name != None:
+            return jsonify("Ya existe esta categoria"), 402
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
+        category = Category(name=body["name"],image=body["image"],description=body["description"])
 
-#     return jsonify(response_body), 200
+        db.session.add(category)
+        db.session.commit()
+
+        return jsonify("add"),201
+
+#__________________________________LIST CATEGORY__________________________________#
+
+@api.route('/category' , methods=['GET'])
+def list_category():
+
+        category = Category.query.all()
+        all_category = list(map(lambda category: category.serialize(),category))
+        return jsonify(all_category)
+
+#__________________________________UPDATE CATEGORY__________________________________#
+
+@api.route('/category/<int:id>' , methods=['PUT'])
+def update_category(id):
+
+    category = Category.query.get(id)
+    body = request.get_json()
+
+    if "name" in body:
+        category.name = body["name"]
+    elif "image" in body:
+        category.image = body["image"]
+    elif "description" in body:
+        category.description = body["description"]
+
+    db.session.commit()
+
+    return jsonify(category.serialize())
+
+#__________________________________DELETE CATEGORY__________________________________#
+
+@api.route('/category/<int:id>' , methods=['DELETE'])
+def delete_category(id):
+
+    category = Category.query.get(id)
+
+    if id is None:
+        raise APIException("CATEGORY DELETE", 201)
+    db.session.delete(category)
+    db.session.commit()
+
+    return jsonify(category.serialize())
+
+
+##-----------------------------------------------------------------------------------##
+##-----------------------------------TABLE COMMENT-----------------------------------##
+##-----------------------------------------------------------------------------------##
+
+
+#__________________________________LIST COMMENT BEER__________________________________#
+
+@api.route('/comment' , methods=['GET'])
+def list_comment():
+
+    comment = Comment.query.all()
+    all_comment = list(map(lambda comment: comment.serialize(),comment))
+
+    return jsonify(all_comment)
+
+#__________________________________CREATE COMMENT BEER__________________________________#
+
+@api.route('/comment' , methods=['POST'])
+def create_comment():
+
+    body = request.get_json()
+    comment = Comment(comment=body["comment"])
+
+    db.session.add(comment)
+    db.session.commit()
+
+    return jsonify(comment.serialize()),201
+
+#__________________________________UPDATE COMMENT BEER__________________________________#
+
+@api.route('/comment/<int:id>' , methods=['PUT'])
+def update_comment(id):
+
+    comment = Comment.query.get(id)
+    body = request.get_json()
+
+    if "comment" in body:
+        comment.comment = body["comment"]
+    db.session.commit()
+
+    return jsonify(comment.serialize())
+
+#__________________________________DELETE COMMENT BEER__________________________________#
+
+@api.route('/comment/<int:id>' , methods=['DELETE'])
+def delete_comment(id):
+
+    comment = Comment.query.get(id)
+
+    if id is None:
+        raise APIException("COMMENT DELETE", 201)
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    return jsonify(comment.serialize())
+
+
+##------------------------------------------------------------------------------------##
+##-----------------------------------TABLE FAVORITE-----------------------------------##
+##------------------------------------------------------------------------------------##
+
+
+#___________________________________LIST FAVORITE BEER___________________________________#
+
+@api.route('/favorite' , methods=['GET'])
+def list_favorite():
+
+    favorite = ILikeIt.query.all()
+    all_favorite = list(map(lambda favorite: favorite.serialize(),favorite))
+
+    return jsonify(all_favorite)
+
+#__________________________________CREATE FAVORITE BEER__________________________________#
+
+@api.route('/favorite' , methods=['POST'])
+def create_favorite():
+
+    body = request.get_json()
+    favorite = ILikeIt(user_id=body["user_id"],beer_id=body["beer_id"])
+
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify(favorite.serialize()),201
+
+#__________________________________UPDATE FAVORITE BEER__________________________________#
+
+@api.route('/favorite/<int:id>' , methods=['PUT'])
+def update_favorite(id):
+
+    favorite = ILikeIt.query.get(id)
+    body = request.get_json()
+
+    if "favorite" in body:
+        favorite.comment = body["favorite"]
+    db.session.commit()
+
+    return jsonify(favorite.serialize())
+
+#__________________________________DELETE FAVORITE BEER__________________________________#
+
+@api.route('/favorite/<int:id>' , methods=['DELETE'])
+def delete_favorite(id):
+
+    favorite = ILikeIt.query.get(id)
+
+    if id is None:
+        raise APIException("FAVORITE DELETE", 201)
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify(favorite.serialize())
+
+
+##------------------------------------------------------------------------------------##
+##-------------------------------------TABLE VOTE-------------------------------------##
+##------------------------------------------------------------------------------------##
+
+
+#___________________________________LIST VOTE BEER___________________________________#
+
+@api.route('/vote' , methods=['GET'])
+def list_vote():
+
+    vote = Vote.query.all()
+    all_vote = list(map(lambda vote: vote.serialize(),vote))
+
+    return jsonify(all_vote)
+
+#__________________________________CREATE VOTE BEER__________________________________#
+
+@api.route('/vote' , methods=['POST'])
+def create_vote():
+
+    body = request.get_json()
+
+    vote = Vote(punctuation=body["punctuation"],user_id=body["user_id"])
+    # ,user_id=body["user_id"],beer_id=body["beer_id"]
+    db.session.add(vote)
+    db.session.commit()
+
+    return jsonify(vote.serialize()),201
+
+#__________________________________UPDATE VOTE BEER__________________________________#
+
+@api.route('/vote/<int:id>' , methods=['PUT'])
+def update_vote(id):
+
+    vote = Vote.query.get(id)
+    body = request.get_json()
+
+    if "vote" in body:
+        vote.comment = body["vote"]
+    db.session.commit()
+
+    return jsonify(vote.serialize())
+
+#__________________________________DELETE VOTE BEER__________________________________#
+
+@api.route('/vote/<int:id>' , methods=['DELETE'])
+def delete_vote(id):
+
+    vote = Vote.query.get(id)
+
+    if id is None:
+        raise APIException("VOTE DELETE", 201)
+
+    db.session.delete(vote)
+    db.session.commit()
+
+    return jsonify(vote.serialize())

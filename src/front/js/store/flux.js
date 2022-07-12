@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			emailExist: false,
 			loginEmailPassMatch: false,
 			categories: [],
+			beers: [],
 		
 			message: null,
 			demo: [
@@ -129,6 +130,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				localStorage.removeItem('token')
 				setStore({myAuthFlag: false})
+			},
+
+			getBeers: async () => {
+				const res = await fetch(`${config.hostname}/api/beers`, {
+					method: 'GET'
+				})
+
+				const data = await res.json();
+				await setStore({beers: data})
 			},
 
 			

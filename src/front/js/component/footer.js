@@ -20,7 +20,7 @@ export const Footer = () => (
             </li>
 
             <li className="nav-item mx-5">
-              <Link className="nav-link text-white" to="#">
+              <Link className="nav-link text-white" to="/categories">
                 Categories
               </Link>
             </li>
@@ -41,13 +41,13 @@ export const Footer = () => (
 
           <div className="navbar-nav d-flex justify-content-end">
             <li className="nav-item mx-5">
-              <Link className="nav-link text-white" to="#">
+              <Link className="nav-link text-white" to="/about">
                 About Us
               </Link>
             </li>
 
             <li className="nav-item mx-4">
-              <Link className="nav-link text-white" to="#">
+              <Link className="nav-link text-white" to="/contact">
                 Contact
               </Link>
             </li>

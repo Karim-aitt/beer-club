@@ -46,7 +46,7 @@ export const Navbar = () => {
                 data-bs-toggle={store.myAuthFlag == false ? "modal" : ""}
                 data-bs-target={store.myAuthFlag == false ? "#loginModal" : ""}
               >
-                {store.myAuthFlag == false ? "Login" : "My Account"}
+                {store.myAuthFlag == false ? "Login" : "My page"}
               </Link>
             </li>
           </div>

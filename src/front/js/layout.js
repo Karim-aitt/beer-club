@@ -71,8 +71,7 @@ const Layout = () => {
                         <Route element={<Userpage />} path="/userpage" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} path="*"/>
+                        <Route element={<h1 className="text-center my-5">Page not found</h1>} path="*"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>

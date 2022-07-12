@@ -10,6 +10,7 @@ export const CreateBeer = () => {
   const [nombre, setNombre] = useState("");
   const [imagen, setImagen] = useState("");
   const [category, setCategory] = useState("ale");
+  const [source, setSource] = useState("");
   const [alcohol, setAlcohol] = useState("");
   const [aroma, setAroma] = useState("");
   const [autor, setAutor] = useState("");
@@ -21,7 +22,7 @@ export const CreateBeer = () => {
 
   //subir Imagen
   const formData = new FormData()  //para manejar las imagenes subidas
-
+  
   return (
     <div
       className="modal fade"
@@ -86,17 +87,24 @@ export const CreateBeer = () => {
                 placeholder="Category"
                 onChange={(e) => setCategory(e.target.value)}
               >
-                <option value="ale">Ale</option>
-                <option value="paleale">Paleale</option>
-                <option value="belgiumAle">Belgium Ale</option>
-                <option value="germanAle">German Ale</option>
-                <option value="lager">Lager</option>
-                <option value="lagerPilsen">Lager Pilsen</option>
-                <option value="lagerExtra">Lager Extra</option>
-                <option value="lagerEspecial">Lager especial</option>
-                <option value="abadia">Abadia</option>
-                <option value="black">Black</option>
+                {store.categories.length >0 ? store.categories.map((elem, i) => {
+                  return (
+                    <option key={i} value={elem.id}>{elem.name}</option>
+                  )
+                })
+                : 
+                  <option>
+                    Loading...
+                  </option>
+                }
               </select>
+              <input
+                className="ms-2 p-1"
+                type="text"
+                placeholder="Source"
+                onChange={(e) => setSource(e.target.value)}
+                value={source}
+              ></input>
               <textarea
                 className="m-2 p-1 inputStyle"
                 rows="4"
@@ -153,6 +161,7 @@ export const CreateBeer = () => {
                     imagen == "" ||
                     nombre == "" ||
                     aroma == "" ||
+                    source == "" ||
                     category == "" ||
                     alcohol == "" ||
                     autor == "" ||
@@ -169,6 +178,7 @@ export const CreateBeer = () => {
                     nombre,
                     aroma,
                     category,
+                    source,
                     alcohol,
                     autor,
                     descrip

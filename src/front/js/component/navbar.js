@@ -28,8 +28,9 @@ export const Navbar = () => {
                 type="button"
                 data-bs-toggle={store.myAuthFlag == false ? "modal" : ""}
                 data-bs-target={store.myAuthFlag == false ?"#registerModal" : ""}
+                onClick={() => store.myAuthFlag == true ? actions.logout() : ""}
               >
-                {store.myAuthFlag == false ? "Signup" : "Bienvenido"}
+                {store.myAuthFlag == false ? "Signup" : "Logout"}
               </Link>
             </li>
           </div>
@@ -85,13 +86,13 @@ export const Navbar = () => {
 
           <div className="navbar-nav d-flex justify-content-end">
             <li className="nav-item mx-5">
-              <Link className="nav-link text-white" to="#">
+              <Link className="nav-link text-white" to="/about">
                 About Us
               </Link>
             </li>
 
             <li className="nav-item mx-4">
-              <Link className="nav-link text-white" to="#">
+              <Link className="nav-link text-white" to="/contact">
                 Contact
               </Link>
             </li>

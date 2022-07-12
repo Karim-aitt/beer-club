@@ -190,17 +190,20 @@ def list_beer():
 #__________________________________CREATE BEER__________________________________#
 
 @api.route('/beers', methods=['POST'])
-
+@jwt_required()
 def add_Beer():
-    user = jwt_required()
-    print(user)
+
+    dataUser = get_jwt_identity()
     body = request.get_json()
+    print(body)
     beer_check_name = Beer.query.filter_by(name=body['name']).first()
     if beer_check_name != None:
         raise APIException('Ya existe este nombre de cerveza')
+    # print("esto es body------------------------------", body['category'])
+    # print(f'user={(dataUser["id"])}, category={int(body["category"])},image={body["image"]},name={body["name"]},smell={body["smell"]},source={body["source"]},alcohol={body["alcohol"]},company={body["company"]},description={body["description"]}')
+    
+    beer = Beer(user_id=dataUser["id"], category_id=int(body["category"]),image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
 
-    beer = Beer(image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
-  #user_id=user.id
     db.session.add(beer)
     db.session.commit()
     return jsonify("ok"), 201
@@ -484,3 +487,10 @@ def delete_vote(id):
     db.session.commit()
 
     return jsonify(vote.serialize())
+
+#__________________________________TOKEN VALIDATION__________________________________#
+
+@api.route('/validation', methods=['GET'])
+@jwt_required()
+def token_validation():
+    return jsonify(True)

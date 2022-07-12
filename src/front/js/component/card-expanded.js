@@ -24,9 +24,9 @@ export const CardExpanded = (props) => {
               <i className="fas fa-star me-2 text-warning"></i>
               {props.rating}
             </p>
-            <p><i class="fas fa-hand-point-up me-2 text-warning"></i>{props.totalvotes}</p>
+            <p><i className="fas fa-hand-point-up me-2 text-warning"></i>{props.totalvotes}</p>
             
-            <p><i class="fas fa-comment-dots me-2 text-warning"></i>{props.comments}</p>
+            <p><i className="fas fa-comment-dots me-2 text-warning"></i>{props.comments}</p>
             <p>{props.type}</p>
           </div>
 

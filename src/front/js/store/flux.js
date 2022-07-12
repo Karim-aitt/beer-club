@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userExist: false,
 			emailExist: false,
 			loginEmailPassMatch: false,
+			categories: [],
 		
 			message: null,
 			demo: [
@@ -95,12 +96,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 
-			createbeer: (image, name, smell, source, alcohol, company, description) => {
+			getCategories: async () => {
+				const res = await fetch(`${config.hostname}/api/category`, {
+					method: 'GET'
+				})
+
+				const data = await res.json();
+				await setStore({categories: data})
+			},
+
+			createbeer: (image, name, smell, category, source, alcohol, company, description) => {
 				let tokenRequired = localStorage.getItem("token")
 
-				fetch(`${config.hostname}/api/createbeer`, {
+				fetch(`${config.hostname}/api/beers`, {
 					method: 'POST',
-					body: JSON.stringify({image, name, smell, source, alcohol, company, description}),
+					body: JSON.stringify({image, name, smell, category, source, alcohol, company, description}),
 					headers: {
 						'Content-Type': 'application/json',
 						'Authorization': "Bearer " + tokenRequired

@@ -56,6 +56,7 @@ class Beer(db.Model):
     alcohol = db.Column(db.String(80))
     company = db.Column(db.String(80))
     description = db.Column(db.String(255))
+    # --------------------
     creation_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user = db.relationship('User')
     category = db.relationship('Category')

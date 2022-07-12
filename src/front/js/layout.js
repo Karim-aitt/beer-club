@@ -7,6 +7,8 @@ import config from "./config.js"
 
 import { Home } from "./pages/home";
 import { Userpage } from "./pages/user_page";
+import { About } from "./pages/aboutsUs";
+import { Contact } from "./pages/contact";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -28,7 +30,6 @@ const Layout = () => {
         const token = localStorage.getItem("token")
     
         if(token){
-        setLoading(true)
           fetch(`${config.hostname}/api/validation`, {
             method: 'GET',
             headers: {
@@ -68,6 +69,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Userpage />} path="/userpage" />
+                        <Route element={<About />} path="/about" />
+                        <Route element={<Contact />} path="/contact" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} path="*"/>
                     </Routes>

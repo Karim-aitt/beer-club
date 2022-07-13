@@ -25,6 +25,35 @@ const Layout = () => {
     const basename = process.env.BASENAME || "";
     const { store, actions } = useContext(Context);
     const [loading, setLoading] = useState(false);
+    const [votes, getVotes] = useState(store.userVotes);
+
+    
+
+    useEffect(() => {
+      if(store.userVotes == false){
+        ""
+      } else {
+
+        fetch(`${config.hostname}/api/vote`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer " + store.token
+          }
+      })
+      .then(res => {
+          if(res.status == 200){
+            return res.json()
+          }
+      })
+      .then(data => {
+        actions.saveUserDataVotes(data)
+        console.log("userDataVotes ",store.userDataVotes)
+      })
+      }
+      console.log(store.userDataVotes)
+    }, [store.userVotes])
+    
 
     useEffect(() => {
         const token = localStorage.getItem("token")

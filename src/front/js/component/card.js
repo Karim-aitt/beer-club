@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Stars } from "./starsranking";
 
 import "../../styles/card.css";
-import Domus from "../../img/Domus.jpg";
 
 export const Card = (props) => {
   const ribbonFlag = props.ribbon;
+
 
   return (
     <div className="card border border-3 border-warning card-width m-3">
@@ -17,7 +17,7 @@ export const Card = (props) => {
         <h5 className="card-title">{props.nombre}</h5>
         <p className="card-text"></p>
         
-        <Stars />
+        <Stars beer_id_star={props.beer_id_card}/>
       </div>
     </div>
   );

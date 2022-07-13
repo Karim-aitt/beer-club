@@ -435,10 +435,21 @@ def delete_favorite(id):
 ##------------------------------------------------------------------------------------##
 
 
-#___________________________________LIST VOTE BEER___________________________________#
+#___________________________________LIST USER VOTE BEER___________________________________#
 
 @api.route('/vote' , methods=['GET'])
+@jwt_required()
+
 def list_vote():
+    dataUser = get_jwt_identity()
+    vote = Vote.query.filter_by(user_id=dataUser['id'])
+    all_user_vote = list(map(lambda vote: vote.serialize(),vote))
+
+    print("esto es all user", all_user_vote)
+    return jsonify(all_user_vote)
+
+@api.route('/votes' , methods=['GET'])
+def list_votes():
 
     vote = Vote.query.all()
     all_vote = list(map(lambda vote: vote.serialize(),vote))
@@ -448,15 +459,22 @@ def list_vote():
 #__________________________________CREATE VOTE BEER__________________________________#
 
 @api.route('/vote' , methods=['POST'])
+@jwt_required()
 def create_vote():
-
     body = request.get_json()
+    dataUser = get_jwt_identity()
+    beer_check = Vote.query.filter_by(user_id=dataUser["id"], beer_id=int(body["beer_id"])).first()
+    
+    if beer_check is not None:
+        print("esto es beer_check dentro del IF", beer_check)
+        return jsonify(True), 202
 
-    vote = Vote(punctuation=body["punctuation"],user_id=body["user_id"])
-    # ,user_id=body["user_id"],beer_id=body["beer_id"]
-    db.session.add(vote)
+    if beer_check is None:
+        vote = Vote(punctuation=int(body["punctuation"]),beer_id=int(body['beer_id']), user_id=dataUser["id"])
+        print(vote)
+        db.session.add(vote)
+
     db.session.commit()
-
     return jsonify(vote.serialize()),201
 
 #__________________________________UPDATE VOTE BEER__________________________________#

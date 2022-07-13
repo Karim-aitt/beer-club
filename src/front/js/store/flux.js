@@ -11,6 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loginEmailPassMatch: false,
 			categories: [],
 			beers: [],
+			userVotes: false,
+			userDataVotes: [],
 		
 			message: null,
 			demo: [
@@ -27,6 +29,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			firstLoadToken: () => {
+				const tok = localStorage.getItem('token')
+				if(tok){
+					setStore({token: tok})
+					setStore({userVotes: true})
+				}
+			},
+
+			saveUserDataVotes: (data) => {
+				setStore({userDataVotes: data})
+			},
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
 				fetch(`${config.hostname}/api/signup`, {
@@ -78,6 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({myAuthFlag: true})
 						setStore({nombre: res.nickname})
 						setStore({loginEmailPassMatch: false})
+						
 
 					} else {
 						setStore({loginEmailPassMatch: true}) // Para validar en form loginModal linea: 56
@@ -87,7 +101,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(data => {
 					localStorage.setItem("token", data)
-					// setStore({token: data})
+					setStore({token: data})
+					setStore({userVotes: true})
+					
 					
 					const modal = document.getElementById("loginModal")
 					const m = bootstrap.Modal.getInstance(modal)

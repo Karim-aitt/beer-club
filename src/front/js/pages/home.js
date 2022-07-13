@@ -22,7 +22,7 @@ export const Home = () => {
       <div className="d-flex mx-5 scrollmenu-x border mb-3">
         {store.beers.length > 0 ? store.beers.map((elem, i) => {
           return(
-            <Card key={i} nombre={elem.name} img={elem.image} ribbon={true}/>
+            <Card key={i} nombre={elem.name} img={elem.image} ribbon={true} beer_id_card={elem.id}/>
           )
         }): <></>}
       </div>

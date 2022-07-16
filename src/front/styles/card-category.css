@@ -1,0 +1,23 @@
+
+.category-size{
+    width: 200px;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+
+.link-style{
+    text-decoration: none;
+    color: black
+}
+.link-style:hover{
+    color:white;
+}
+
+.category-size:hover{
+    background-color: rgb(250, 199, 16);;
+}
+
+.category-item{
+    max-width: 300px;
+}

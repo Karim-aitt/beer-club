@@ -3,8 +3,8 @@ import config from "../../js/config.js"
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myAuthFlag: false,
-			token: "",
+			// myAuthFlag: false,
+			token: null,
 			nombre: "",
 			userExist: false,
 			emailExist: false,
@@ -29,17 +29,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			 //Esta funcion es para loguearte directamente si tienes un token en el navegador valido
 			firstLoadToken: () => {
-				const tok = localStorage.getItem('token')
-				if(tok){
-					setStore({token: tok})
-					setStore({userVotes: true})
-				}
+				const tok = localStorage.getItem("token");
+				
+				if(tok != "") {
+
+					fetch(`${config.hostname}/api/validation`, {
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + tok
+						}
+					})
+					.then(res => {
+						if(res.status == 200 || res.status == 201){
+							setStore({ token: tok });
+							setStore({ userVotes: true });
+						} else {
+							setStore({ token: null });
+							return "Token no valido o expirado flux 42";
+						} 
+					}
+
+				)}
 			},
 
-			saveUserDataVotes: (data) => {
-				setStore({userDataVotes: data})
+			// Consigue las categorias existentes en la DB al entrar en la web
+			getCategories: async () => {
+				const res = await fetch(`${config.hostname}/api/category`, {
+				  method: "GET",
+				});
+		
+				const data = await res.json();
+				await setStore({ categories: data });
+			  },
+		
+			  //Esto se hace al cargar la página y recoge todas las beers de la DB y las almacena en global
+			  getBeers: async () => {
+				const res = await fetch(`${config.hostname}/api/beers`, {
+				  method: "GET",
+				});
+		
+				const data = await res.json();
+				await setStore({ beers: data });
+			  },
+		
+			  // Esto es usado en sincronizacion con el fetch utilizado en ___ para almacenar los votos de un usuario.
+			  saveUserDataVotes: (data) => {
+				setStore({ userDataVotes: data });
+			  },
+
+			  logout: () => {
+				localStorage.removeItem('token')
+				setStore({myAuthFlag: false})
+			},	
+
+			setmyAuthFlag: (value) => {
+				setStore({myAuthFlag: value})
 			},
+
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
 				fetch(`${config.hostname}/api/signup`, {
@@ -51,10 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(res => {
 					if(res.status == 200 || res.status == 201){
-						setStore({myAuthFlag: true})
-						setStore({nombre: res.nickname})
 						setStore({userExist: false})
-						// setStore({auth: true})
 					} 
 					else if(res.status == 402){
 						setStore({emailExist: true})
@@ -65,9 +110,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({emailExist: false})
 					}
 					else if(res.status == 400 || res.status == 500){
-						alert("Error raro del back")
+						alert("Error del back")
 					}
-					return res.json
+					return res.json()
 				})
 				.then(data => {
 					localStorage.setItem("token", data)
@@ -108,18 +153,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const modal = document.getElementById("loginModal")
 					const m = bootstrap.Modal.getInstance(modal)
 					m.hide()
-					
-					
 				})
-			},
-
-			getCategories: async () => {
-				const res = await fetch(`${config.hostname}/api/category`, {
-					method: 'GET'
-				})
-
-				const data = await res.json();
-				await setStore({categories: data})
+				.catch(error => {error})
 			},
 
 			createbeer: (image, name, smell, category, source, alcohol, company, description) => {
@@ -141,26 +176,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else (alert("Error en backend"))
 				})
 
-			},
-
-			logout: () => {
-				localStorage.removeItem('token')
-				setStore({myAuthFlag: false})
-			},
-
-			getBeers: async () => {
-				const res = await fetch(`${config.hostname}/api/beers`, {
-					method: 'GET'
-				})
-
-				const data = await res.json();
-				await setStore({beers: data})
-			},
-
-			
-
-			setmyAuthFlag: (value) => {
-				setStore({myAuthFlag: value})
 			},
 
 			exampleFunction: () => {

@@ -1,27 +1,64 @@
-/* NAVBAR */
+/* VARIABLES */
 
-@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Finlandica:ital@1&family=Roboto+Slab&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,900&family=Square+Peg&display=swap');
-
-.radius{
-    border-radius: 30px;
-}
-.nav-radius{
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+.custom-navbar{
+    background-color: var(--first-color)
 }
 
-.navimg{
-    border: 1px inset black;
-    border-radius: 100px;
-    width: 150px;
-    height: 150px; 
+.custom-buttom{
+    font-size: 25px;
+    color: white;
+    /* border-radius: 5px; */
 }
 
-.navbar-width{
-    max-width: 1140px;
-    font-family: 'Bree Serif', serif;
+.custom-buttom:hover{
+    color: rgb(250, 199, 16);
 }
 
-.navbar-color{
-    background-color: #31312f
+/* .custom-buttom-div{
+    position: relative;
+    left: 20%;
+    
+} */
+
+.drop-size{
+    position: relative;
+    right: 40px;
+    top: 1px;
+}
+
+.user-icon-size{
+    font-size: 25px;
+    color: white;
+}
+.user-icon-size:hover{
+    color: rgb(250, 199, 16);
+}
+
+@media only screen and (max-width: 1000px){
+    .custom-buttom-div{
+        position: relative;
+        left: 18%;
+        
+    }
+}
+
+@media only screen and (max-width: 850px){
+    .custom-buttom-div{
+        position: relative;
+        left: 15%;
+        
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    /* For mobile phones: */
+    .custom-buttom-div{
+        position: relative;
+        left: 13%;
+        
+    }
+  }
+
+.navbar-link{
+    text-decoration: none;
 }

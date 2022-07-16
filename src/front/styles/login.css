@@ -1,0 +1,15 @@
+.pos_login{
+    position: absolute;
+    top: 100px;
+    right: 200px;
+    background-color: rgb(224, 223, 223);
+}
+
+button.active{
+    background-color: black !important;
+    color: white !important;
+}
+
+.container-width{
+    max-width: 400px;
+}

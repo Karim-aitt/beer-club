@@ -1,14 +1,137 @@
-/*
-    home.css: This website contains selectors only used in home.css
+/*  #---------------------------------------------#
+    #----------------- GLOBAL    -----------------#
+    #---------------------------------------------# */
+    :root{
+        --first-color: rgb(250, 199, 16);
+    }
+    
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+    .color-head{
+        background: rgb(250, 199, 16);
+    }
 
-.home-width{
-    max-width: 1140px;
-    font-family: 'Bree Serif', serif;
-    /* border-left: 3px solid #ffbb33;
-    border-right: 3px solid #ffbb33; */
+    .color-bg{
+        background: rgb(204, 168, 40);
+    }
+    
+    .custom-img{
+    max-height: 90%;
+    max-width: 170%;
+    }
+
+    .borde{
+        border-radius: 10px;
+        border: 1px solid rgb(219, 219, 219);
+        
+    }
+
+    .header{
+        height: 40px;
+        vertical-align: middle;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .back-color{
+        background-color: rgb(224, 223, 223);
+    }
+/*  #---------------------------------------------#
+    #----------------- BANNER    -----------------#
+    #---------------------------------------------# */
+
+    /* .banner-img{
+        filter: grayscale(100%); 
+        position:  relative;
+        bottom: 40px; 
+    } */
+
+    /* @media only screen and (max-width: 2560px){
+        .banner-img{
+            position: relative;
+            bottom: 550px;
+        }
+    }
+
+    @media only screen and (max-width: 1920px){
+        .banner-img{
+            position: relative;
+            bottom: 350px;
+        }
+    }
+
+    @media only screen and (max-width: 1440px){
+        .banner-img{
+            position: relative;
+            bottom: 265px;
+        }
+    }
+    @media only screen and (max-width: 1024px){
+        .banner-img{
+            position: relative;
+            bottom: 150px;
+        }
+    }
+    @media only screen and (max-width: 483px){
+        .banner-img{
+            position: relative;
+            bottom: 20px;
+        }
+    } */
+    
+
+    .banner-container{
+        /* width: 860px;
+        min-width: 834px; */
+        /* height: 250px; */
+        overflow: hidden;
+    }
+    /* .banner-img{
+        position: relative;
+        bottom: 220px;
+    } */
+
+    /* .beer-container{
+        width: 1000px;
+        min-width: 834px;
+    } */
+
+/*  #---------------------------------------------#
+    #----------------- SCROLLBAR -----------------#
+    #---------------------------------------------# */
+
+.scrollmenu-x{
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    
+}
+
+.scrollmenu-y{
+    overflow-y: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    max-height: 500px;
+}
+
+/*  #---------------------------------------------#
+    #----------------- CARDS EXPANDED ------------#
+    #---------------------------------------------# */
+
+/* .mes{
+    width: 300px;
+    
+} */
+
+.mes-header{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 40px;
+    vertical-align: middle;
+
+}
+
+.mes-body{
+
 }

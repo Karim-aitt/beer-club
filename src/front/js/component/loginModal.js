@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 
 import "../../styles/modals.css";
 
-export const Login = () => {
+export const LoginModal = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -72,7 +72,7 @@ export const Login = () => {
                 // } 
                 else {
                   setAllfill(false)
-
+                  
                   actions.login(email, pass)
 
                   setEmail("");

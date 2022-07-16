@@ -4,11 +4,6 @@
     margin: 20px auto;
 }
 
-.color-bg{
+.color-bg-{
     background-color: rgb(250, 199, 16);
-}
-
-.custom-img{
-    max-height: 90%;
-    max-width: 170%;
 }

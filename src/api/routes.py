@@ -187,6 +187,15 @@ def list_beer():
     all_beers = list(map(lambda beers: beers.serialize(),beers))
     return jsonify(all_beers)
 
+#__________________________________LIST BEERS IN CATEGORY__________________________________#
+
+@api.route('/beers/<int:id>' , methods=['GET'])
+def list_beers_category(id):
+
+        beers = Beer.query.filter_by(category_id=id)
+        all_beers_category = list(map(lambda beers: beers.serialize(), beers))
+        return jsonify(all_beers_category)
+
 #__________________________________CREATE BEER__________________________________#
 
 @api.route('/beers', methods=['POST'])
@@ -241,8 +250,10 @@ def update_beer(id):
 def delete_beer(id):
 
     beer = Beer.query.get(id)
+    print(beer)
+    return ""
     if id is None:
-        raise APIException("BEER DELETE", 201)
+        raise APIException("BEER DELETE")
     db.session.delete(beer)
     db.session.commit()
     return jsonify(beer.serialize())

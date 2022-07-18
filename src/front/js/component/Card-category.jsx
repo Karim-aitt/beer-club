@@ -18,9 +18,9 @@ export const CardCategory = (props) => {
         */}
         {store.categories.length >0 ? store.categories.map((elem, i) => {
                   return (
-                    <div key={i} className="div-size m-2 p-2 fw-bold category-size">
-                        <Link to={elem.id} className="link-style">{elem.name}</Link>
-                    </div>
+                    // <div key={i} className="div-size m-2 p-2 fw-bold category-size text-center">
+                        <Link key={i} to={elem.id} className="d-flex flex-column div-size m-2 p-2 fw-bold category-size link-style">{elem.name}</Link>
+                    // </div>
                   )
                 })
                 : 

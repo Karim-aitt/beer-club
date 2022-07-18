@@ -1,0 +1,12 @@
+
+.img-category-mini{
+    border-radius: 100px;
+    width: 150px;
+    height: 150px;
+}
+
+.category-name-position{
+    position: relative;
+    bottom: 70px;
+    background-color: white;
+}

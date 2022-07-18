@@ -1,0 +1,17 @@
+
+.border-p{
+border-right: 1px solid rgb(167, 167, 167);
+border-left: 1px solid rgb(167, 167, 167);
+}
+
+.description{
+    border-bottom: 1px solid rgb(167, 167, 167);
+}
+
+.body-w{
+    width: 700px;
+}
+
+/* .input-detail{
+    outline: none;
+} */

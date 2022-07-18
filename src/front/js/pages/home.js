@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Navigate } from "react-router-dom";
 
@@ -16,6 +16,11 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 	console.log(store.beers[0])
 	console.log(store.categories)
+
+  useEffect(() => {
+    actions.getBeers()
+    actions.getCategories()
+  }, [])
 	
 	return (
 		<>

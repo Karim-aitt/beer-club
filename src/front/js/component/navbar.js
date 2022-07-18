@@ -15,10 +15,10 @@ export const Navbar = () => {
       
       {/* BOTONES dE HOME Y CATEGORIAS */}
       <Link to="/" onClick="" className="fas fa-home custom-buttom me-xs-1 me-3 navbar-link"></Link>
-      <Link to="/home" onClick="" className="fas fa-beer custom-buttom me-xs-1 me-3 navbar-link"></Link>
+      <Link to="/categories" onClick="" className="fas fa-beer custom-buttom me-xs-1 me-3 navbar-link"></Link>
       
 
-        <a className="navbar-brand logo-hover d-flex fw-bold" href="#">
+        <a className="navbar-brand logo-hover d-flex fw-bold" href="/home">
           Beer Club
         </a>
         

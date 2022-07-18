@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			emailExist: false,
 			loginEmailPassMatch: false,
 			categories: [],
+			beerscategory: [],
 			beers: [],
 			userVotes: false,
 			userDataVotes: [],
@@ -30,10 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			 //Esta funcion es para loguearte directamente si tienes un token en el navegador valido
-			firstLoadToken: () => {
+			validate: () => {
 				const tok = localStorage.getItem("token");
 				
-				if(tok != "") {
+				if(tok != "" || tok != null) {
 
 					fetch(`${config.hostname}/api/validation`, {
 						headers: {
@@ -47,7 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							setStore({ userVotes: true });
 						} else {
 							setStore({ token: null });
-							return "Token no valido o expirado flux 42";
+							return "Token no valido o expirado flux 50";
 						} 
 					}
 

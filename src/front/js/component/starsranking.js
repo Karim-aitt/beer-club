@@ -9,7 +9,7 @@ export const Stars = (props) => {
   const [hover, setHover] = useState(0);
   const [beer_id, setBeer_id] = useState();
   const id_beer = props.beer_id_star;
-  // console.log(beer_id)
+
   const token = localStorage.getItem("token");
 
   const onVote = (value) => {
@@ -27,7 +27,7 @@ export const Stars = (props) => {
     })
       .then((res) => {
         if (res.status == 200) {
-          return "ok en el starsranking 31";
+          return "ok en el starsranking 30";
         }
       })
       .then((data) => {

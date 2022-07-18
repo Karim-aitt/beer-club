@@ -41,7 +41,11 @@ export const Beerdetail = (props) => {
               <p className="mx-2 px-3">{beer.company}</p>
               </div>
               {/* AQUI PONER LA MEDIA DE VOTOS */}
-              <p className="mb-0 pb-0">5</p>
+              <div className="d-flex">
+                <i className="fa fa-star mx-1 d-flex align-items-center"></i>
+                <p className="mb-0 pb-0">5</p>
+              </div>
+              
             
           </div>
           <div className="modal-body d-flex">
@@ -70,6 +74,7 @@ export const Beerdetail = (props) => {
               beer_id_star={props.beer_id_card}
               />
             </div>
+            {/* HACER COMENTARIOS */}
           <input type="text" className="p-2 input-detail rounded" placeholder="Post your comment"></input>
           </div>
         </div>

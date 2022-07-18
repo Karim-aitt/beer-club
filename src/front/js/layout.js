@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
+import { Context } from "./store/appContext";
+import config from "./config";
 
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
@@ -14,9 +16,47 @@ import { Footer } from "./component/footer";
 
 //create your first component
 const Layout = () => {
+    const { store, actions } = useContext(Context);
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
+    const [loading, setLoading] = useState(false);
+    const [votes, getVotes] = useState(store.userVotes);
+
+    
+
+    useEffect(() => {
+      if(store.userVotes == false){
+        ""
+      } else {
+
+        fetch(`${config.hostname}/api/vote`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer " + store.token
+          }
+      })
+      .then(res => {
+          if(res.status == 200){
+            return res.json()
+          }
+      })
+      .then(data => {
+        actions.saveUserDataVotes(data)
+        console.log("userDataVotes ",store.userDataVotes)
+      })
+      }
+      console.log(store.userDataVotes)
+    }, [store.userVotes])
+    
+      if(loading){
+            return (
+                <div className="spinner-border text-danger m-auto" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            )
+          }
 
     return (
         <div>
@@ -107,6 +147,15 @@ export default injectContext(Layout);
 //       console.log(store.userDataVotes)
 //     }, [store.userVotes])
     
+//       if(loading){
+    //         return (
+    //             <div className="spinner-border text-danger m-auto" role="status">
+    //                 <span className="sr-only">Loading...</span>
+    //             </div>
+    //         )
+    //       }
+
+
 
 //     useEffect(() => {
 //         const token = localStorage.getItem("token")
@@ -138,13 +187,7 @@ export default injectContext(Layout);
     
 //       },[])
 
-//       if(loading){
-//         return (
-//             <div className="spinner-border text-danger m-auto" role="status">
-//                 <span className="sr-only">Loading...</span>
-//             </div>
-//         )
-//       }
+//       
 
 //     return (
 //         <div className="backgroundColor">

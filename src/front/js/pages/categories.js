@@ -37,9 +37,8 @@ export const Categories = () => {
             </div>
         <div className="container w-75 d-flex div-category-mini justify-content-center">
          {store.categories.length >0 ? store.categories.map((elem, i) => {
-          let c_id = elem.id
             return (
-            <Link key={i} to={`/categories/${c_id}`} className="mx-2 p-2 text-decoration-none text-dark">
+            <Link key={i} to={`/categories/${elem.id}`} className="mx-2 p-2 text-decoration-none text-dark">
                 <CardCategoryMini className="" image={elem.image} nombre={elem.name} />
             </Link>
             )   

@@ -14,8 +14,6 @@ import banner from "../../img/bannerWeb2.png"
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-	console.log(store.beers[0])
-	console.log(store.categories)
 
   useEffect(() => {
     actions.getBeers()

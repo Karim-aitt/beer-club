@@ -12,6 +12,26 @@ border-left: 1px solid rgb(167, 167, 167);
     width: 700px;
 }
 
+.modal-image{
+
+    height: 250px;
+}
+
 /* .input-detail{
     outline: none;
+} */
+
+.div-comments-body{
+max-height: 200px;
+}
+
+.scrollhidden{
+    overflow-y: scroll;
+}
+.scrollhidden::-webkit-scrollbar {
+    display: none;
+}
+/* .scrollhidden{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 } */

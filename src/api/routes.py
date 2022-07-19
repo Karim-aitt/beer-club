@@ -10,6 +10,17 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
+from datetime import timedelta
+delta = timedelta(
+    days=50,
+    seconds=27,
+    microseconds=10,
+    milliseconds=29000,
+    minutes=5,
+    hours=8,
+    weeks=2
+)
+
 api = Blueprint('api', __name__)
 
 # generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
@@ -27,6 +38,11 @@ def list_user():
     users = User.query.all()
     all_users = list(map(lambda users: users.serialize(),users))
     return jsonify(all_users)
+
+@api.route('/users/<int:id>' , methods=['GET']) 
+def get_user(id):
+    user = User.query.get(id)
+    return jsonify(user.serialize())
 
 
 ##--------------------------------------------------------------------------##
@@ -65,7 +81,7 @@ def add_Signup():
         'id': user.id
     }
 
-    token = create_access_token(identity=data)
+    token = create_access_token(identity=data, expires_delta=timedelta(minutes=120))
     db.session.commit()
 
     db.session.add(user)
@@ -90,7 +106,7 @@ def login_user():
     if user is None:
         raise APIException('Usuario no encontrado /routes login l 72')
 
-    # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer enconde !!!!!!!
+    # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer encode !!!!!!!
     passwordCheck = bcrypt.checkpw(user_check_password.encode('utf-8'), user.password.encode('utf-8'))
     print('esto es passwordCheck', passwordCheck)
     if passwordCheck is False:
@@ -104,7 +120,7 @@ def login_user():
         'surname': user.surnames
     }
 
-    token = create_access_token(identity=data)
+    token = create_access_token(identity=data, expires_delta=timedelta(minutes=120))
     return jsonify(token), 200
 
 
@@ -204,7 +220,7 @@ def add_Beer():
 
     dataUser = get_jwt_identity()
     body = request.get_json()
-    print(body)
+
     beer_check_name = Beer.query.filter_by(name=body['name']).first()
     if beer_check_name != None:
         raise APIException('Ya existe este nombre de cerveza')
@@ -343,14 +359,15 @@ def list_comment():
 #__________________________________CREATE COMMENT BEER__________________________________#
 
 @api.route('/comment' , methods=['POST'])
+@jwt_required()
 def create_comment():
-
+    dataUser = get_jwt_identity()
     body = request.get_json()
-    comment = Comment(comment=body["comment"])
+    print("esto es body", body)
+    comment = Comment(user_id=dataUser['id'], beer_id=int(body['beer_id']), comment=body['comment'])
 
     db.session.add(comment)
     db.session.commit()
-
     return jsonify(comment.serialize()),201
 
 #__________________________________UPDATE COMMENT BEER__________________________________#
@@ -450,13 +467,10 @@ def delete_favorite(id):
 
 @api.route('/vote' , methods=['GET'])
 @jwt_required()
-
 def list_vote():
     dataUser = get_jwt_identity()
     vote = Vote.query.filter_by(user_id=dataUser['id'])
     all_user_vote = list(map(lambda vote: vote.serialize(),vote))
-
-    print("esto es all user", all_user_vote)
     return jsonify(all_user_vote)
 
 @api.route('/votes' , methods=['GET'])

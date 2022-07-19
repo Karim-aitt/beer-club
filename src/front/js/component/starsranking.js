@@ -7,7 +7,6 @@ export const Stars = (props) => {
   const { store, actions } = useContext(Context);
   const [punctuation, setPunctuation] = useState(0);
   const [hover, setHover] = useState(0);
-  const [beer_id, setBeer_id] = useState();
   const id_beer = props.beer_id_star;
 
   const token = localStorage.getItem("token");
@@ -32,6 +31,7 @@ export const Stars = (props) => {
       })
       .then((data) => {
         data;
+        
       });
   };
 
@@ -50,9 +50,28 @@ export const Stars = (props) => {
                 ? "fa fa-star"
                 : "far fa-star"
             }
-            onClick={() => props.punctuation <= 0 && onVote(index)}
-            onMouseEnter={() => props.punctuation <= 0 && setHover(index)}
-            onMouseLeave={() => props.punctuation <= 0 && setHover(punctuation)}
+            onClick={() => {
+              if (!props.punctuation) {
+                onVote(index);
+                setPunctuation(index)
+                setHover(punctuation)
+              }
+              // props.punctuation <= 0 && onVote(index)
+            }}
+            onMouseEnter={() => {
+              // console.log("onMouseEnter: ", props.punctuation);
+              if (!props.punctuation && punctuation <= 0) {
+                setHover(index);
+              }
+              // props.punctuation <= 0 && setHover(index)
+            }}
+            onMouseLeave={() => {
+              // console.log("onMouseLeave: ", props.punctuation);
+              if (!props.punctuation) {
+                setHover(punctuation);
+              }
+              // props.punctuation <= 0 && setHover(punctuation)
+            }}
           >
             <span className=""></span>
           </button>

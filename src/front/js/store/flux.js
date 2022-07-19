@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			categories: [],
 			beerscategory: [],
 			beers: [],
+			users: [],
 			userVotes: false,
 			userDataVotes: [],
 		
@@ -80,6 +81,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ userDataVotes: data });
 			  },
 
+			  getUsers: async () => {
+				const res = await fetch(`${config.hostname}/api/users`, {
+					method: "GET",
+				  });
+				  
+				  const data = await res.json();
+				  
+				  await setStore({ users: data });
+				  
+			  },
+
 			  logout: () => {
 				localStorage.removeItem('token')
 				setStore({myAuthFlag: false})
@@ -88,6 +100,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setmyAuthFlag: (value) => {
 				setStore({myAuthFlag: value})
 			},
+			
+
 
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
@@ -148,12 +162,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					localStorage.setItem("token", data)
 					setStore({token: data})
-					setStore({userVotes: true})
+					setStore({userVotes: true}) //flagVotes
 					
-					
-					const modal = document.getElementById("loginModal")
-					const m = bootstrap.Modal.getInstance(modal)
-					m.hide()
+					// To hide a modal, not in use actually
+					// const modal = document.getElementById("loginModal")
+					// const m = bootstrap.Modal.getInstance(modal)
+					// m.hide()
 				})
 				.catch(error => {error})
 			},

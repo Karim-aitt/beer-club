@@ -44,10 +44,8 @@ const Layout = () => {
       })
       .then(data => {
         actions.saveUserDataVotes(data)
-        console.log("userDataVotes ",store.userDataVotes)
       })
       }
-      console.log(store.userDataVotes)
     }, [store.userVotes])
     
       if(loading){

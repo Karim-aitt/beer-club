@@ -85,13 +85,13 @@ fetch(`${config.hostname}/api/comment`)
 const [username, setUsername] = useState("")
 const [id_user, setId_user] = useState("")
 
-function getNamename(id) {
-  store.users.map(elem => {
-    if(elem.id == id){
-      setUsername(elem.nickname)
-    }
-  })
-}
+// function getNamename(id) {
+//   store.users.map(elem => {
+//     if(elem.id == id){
+//       setUsername(elem.nickname)
+//     }
+//   })
+// }
 
 
   // ---------------- Voting system ----------------- \\
@@ -159,7 +159,10 @@ function getNamename(id) {
 
                 <div className="my-3 div-comments-body scrollhidden">
                   {
-                  
+                  //Esto tiene que cambiarse a que dataComment solo tenga comentarios de la cerveza
+                  //en cuestion, o ninguno. Hacer el fetch con la id de la cerveza y filtrar en el back
+                  //por id de la cerveza y retornar esos comentarios.
+
                   dataComment.length >0 ?
                   dataComment.map((elem, i) => {
                     

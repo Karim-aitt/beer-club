@@ -356,6 +356,17 @@ def list_comment():
 
     return jsonify(all_comment)
 
+@api.route('/comment/beer/<int:id>', methods=['GET'])
+def get_comment_beer(id):
+    comment = Comment.query.filter_by(beer_id=id)
+
+    if comment is None:
+        return APIException("No hay comentarios")
+
+    if comment is not None:
+        all_comments = list(map(lambda comment: comment.serialize(), comment))
+        return jsonify(all_comments)
+
 #__________________________________CREATE COMMENT BEER__________________________________#
 
 @api.route('/comment' , methods=['POST'])

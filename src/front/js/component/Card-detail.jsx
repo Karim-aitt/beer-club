@@ -1,10 +1,39 @@
-import React from "react";
-import "../../styles/card-detail.css";
-import fondo from "../../img/bannerWeb.png";
+import React, {useState, useEffect, useContext} from "react";
+
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
+import "../../styles/card-detail.css";
+import fondo from "../../img/bannerWeb.png";
+
+
+
+import config from "../config";
 
 export const CardDetail = (props) => {
+  const { store, actions } = useContext(Context);
+
+  const [lastComment, setLastComment] = useState({})
+  const [id_user, setId_user] = useState()
+ 
+  useEffect(() => {
+    fetch(`${config.hostname}/api/comment/beer/${props.beer_id}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data != undefined){
+      setLastComment({comment: data[data.length-1].comment})
+      setId_user(data[data.length-1].user_id)
+    }})
+  }, [])
+
+let nameUser = ""
+  function name(iduser){
+    store.users.map(elem => {
+      if(elem.id == iduser){
+        nameUser = elem.nickname
+      }
+    })
+  }
   
   return (
     <div className="card custom-style-detail mx-auto mt-5">
@@ -47,22 +76,20 @@ export const CardDetail = (props) => {
             */}
             <div className="bg-secondary text-white w-75 mx-auto comment-style px-2 shadow-lg">
               {/* AQUI HAY QUE SACAR EL ULTIMO COMENTARIO HECHO EN ESTA CERVEZA DE LA TABLA COMMENTS*/}
-                <h6>Pedro</h6>
-                <p className="">Me encanta esta cerveza es super tasty y el creador es muy buena gente.
-                Me encanta esta cerveza es super tasty y el creador es muy buena gente.
-                Me encanta esta cerveza es super tasty y el creador es muy buena gente.
+                <h6>{name(id_user)}{nameUser}</h6>
+                <p className="">{lastComment.comment}
                 </p>
                 <div className="d-flex">
-                <span className="fw-bold">13/07/2022</span>
+                
 
                 {/* CUANDO SE LE DA CLICK A MÁS COMENTARIOS SE DEBERÍA ABRIR UNA NUEVA VISTA AMPLIADA (MODAL) DE LA CERVEZA
                     DONDE SE MUESTREN TODOS LOS COMENTARIOS EN SCROLL SI SON MUCHOS
                 */}
 
-                <Link to="#" className="ms-auto text-white">Ver más comentarios</Link>
+                <Link to="#" className="mx-auto text-white">Ver más comentarios</Link>
+                </div>  
             </div>
-                
-            </div>
+
             <form className="d-flex my-4">
             <input className="mx-auto p-2 input-detail rounded" type="text" placeholder="Comentar..."></input>
             </form>

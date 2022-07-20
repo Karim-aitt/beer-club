@@ -129,9 +129,9 @@ export const Beerdetail = (props) => {
         aria-labelledby={`beerdetailLabel${props.CI}`}
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog text-dark">
           <div className="modal-content body-w">
-            <div className="modal-header d-flex flex-column">
+            <div className="modal-header d-flex flex-column text-dark">
               <button
                 type="button"
                 className="btn-close"

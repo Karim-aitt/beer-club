@@ -104,13 +104,13 @@ def login_user():
     
     user = User.query.filter_by(email=user_check_email).first()
     if user is None:
-        raise APIException('Usuario no encontrado /routes login l 72')
+        raise APIException('Usuario no encontrado /routes login l 107')
 
     # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer encode !!!!!!!
     passwordCheck = bcrypt.checkpw(user_check_password.encode('utf-8'), user.password.encode('utf-8'))
     print('esto es passwordCheck', passwordCheck)
     if passwordCheck is False:
-        raise APIException('Clave incorrecta /routes login l 74')
+        raise APIException('Clave incorrecta /routes login l 113')
 
     data = {
         "id": user.id,

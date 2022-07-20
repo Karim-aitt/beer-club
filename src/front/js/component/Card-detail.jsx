@@ -3,7 +3,10 @@ import React, {useState, useEffect, useContext} from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
+import { Beerdetail } from "./Beer-detail.jsx";
+
 import "../../styles/card-detail.css";
+import "../../styles/beer-detail.css";
 import fondo from "../../img/bannerWeb.png";
 
 
@@ -11,6 +14,11 @@ import fondo from "../../img/bannerWeb.png";
 import config from "../config";
 
 export const CardDetail = (props) => {
+
+  //PROP FILLING
+  const idcerveza = props.beer_id
+  const databeer = props.databeer
+
   const { store, actions } = useContext(Context);
 
   const [lastComment, setLastComment] = useState({})
@@ -86,7 +94,8 @@ let nameUser = ""
                     DONDE SE MUESTREN TODOS LOS COMENTARIOS EN SCROLL SI SON MUCHOS
                 */}
 
-                <Link to="#" className="mx-auto text-white">Ver más comentarios</Link>
+                <Link to="#" className="mx-auto text-white" data-bs-toggle="modal" data-bs-target={`#beerdetail${props.beer_id}`} data-bs-whatever={props.beer_id}>Ver más comentarios</Link>
+                <Beerdetail className="text-dark" CI={props.beer_id} databeer={props.databeer} id_cerveza={props.beer_id}/>
                 </div>  
             </div>
 

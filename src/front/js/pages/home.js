@@ -45,7 +45,7 @@ export const Home = () => {
 					getNameCategory(elem.category_id)
           
                   return (
-						<CardDetail key={i} beer_id={elem.id} name={elem.name} type={cat_name} alcohol={elem.alcohol} company={elem.company} img={elem.image} descrip={elem.description}/> 
+						<CardDetail databeer={elem} key={i} beer_id={elem.id} name={elem.name} type={cat_name} alcohol={elem.alcohol} company={elem.company} img={elem.image} descrip={elem.description}/> 
                   )
                 })
                 : 

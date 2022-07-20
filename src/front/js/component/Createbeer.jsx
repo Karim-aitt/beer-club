@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
-import "../../styles/createbeer_modal.css"
+import "../../styles/createbeer_modal.css";
 
 export const Createbeer = () => {
   const { store, actions } = useContext(Context);
@@ -9,7 +9,7 @@ export const Createbeer = () => {
   //inputs formularios
   const [nombre, setNombre] = useState("");
   const [imagen, setImagen] = useState("");
-  const [category, setCategory] = useState("ale");
+  const [category, setCategory] = useState("1");
   const [source, setSource] = useState("");
   const [alcohol, setAlcohol] = useState("");
   const [aroma, setAroma] = useState("");
@@ -21,8 +21,8 @@ export const Createbeer = () => {
   const [allDone, setAllDone] = useState(false); //flag Registro completado
 
   //subir Imagen
-  const formData = new FormData()  //para manejar las imagenes subidas
-  
+  const formData = new FormData(); //para manejar las imagenes subidas
+
   return (
     <div
       className="modal fade"
@@ -94,18 +94,19 @@ export const Createbeer = () => {
                 placeholder="Category"
                 onChange={(e) => setCategory(e.target.value)}
               >
-                {store.categories.length >0 ? store.categories.map((elem, i) => {
-                  return (
-                    <option key={i} value={elem.id}>{elem.name}</option>
-                  )
-                })
-                : 
-                  <option>
-                    Loading...
-                  </option>
-                }
+                {store.categories.length > 0 ? (
+                  store.categories.map((elem, i) => {
+                    return (
+                      <option key={i} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>Loading...</option>
+                )}
               </select>
-              
+
               <textarea
                 className="m-2 p-1 inputStyle"
                 rows="4"
@@ -126,20 +127,17 @@ export const Createbeer = () => {
                 id="imgBeer"
               ></input> */}
               <input
-              className="m-2 p-1"
-              type="text"
-              placeholder="url de tu imagen"
-              onChange={(e) => setImagen(e.target.value)}
-              value={imagen}
-              >
-              </input>
+                className="m-2 p-1"
+                type="text"
+                placeholder="url de tu imagen"
+                onChange={(e) => setImagen(e.target.value)}
+                value={imagen}
+              ></input>
             </form>
-            
           </div>
-        
+
           <div className="modal-footer color-back">
             <div className="modal-footer">
-            
               {/* VALIDACIONES DE INPUTS */}
 
               {allfill == true ? (
@@ -173,9 +171,8 @@ export const Createbeer = () => {
                   ) {
                     setAllfill(true);
                   }
-                  console.log(imagen)
+                  console.log(imagen);
                   // token = localStorage.getItem('token') //intento conseguir datos del token
-                  
 
                   actions.createbeer(
                     imagen,
@@ -190,7 +187,7 @@ export const Createbeer = () => {
 
                   // Reset de variables para que los inputs aparezcan vacios de nuevo
 
-                //   store.myAuthFlag = true;
+                  //   store.myAuthFlag = true;
                 }}
               >
                 Submit

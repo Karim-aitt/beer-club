@@ -51,9 +51,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 							setStore({ token: null });
 							return "Token no valido o expirado flux 50";
 						} 
-					}
-
-				)}
+					})
+					.catch(error => {
+						console.log(error)
+						setStore({ token: null })
+					})
+				}
 			},
 
 			// Consigue las categorias existentes en la DB al entrar en la web
@@ -130,11 +133,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return res.json()
 				})
 				.then(data => {
-					localStorage.setItem("token", data)
-					setStore({token: data})
+					if(data == "Ya existe este email" || data == "Ya existe este nickname"){
+						setStore({token: null})
+					} else {
+						localStorage.setItem("token", data)
+						setStore({token: data})
+					}
+					
 				})
 				.catch((error) => {
-					alert("Error en el fetch - flux 60 saltó")
+					alert("Error en el fetch - flux 140 saltó")
+					setStore({ token: null })
 				})
 			},
 

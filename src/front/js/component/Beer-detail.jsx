@@ -11,88 +11,95 @@ import config from "../config";
 export const Beerdetail = (props) => {
   const { store, actions } = useContext(Context);
   // ---------------- Comment system ----------------- \\
-  const [comment, setComment] = useState("")
-  const [flagComment, setFlagComment] = useState()
+  const [comment, setComment] = useState("");
+  const [flagComment, setFlagComment] = useState();
+  const [dataComment, setDataComment] = useState([]);
 
-  const commentFetch = (commentValue, id_cerveza) => {
-    if(commentValue != "" && commentValue != undefined && commentValue != null){
-      const tok = localStorage.getItem("token")
-      let comment = commentValue;
-      let beer_id = props.id_cerveza;
-      
-      // ---- TRIGGER SEGUNDARIO DEL FETCH dataComment l50 ---- \\
-      if(flagComment == !0){
-        setFlagComment(!1)
-      } else {setFlagComment(!0)}
-
-      fetch(`${config.hostname}/api/comment`, {
-        method: 'POST',
-        body: JSON.stringify({comment, beer_id}),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer " + tok
+  const getComments = () =>
+    fetch(`${config.hostname}/api/comment`)
+      .then((res) => {
+        if (res.status == 200) {
+          return res.json();
         }
       })
-      .then(res => {
-              if(res.status == 200 || res.status == 201){
-                return "Todo ok"
+      .then((data) => {
+        setDataComment(data);
+      })
+      .catch((error) => console.log({ error }));
 
-              } else {
-                
-                return "Problema en respuesta fetch comment beer-detail";
-              } 
-            })
-      .then(data => data) // No esta en uso
-      .catch(error => console.log({error}))
-        }
-  }
+  const commentFetch = (commentValue, id_cerveza) => {
+    if (
+      commentValue != "" &&
+      commentValue != undefined &&
+      commentValue != null
+    ) {
+      const tok = localStorage.getItem("token");
+      let comment = commentValue;
+      let beer_id = props.id_cerveza;
+
+      // ---- TRIGGER SEGUNDARIO DEL FETCH dataComment l50 ---- \\
+      if (flagComment == !0) {
+        setFlagComment(!1);
+      } else {
+        setFlagComment(!0);
+      }
+
+      fetch(`${config.hostname}/api/comment`, {
+        method: "POST",
+        body: JSON.stringify({ comment, beer_id }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tok,
+        },
+      })
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            return "Todo ok";
+          } else {
+            return "Problema en respuesta fetch comment beer-detail";
+          }
+        })
+        .then((data) => {
+          getComments();
+          return data;
+        }) // No esta en uso
+        .catch((error) => console.log({ error }));
+    }
+  };
   // ------------ Visualize Comments system ----------------- \\
-const [dataComment, setDataComment] = useState([])
 
+  useEffect(() => {
+    getComments();
+  }, []); // Como renderizar los comentarios nuevamente añadidos sin tener que cerrar y abrir el modal ??
 
-useEffect(() => {
+  // function getName() {
+  //   dataComment.map((elem, i) => {
 
-fetch(`${config.hostname}/api/comment`)
-.then(res => {
-  if(res.status == 200){
-    return res.json()
-  }
-})
-.then(data => {
-  setDataComment(data)
-})
-.catch(error => console.log({error}))
-}, []) // Como renderizar los comentarios nuevamente añadidos sin tener que cerrar y abrir el modal ??
+  //     if(elem.beer_id == props.id_cerveza){
 
-// function getName() {
-//   dataComment.map((elem, i) => {
-                
-//     if(elem.beer_id == props.id_cerveza){
+  //       const getUserName = async (id) => {
+  //         const res = await fetch(`${config.hostname}/api/users/${id}`)
+  //         const data = await res.json()
+  //         setUsername(data)
+  //         console.log("esto es username inside", username)
+  //       }
+  //       getUserName(elem.user_id)
+  //   }
 
-//       const getUserName = async (id) => {
-//         const res = await fetch(`${config.hostname}/api/users/${id}`)
-//         const data = await res.json()
-//         setUsername(data)
-//         console.log("esto es username inside", username)
-//       }
-//       getUserName(elem.user_id)
-//   }
+  //   })
+  // }
 
-//   })
-// }
+  // ---------------- Get user name ----------------- \\
+  const [username, setUsername] = useState("");
+  const [id_user, setId_user] = useState("");
 
-// ---------------- Get user name ----------------- \\
-const [username, setUsername] = useState("")
-const [id_user, setId_user] = useState("")
-
-// function getNamename(id) {
-//   store.users.map(elem => {
-//     if(elem.id == id){
-//       setUsername(elem.nickname)
-//     }
-//   })
-// }
-
+  // function getNamename(id) {
+  //   store.users.map(elem => {
+  //     if(elem.id == id){
+  //       setUsername(elem.nickname)
+  //     }
+  //   })
+  // }
 
   // ---------------- Voting system ----------------- \\
   const [beer, setBeer] = useState({});
@@ -105,10 +112,8 @@ const [id_user, setId_user] = useState("")
   useEffect(() => {
     if (store.userDataVotes.length > 0) {
       store.userDataVotes.map((elem, i) => {
-        
         if (elem.beer_id == props.id_cerveza) {
           setVote(elem);
-          
         }
       });
     }
@@ -135,6 +140,7 @@ const [id_user, setId_user] = useState("")
               ></button>
               <h5 className="modal-title" id={`beerdetailLabel${props.CI}`}>
                 {beer.name}
+                {props.name}
               </h5>
               <div className="d-flex mt-2 fw-bold">
                 <p className="mx-1 px-1">{beer.alcohol} ALC</p>
@@ -151,45 +157,45 @@ const [id_user, setId_user] = useState("")
               <div className="col-5">
                 <img className="modal-image" src={beer.image}></img>
               </div>
-              
 
               <div className="col-7">
-
                 <div className="description py-3 mb-2">{beer.description}</div>
 
                 <div className="my-3 div-comments-body scrollhidden">
                   {
-                  //Esto tiene que cambiarse a que dataComment solo tenga comentarios de la cerveza
-                  //en cuestion, o ninguno. Hacer el fetch con la id de la cerveza y filtrar en el back
-                  //por id de la cerveza y retornar esos comentarios.
+                    //Esto tiene que cambiarse a que dataComment solo tenga comentarios de la cerveza
+                    //en cuestion, o ninguno. Hacer el fetch con la id de la cerveza y filtrar en el back
+                    //por id de la cerveza y retornar esos comentarios.
 
-                  dataComment.length >0 ?
-                  dataComment.map((elem, i) => {
-                    
-                    if(elem.beer_id == props.id_cerveza){
-                          let nameUser = ""
-                          function name(iduser){
-                            store.users.map(elem => {
-                              if(elem.id == iduser){
-                                nameUser = elem.nickname
+                    dataComment.length > 0 ? (
+                      dataComment.map((elem, i) => {
+                        if (elem.beer_id == props.id_cerveza) {
+                          let nameUser = "";
+                          function name(iduser) {
+                            store.users.map((elem) => {
+                              if (elem.id == iduser) {
+                                nameUser = elem.nickname;
                               }
-                            })
+                            });
                           }
-                      return (
-                          <div key={i} className="d-flex">
-                            <p className="fw-bold mx-2">{name(elem.user_id)}{nameUser}</p>
-                            <p className="">{elem.comment}</p>
-                        </div>
-                      
-                      )
-                    } 
-                    else {""}
-                  })
-                  
-                  : <p>There aren't comments yet</p>
+                          return (
+                            <div key={i} className="d-flex">
+                              <p className="fw-bold mx-2">
+                                {name(elem.user_id)}
+                                {nameUser}
+                              </p>
+                              <p className="">{elem.comment}</p>
+                            </div>
+                          );
+                        } else {
+                          ("");
+                        }
+                      })
+                    ) : (
+                      <p>There aren't comments yet</p>
+                    )
                   }
                 </div>
-
               </div>
             </div>
             <div className="modal-footer d-flex justify-content-around">
@@ -207,27 +213,29 @@ const [id_user, setId_user] = useState("")
                   className="p-2 input-detail rounded"
                   placeholder="Post your comment..."
                   onChange={(e) => {
-                    setComment(e.target.value)
-                    
+                    setComment(e.target.value);
                   }}
                   value={comment}
                 ></input>
                 <input
-                type="button"
-                className={comment == "" ? "btn btn-dark btn-sm mx-2 align-bottom disabled" : "btn btn-dark btn-sm mx-2 align-bottom"}
-                value="Submit"
-                onClick={() => {
-                  if(comment == ""){
-                      return "Debes de escribir algo en tu comentario"
-                  } else {
+                  type="button"
+                  className={
+                    comment == ""
+                      ? "btn btn-dark btn-sm mx-2 align-bottom disabled"
+                      : "btn btn-dark btn-sm mx-2 align-bottom"
+                  }
+                  value="Submit"
+                  onClick={() => {
+                    if (comment == "") {
+                      return "Debes de escribir algo en tu comentario";
+                    } else {
                       commentFetch(comment);
                       // setDataComment(...dataComment, comment)
                       setComment("");
-                  }
-                }}
-              ></input>
+                    }
+                  }}
+                ></input>
               </form>
-              
             </div>
           </div>
         </div>

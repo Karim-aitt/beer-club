@@ -203,6 +203,13 @@ def list_beer():
     all_beers = list(map(lambda beers: beers.serialize(),beers))
     return jsonify(all_beers)
 
+@api.route('/beers/<search>', methods=['GET'])
+def search_beer(search):
+    word = '%{}%'.format(search)
+    beer = Beer.query.filter(Beer.name.like(word)).all()
+    the_beer = list(map(lambda beer: beer.serialize(),beer))
+    return jsonify(the_beer)
+
 #__________________________________LIST BEERS IN CATEGORY__________________________________#
 
 @api.route('/beers/<int:id>' , methods=['GET'])

@@ -548,8 +548,9 @@ def get_average(beer_id):
         return jsonify(0)
     
     average = suma / division
+    
 
-    return jsonify(average)        
+    return jsonify(round(average, 1))        
 
 #__________________________________DELETE VOTE BEER__________________________________#
 

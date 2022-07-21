@@ -70,36 +70,11 @@ export const Beerdetail = (props) => {
 
   useEffect(() => {
     getComments();
-  }, []); // Como renderizar los comentarios nuevamente añadidos sin tener que cerrar y abrir el modal ??
-
-  // function getName() {
-  //   dataComment.map((elem, i) => {
-
-  //     if(elem.beer_id == props.id_cerveza){
-
-  //       const getUserName = async (id) => {
-  //         const res = await fetch(`${config.hostname}/api/users/${id}`)
-  //         const data = await res.json()
-  //         setUsername(data)
-  //         console.log("esto es username inside", username)
-  //       }
-  //       getUserName(elem.user_id)
-  //   }
-
-  //   })
-  // }
+  }, []); 
 
   // ---------------- Get user name ----------------- \\
   const [username, setUsername] = useState("");
   const [id_user, setId_user] = useState("");
-
-  // function getNamename(id) {
-  //   store.users.map(elem => {
-  //     if(elem.id == id){
-  //       setUsername(elem.nickname)
-  //     }
-  //   })
-  // }
 
   // ---------------- Voting system ----------------- \\
   const [beer, setBeer] = useState({});
@@ -126,7 +101,7 @@ export const Beerdetail = (props) => {
         }
       });
     }
-  }, [store.userDataVotes]);
+  }, []);
   // ---------------- ------------ ----------------- \\
 
   return (

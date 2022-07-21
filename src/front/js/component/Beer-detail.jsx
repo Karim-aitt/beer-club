@@ -104,10 +104,19 @@ export const Beerdetail = (props) => {
   // ---------------- Voting system ----------------- \\
   const [beer, setBeer] = useState({});
   const [vote, setVote] = useState({});
+  const [average, setAverage] = useState()
 
   useEffect(() => {
     setBeer(props.databeer);
   }, [beer]);
+
+  useEffect(() => {
+    fetch(`${config.hostname}/api/vote/average/${props.id_cerveza}`)
+    .then(res => res.json())
+    .then(data => {
+      setAverage(data)
+    })
+  }, [])
 
   useEffect(() => {
     if (store.userDataVotes.length > 0) {
@@ -148,10 +157,10 @@ export const Beerdetail = (props) => {
                 <p className="mx-2 px-3">{beer.company}</p>
               </div>
               {/* AQUI PONER LA MEDIA DE VOTOS */}
-              <div className="d-flex">
-                <i className="fa fa-star mx-1 d-flex align-items-center"></i>
-                <p className="mb-0 pb-0">5</p>
-              </div>
+              <div className="col-2 d-flex align-items-end ">
+            <i className="fas fa-star d-flex pb-1 ms-auto me-1"></i>
+              <span className="d-flex me-auto">{average}</span>
+            </div>
             </div>
             <div className="modal-body d-flex">
               <div className="col-5">

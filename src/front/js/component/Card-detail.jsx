@@ -23,6 +23,7 @@ export const CardDetail = (props) => {
 
   const [lastComment, setLastComment] = useState({})
   const [id_user, setId_user] = useState()
+  const [average, setAverage] = useState()
  
   useEffect(() => {
     fetch(`${config.hostname}/api/comment/beer/${props.beer_id}`)
@@ -32,6 +33,12 @@ export const CardDetail = (props) => {
       setLastComment({comment: data[data.length-1].comment})
       setId_user(data[data.length-1].user_id)
     }})
+
+    fetch(`${config.hostname}/api/vote/average/${props.beer_id}`)
+    .then(res => res.json())
+    .then(data => {
+      setAverage(data)
+    })
   }, [])
 
 let nameUser = ""
@@ -56,9 +63,10 @@ let nameUser = ""
             <h5 className="card-title ms-3">{props.type}</h5>
             </div>
 
+            {/* Aqui poner la media */}
             <div className="col-2 d-flex align-items-end ">
-            <i className="fas fa-star d-flex justify-content-center"></i>
-
+            <i className="fas fa-star d-flex pb-1 ms-auto me-1"></i>
+              <span className="d-flex me-auto">{average}</span>
             </div>
 
             <div className="col-5 ms-auto">
@@ -71,34 +79,22 @@ let nameUser = ""
             </p>
             <hr className="w-75 mx-auto"></hr>
             
-            {/* PLANTILLA
-
-              <div className="bg-secondary text-white w-75 mx-auto comment-style px-2 shadow-lg">
-                <h6>{props.user_name_comment}</h6>
-                <p className="">{props.user_comment}
-                </p>
-                <div className="d-flex">
-                <span className="fw-bold">{props.date}</span><a className="ms-auto text-white">Ver más comentarios</a>
-            </div>
-
-            */}
             <div className="bg-secondary text-white w-75 mx-auto comment-style px-2 shadow-lg">
-              {/* AQUI HAY QUE SACAR EL ULTIMO COMENTARIO HECHO EN ESTA CERVEZA DE LA TABLA COMMENTS*/}
+                {/* Last comment view */}
                 <h6>{name(id_user)}{nameUser}</h6>
                 <p className="">{lastComment.comment}
                 </p>
                 <div className="d-flex">
                 
 
-                {/* CUANDO SE LE DA CLICK A MÁS COMENTARIOS SE DEBERÍA ABRIR UNA NUEVA VISTA AMPLIADA (MODAL) DE LA CERVEZA
-                    DONDE SE MUESTREN TODOS LOS COMENTARIOS EN SCROLL SI SON MUCHOS
-                */}
-
+                
+                {/* Card comments in amplified view */}
                 <Link to="#" className="mx-auto text-white" data-bs-toggle="modal" data-bs-target={`#beerdetail${props.beer_id}`} data-bs-whatever={props.beer_id}>Ver más comentarios</Link>
                 <Beerdetail className="text-dark" CI={props.beer_id} databeer={props.databeer} id_cerveza={props.beer_id}/>
                 </div>  
             </div>
 
+              {/* Post comment input */}
             <form className="d-flex my-4">
             <input className="mx-auto p-2 input-detail rounded" type="text" placeholder="Comentar..."></input>
             </form>

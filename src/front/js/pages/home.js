@@ -123,6 +123,8 @@ export const Home = () => {
   );
 };
 
+
+// ---------------------------------------------------------------------------------
 // API search function
 
 function searchCharacters(search) {

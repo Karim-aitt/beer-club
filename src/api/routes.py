@@ -534,6 +534,23 @@ def update_vote(id):
 
     return jsonify(vote.serialize())
 
+@api.route('/vote/average/<int:beer_id>', methods=['GET'])
+def get_average(beer_id):
+
+    votes = Vote.query.filter_by(beer_id=beer_id).all()
+
+    suma = 1
+    for vote in votes:
+        suma += vote.punctuation
+
+    division = len(votes)
+    if(division == 0):
+        return jsonify(0)
+    
+    average = suma / division
+
+    return jsonify(average)        
+
 #__________________________________DELETE VOTE BEER__________________________________#
 
 @api.route('/vote/<int:id>' , methods=['DELETE'])

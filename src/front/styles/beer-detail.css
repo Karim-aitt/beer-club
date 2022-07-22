@@ -17,9 +17,10 @@ border-left: 1px solid rgb(167, 167, 167);
     height: 250px;
 }
 
-/* .input-detail{
+.input-comment{
     outline: none;
-} */
+    border: none;
+}
 
 .div-comments-body{
 max-height: 200px;

@@ -23,8 +23,6 @@ const Layout = () => {
     const [loading, setLoading] = useState(false);
     const [votes, getVotes] = useState(store.userVotes);
 
-    
-
     useEffect(() => {
       if(store.userVotes == false){
         ""

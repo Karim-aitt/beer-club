@@ -82,7 +82,6 @@ def add_Signup():
     }
 
     token = create_access_token(identity=data, expires_delta=timedelta(minutes=120))
-    db.session.commit()
 
     db.session.add(user)
     db.session.commit()
@@ -206,8 +205,11 @@ def list_beer():
 @api.route('/beers/<search>', methods=['GET'])
 def search_beer(search):
     word = '%{}%'.format(search)
+
     beer = Beer.query.filter(Beer.name.like(word)).all()
+
     the_beer = list(map(lambda beer: beer.serialize(),beer))
+
     return jsonify(the_beer)
 
 #__________________________________LIST BEERS IN CATEGORY__________________________________#
@@ -533,6 +535,8 @@ def update_vote(id):
     db.session.commit()
 
     return jsonify(vote.serialize())
+
+#__________________________________GET VOTE BEER__________________________________#
 
 @api.route('/vote/average/<int:beer_id>', methods=['GET'])
 def get_average(beer_id):

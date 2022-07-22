@@ -79,10 +79,10 @@ let nameUser = ""
             </p>
             <hr className="w-75 mx-auto"></hr>
             
-            <div className="bg-secondary text-white w-75 mx-auto comment-style px-2 shadow-lg">
+            <div className="bg-secondary text-white w-75 mx-auto comment-style px-2 shadow-lg mb-4">
                 {/* Last comment view */}
                 <h6>{name(id_user)}{nameUser}</h6>
-                <p className="">{lastComment.comment}
+                <p className="ps-2">{lastComment.comment}
                 </p>
                 <div className="d-flex">
                 
@@ -93,11 +93,6 @@ let nameUser = ""
                 <Beerdetail className="text-dark" CI={props.beer_id} databeer={props.databeer} id_cerveza={props.beer_id}/>
                 </div>  
             </div>
-
-              {/* Post comment input */}
-            <form className="d-flex my-4">
-            <input className="mx-auto p-2 input-detail rounded" type="text" placeholder="Comentar..."></input>
-            </form>
       </div>
     </div>
   );

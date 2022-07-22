@@ -84,14 +84,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ userDataVotes: data });
 			  },
 
-			  getUsers: async () => {
-				const res = await fetch(`${config.hostname}/api/users`, {
+			  getUsers: () => {
+				fetch(`${config.hostname}/api/users`, {
 					method: "GET",
-				  });
-				  
-				  const data = await res.json();
-				  
-				  await setStore({ users: data });
+				  })
+				  .then(res => res.json())
+				  .then(data => setStore({ users: data }))
+				  .catch(error => {error})
 				  
 			  },
 
@@ -104,7 +103,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({myAuthFlag: value})
 			},
 			
-
+			getVotes: () => {
+				fetch(`${config.hostname}/api/vote`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': "Bearer " + store.token
+					}
+				})
+				.then(res => {
+					if(res.status == 200){
+					  return res.json()
+					}
+				})
+				.then(data => {
+				  setStore({userDataVotes: data})
+				})
+			},
 
 			//EL SIGNUP retorna un token en forma de token con los datos del usuario nickname, email y pass dentro.
 			signup: (nickname, name, surnames, email, password,) => {
@@ -118,6 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(res => {
 					if(res.status == 200 || res.status == 201){
 						setStore({userExist: false})
+						setStore({emailExist: false})
 					} 
 					else if(res.status == 402){
 						setStore({emailExist: true})
@@ -138,12 +154,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						localStorage.setItem("token", data)
 						setStore({token: data})
+						setStore({userVotes: true})
+						// getActions.getUsers()
 					}
 					
 				})
 				.catch((error) => {
-					alert("Error en el fetch - flux 140 saltó")
+					alert("Error en el fetch - flux 166 saltó")
 					setStore({ token: null })
+					localStorage.removeItem("token")
 				})
 			},
 
@@ -158,7 +177,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(res => {
 					if (res.status == 200 || res.status == 201){
 						setStore({myAuthFlag: true})
-						setStore({nombre: res.nickname})
 						setStore({loginEmailPassMatch: false})
 						
 
@@ -172,7 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("token", data)
 					setStore({token: data})
 					setStore({userVotes: true}) //flagVotes
-					
+					getActions.getVotes()
 					// To hide a modal, not in use actually
 					// const modal = document.getElementById("loginModal")
 					// const m = bootstrap.Modal.getInstance(modal)

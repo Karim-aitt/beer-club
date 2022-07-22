@@ -26,7 +26,12 @@ export const Home = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 1000)
 
- 
+ //Refresco de cervezas y categorias
+ useEffect(() => {
+  actions.getBeers()
+  actions.getCategories()
+  actions.getUsers()
+}, [])
 
   // Effect for API call
   useEffect(() => {
@@ -42,11 +47,7 @@ export const Home = () => {
     }
   }, [debouncedSearchTerm])
 
-//Refresco de cervezas y categorias
-  useEffect(() => {
-    actions.getBeers()
-    actions.getCategories()
-  }, [])
+
 	
 	return (
 		<>
@@ -165,49 +166,3 @@ function useDebounce(value, delay) {
   );
   return debouncedValue;
 }
-
-// ---------- ESTO ES LO VIEJO, AQUI HAY QUE MIRAR EL SISTEMA DE COGER LOS VOTOS con getUserVote
-
-
-// const { store, actions } = useContext(Context);
-
-  // const getUserVote = (beer) => {
-  //   for (let index = 0; index < store.userDataVotes?.length; index++) {
-  //     const objVote = store.userDataVotes[index];
-  //     if (objVote?.beer_id === beer.id) {
-  //       return objVote.punctuation;
-  //     }
-  //   }
-
-  //   return 0;
-  //   // En donde se vaya a establecer la puntuacion punctuation={getUserVote(elem)}
-  // };
-
-  // return (
-  //   <div className="home-width mx-auto pb-3 bg-white">
-  //     <Bodybar />
-  //     <div className="container d-flex justify-content-center">
-  //       <Card rank="2" ribbon={false} />
-  //       <Card rank="1" ribbon={false} />
-  //       <Card rank="3" ribbon={false} />
-  //     </div>
-  //     <div className="d-flex mx-5 scrollmenu-x border mb-3">
-  //       {store.beers.length > 0 ? (
-  //         store.beers.map((elem, i) => {
-  //           return (
-  //             <Card
-  //               key={i}
-  //               punctuation={getUserVote(elem)}
-  //               nombre={elem.name}
-  //               img={elem.image}
-  //               ribbon={true}
-  //               beer_id_card={elem.id}
-  //             />
-  //           );
-  //         })
-  //       ) : (
-  //         <></>
-  //       )}
-  //     </div>
-      
-  //   </div>const { store, actions } = useContext(Context);

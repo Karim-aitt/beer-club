@@ -194,7 +194,7 @@ export const Beerdetail = (props) => {
               <form>
                 <input
                   type="text"
-                  className="p-2 input-detail rounded"
+                  className="p-2 pb-0 input-comment rounded"
                   placeholder="Post your comment..."
                   onChange={(e) => {
                     setComment(e.target.value);
@@ -205,7 +205,7 @@ export const Beerdetail = (props) => {
                   type="button"
                   className={
                     comment == ""
-                      ? "btn btn-dark btn-sm mx-2 align-bottom disabled"
+                      ? "btn btn-sm mx-2 align-bottom disabled"
                       : "btn btn-dark btn-sm mx-2 align-bottom"
                   }
                   value="Submit"

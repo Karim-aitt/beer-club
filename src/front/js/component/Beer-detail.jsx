@@ -100,7 +100,7 @@ export const Beerdetail = (props) => {
           setVote(elem);
         }
       });
-    }
+    } else {""}
   }, []);
   // ---------------- ------------ ----------------- \\
 

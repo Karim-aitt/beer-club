@@ -20,8 +20,17 @@ delta = timedelta(
     hours=8,
     weeks=2
 )
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 api = Blueprint('api', __name__)
+
+cloudinary.config( 
+  cloud_name = "dztgp8g6w", 
+  api_key = "158344581497744", 
+  api_secret = "a5xb9RBMOpovJEOOranrRYLWAYw" 
+)
 
 # generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
 
@@ -85,7 +94,7 @@ def add_Signup():
 
     db.session.add(user)
     db.session.commit()
-    return jsonify(token),201
+    return jsonify(token)
 
 
 ##--------------------------------------------------------------------------##
@@ -223,20 +232,68 @@ def list_beers_category(id):
 
 #__________________________________CREATE BEER__________________________________#
 
+# @api.route('/beers', methods=['POST'])
+# @jwt_required()
+# def add_Beer():
+#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1")
+#     dataUser = get_jwt_identity()
+#     body = request.get_json()
+#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2")
+#     image_to_load = body['image']
+#     print(image_to_load)
+#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>3")
+#     result = cloudinary.uploader.upload(image_to_load)
+#     print(result)
+#     url=result['url']
+#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>4")
+#     beer_check_name = Beer.query.filter_by(name=body['name']).first()
+#     if beer_check_name != None:
+#         raise APIException('Ya existe este nombre de cerveza')
+     
+#     beer = Beer(user_id=dataUser["id"], category_id=int(body["category"]),image=url,name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
+#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>5")
+#     db.session.add(beer)
+#     db.session.commit()
+#     return jsonify("ok")
+
 @api.route('/beers', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def add_Beer():
 
-    dataUser = get_jwt_identity()
-    body = request.get_json()
+    image_to_load = request.files["file"]
+    if not image_to_load:
+        return jsonify("imagen no existe")
 
-    beer_check_name = Beer.query.filter_by(name=body['name']).first()
+
+    result = cloudinary.uploader.upload(image_to_load)
+    print(result)
+    url=result['url']
+    print("esta es la url..................",url)
+
+    # dataUser = get_jwt_identity()
+    user_id=int(request.form["user_id"])
+    category=int(request.form["category"])
+    name=request.form["name"]
+    smell=request.form["smell"]
+    source=request.form["source"]
+    alcohol=request.form["alcohol"]
+    company=request.form["company"]
+    description=request.form["description"]
+
+    beer_check_name = Beer.query.filter_by(name=name).first()
     if beer_check_name != None:
         raise APIException('Ya existe este nombre de cerveza')
-    # print("esto es body------------------------------", body['category'])
-    # print(f'user={(dataUser["id"])}, category={int(body["category"])},image={body["image"]},name={body["name"]},smell={body["smell"]},source={body["source"]},alcohol={body["alcohol"]},company={body["company"]},description={body["description"]}')
-    
-    beer = Beer(user_id=dataUser["id"], category_id=int(body["category"]),image=body["image"],name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
+    beer = Beer(
+        user_id=user_id, 
+        category_id=category,
+        name=name,
+        image=url,
+        smell=smell,
+        source=source,
+        alcohol=alcohol,
+        company=company,
+        description=description,
+    )
 
     db.session.add(beer)
     db.session.commit()
@@ -576,4 +633,6 @@ def delete_vote(id):
 @api.route('/validation', methods=['GET'])
 @jwt_required()
 def token_validation():
-    return jsonify(True)
+    usuarioData = get_jwt_identity()
+    user_id = usuarioData['id']
+    return jsonify(user_id)

@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			beerscategory: [],
 			beers: [],
 			users: [],
+			user_id: 0,
 			userVotes: false,
 			userDataVotes: [],
 		
@@ -47,10 +48,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						if(res.status == 200 || res.status == 201){
 							setStore({ token: tok });
 							setStore({ userVotes: true });
+							return res.json()
+
 						} else {
 							setStore({ token: null });
 							return "Token no valido o expirado flux 50";
 						} 
+					})
+					.then(data => {
+						
+						setStore({user_id: data})
 					})
 					.catch(error => {
 						console.log(error)
@@ -104,11 +111,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 			getVotes: () => {
+				const token = localStorage.getItem('token')
+
 				fetch(`${config.hostname}/api/vote`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						'Authorization': "Bearer " + store.token
+						'Authorization': "Bearer " + token
 					}
 				})
 				.then(res => {
@@ -117,7 +126,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				.then(data => {
-				  setStore({userDataVotes: data})
+					setStore({userDataVotes: data})
+					
+					
 				})
 			},
 
@@ -143,26 +154,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({userExist: true})
 						setStore({emailExist: false})
 					}
-					else if(res.status == 400 || res.status == 500){
-						alert("Error del back")
-					}
 					return res.json()
 				})
 				.then(data => {
 					if(data == "Ya existe este email" || data == "Ya existe este nickname"){
 						setStore({token: null})
+						alert(data)
 					} else {
 						localStorage.setItem("token", data)
 						setStore({token: data})
 						setStore({userVotes: true})
 						// getActions.getUsers()
 					}
-					
 				})
 				.catch((error) => {
-					alert("Error en el fetch - flux 166 saltó")
+					alert("Error en el fetch - flux 162 saltó")
 					setStore({ token: null })
 					localStorage.removeItem("token")
+					console.log(error, {error})
 				})
 			},
 
@@ -191,6 +200,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data})
 					setStore({userVotes: true}) //flagVotes
 					getActions.getVotes()
+					console.log("estoes userDataVotes", userDataVotes)
 					// To hide a modal, not in use actually
 					// const modal = document.getElementById("loginModal")
 					// const m = bootstrap.Modal.getInstance(modal)
@@ -199,26 +209,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => {error})
 			},
 
-			createbeer: (image, name, smell, category, source, alcohol, company, description) => {
-				let tokenRequired = localStorage.getItem("token")
+			// createbeer: (image, name, smell, category, source, alcohol, company, description) => {
+			// 	let tokenRequired = localStorage.getItem("token")
+			// 	console.log("esto es IMAGE", image)
 
-				fetch(`${config.hostname}/api/beers`, {
-					method: 'POST',
-					body: JSON.stringify({image, name, smell, category, source, alcohol, company, description}),
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': "Bearer " + tokenRequired
-					}
-				})
-				.then(res => {
-					if(res.status == 200 || res.status == 201){
-						const modal = document.getElementById("createbeerModal")
-						const m = bootstrap.Modal.getInstance(modal)
-						m.hide()
-					} else (alert("Error en backend"))
-				})
+			// 	fetch(`${config.hostname}/api/beers`, {
+			// 		method: 'POST',
+			// 		body: JSON.stringify({image, name, smell, category, source, alcohol, company, description}),
+			// 		headers: {
+			// 			'Content-Type': 'application/json',
+			// 			'Authorization': "Bearer " + tokenRequired
+			// 		}
+			// 	})
+			// 	.then(res => {
+			// 		if(res.status == 200 || res.status == 201){
+			// 			const modal = document.getElementById("createbeerModal")
+			// 			const m = bootstrap.Modal.getInstance(modal)
+			// 			m.hide()
+			// 		} else (alert("Error en backend"))
+			// 	})
 
-			},
+			// },
 
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

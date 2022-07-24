@@ -31,6 +31,8 @@ export const Home = () => {
   actions.getBeers()
   actions.getCategories()
   actions.getUsers()
+  actions.validate()
+  actions.getVotes()
 }, [])
 
   // Effect for API call

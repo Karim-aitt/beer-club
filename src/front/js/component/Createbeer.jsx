@@ -2,13 +2,15 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
 import "../../styles/createbeer_modal.css";
+import config from "../config";
 
 export const Createbeer = () => {
   const { store, actions } = useContext(Context);
+  const token = localStorage.getItem("token")
 
   //inputs formularios
   const [nombre, setNombre] = useState("");
-  const [imagen, setImagen] = useState("");
+  const [imagen, setImagen] = useState();
   const [category, setCategory] = useState("1");
   const [source, setSource] = useState("");
   const [alcohol, setAlcohol] = useState("");
@@ -21,7 +23,36 @@ export const Createbeer = () => {
   const [allDone, setAllDone] = useState(false); //flag Registro completado
 
   //subir Imagen
-  const formData = new FormData(); //para manejar las imagenes subidas
+   //para manejar las imagenes subidas
+  
+
+// const handleSend = (event) => {
+//   event.preventDefault()
+//   const token = localStorage.getItem("token")
+
+//   const formData = new FormData();
+//   formData.append("file", imagen)
+//   formData.append("name", nombre)
+//   formData.append("category", category)
+//   formData.append("source", source)
+//   formData.append("alcohol", alcohol)
+//   formData.append("smell", aroma)
+//   formData.append("company", autor)
+//   formData.append("description", descrip)
+
+//   console.log("esto es formData",formData, {formData})
+//   fetch(`${config.hostname}/api/beers`, {
+//     method: "POST",
+//     body: JSON.stringify({formData}),
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//       'Authorization': "Bearer " + token
+//     } 
+//   })
+//   .then(res => res.json())
+//   .then(data => data)
+//   .catch(error => {console.log("esto es error",error, {error})})
+// }
 
   return (
     <div
@@ -45,24 +76,26 @@ export const Createbeer = () => {
             ></button>
           </div>
           <div className="modal-body color-back">
-            <form className="">
+{/* FORM */}
+
+            <form target="dummyframe" className="" method="POST" action="https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers" encType="multipart/form-data">
               <input
                 className="m-2 p-1"
                 type="text"
                 placeholder="Beer Name"
                 onChange={(e) => setNombre(e.target.value)}
-                autoFocus={true}
                 value={nombre}
                 required
+                name="name"
               ></input>
               <input
                 className="m-2 p-1"
                 type="text"
                 placeholder="Smell"
                 onChange={(e) => setAroma(e.target.value)}
-                autoFocus={true}
                 value={aroma}
                 required
+                name="smell"
               ></input>
               <input
                 className="m-2 p-1"
@@ -70,7 +103,8 @@ export const Createbeer = () => {
                 placeholder="Alcohol"
                 onChange={(e) => setAlcohol(e.target.value)}
                 value={alcohol}
-                required="required"
+                required
+                name="alcohol"
               ></input>
               <input
                 className="m-2 p-1"
@@ -78,7 +112,8 @@ export const Createbeer = () => {
                 placeholder="Owner / Company"
                 onChange={(e) => setAutor(e.target.value)}
                 value={autor}
-                required="required"
+                required
+                name="company"
               ></input>
               <input
                 className="ms-2 p-1"
@@ -86,13 +121,16 @@ export const Createbeer = () => {
                 placeholder="Source"
                 onChange={(e) => setSource(e.target.value)}
                 value={source}
+                name="source"
               ></input>
+
               <select
                 className="m-2 p-1"
                 id="selectCategory"
                 name="category"
                 placeholder="Category"
                 onChange={(e) => setCategory(e.target.value)}
+                
               >
                 {store.categories.length > 0 ? (
                   store.categories.map((elem, i) => {
@@ -114,31 +152,39 @@ export const Createbeer = () => {
                 placeholder="Description"
                 onChange={(e) => setDescrip(e.target.value)}
                 value={descrip}
+                name="description"
               ></textarea>
-              {/* <input
-                className="m-2 p-1"
-                type="file"
-                placeholder="Select a file:"
-                onChange={(e) => {
-                    setImagen(e.target.files)
-                    // formData.append('img', imagen)
-                }
-                }
-                id="imgBeer"
-              ></input> */}
+        
               <input
                 className="m-2 p-1"
-                type="text"
-                placeholder="url de tu imagen"
-                onChange={(e) => setImagen(e.target.value)}
-                value={imagen}
+                type="file"
+                // placeholder="url de tu imagen"
+                name="file"
+                onChange={(e) => setImagen(e.target.files[0])}
+                // value={imagen}
               ></input>
+              <input 
+              type="hidden"
+              name="user_id"
+              value={store.user_id} />
+              <input
+                type="submit"
+                className="btn btn-dark"
+                value="Submit"
+                onClick={() => {
+                  const modal = document.getElementById("createbeerModal")
+						      const m = bootstrap.Modal.getInstance(modal)
+						      m.hide()
+                }}
+              />
+              
             </form>
+            <iframe name="dummyframe" id="dummyframe"></iframe>
           </div>
 
           <div className="modal-footer color-back">
             <div className="modal-footer">
-              {/* VALIDACIONES DE INPUTS */}
+              {/* VALIDACIONES DE INPUTS
 
               {allfill == true ? (
                 <p className="me-auto text-danger">Must fill all fields</p>
@@ -191,7 +237,7 @@ export const Createbeer = () => {
                 }}
               >
                 Submit
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

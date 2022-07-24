@@ -7,7 +7,6 @@ export const Stars = (props) => {
   const { store, actions } = useContext(Context);
   const [punctuation, setPunctuation] = useState(0);
   const [hover, setHover] = useState(0);
-  const id_beer = props.beer_id_star;
 
   const token = localStorage.getItem("token");
 

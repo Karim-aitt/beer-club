@@ -77,7 +77,9 @@ export const Createbeer = () => {
           </div>
           <div className="modal-body color-back">
 {/* FORM */}
-
+{/* Para prevenir el redireción del submit, establecí como target 
+un iframe vacío dentro del propio modal que se cierra automaticamente cuando 
+se hace click por lo que no se ve la respuesta */}
             <form target="dummyframe" className="" method="POST" action="https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers" encType="multipart/form-data">
               <input
                 className="m-2 p-1"
@@ -122,6 +124,7 @@ export const Createbeer = () => {
                 onChange={(e) => setSource(e.target.value)}
                 value={source}
                 name="source"
+                required
               ></input>
 
               <select
@@ -162,6 +165,7 @@ export const Createbeer = () => {
                 name="file"
                 onChange={(e) => setImagen(e.target.files[0])}
                 // value={imagen}
+                required
               ></input>
               <input 
               type="hidden"

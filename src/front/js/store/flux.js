@@ -13,7 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			beerscategory: [],
 			beers: [],
 			users: [],
-			user_id: 0,
+			user_id: "0",
 			userVotes: false,
 			userDataVotes: [],
 		
@@ -164,7 +164,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", data)
 						setStore({token: data})
 						setStore({userVotes: true})
-						getActions.getUsers()
 					}
 				})
 				.catch((error) => {

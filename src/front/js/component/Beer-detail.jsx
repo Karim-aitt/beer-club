@@ -56,6 +56,7 @@ export const Beerdetail = (props) => {
           }
         })
         .then((data) => {
+          console.log("esto es datacomment", data)
           getComments();
           return data;
         }) // No esta en uso
@@ -85,9 +86,10 @@ export const Beerdetail = (props) => {
     fetch(`${config.hostname}/api/vote/average/${props.id_cerveza}`)
     .then(res => res.json())
     .then(data => {
+      console.log("esto es data",data)
       setAverage(data)
     })
-  }, [])
+  }, [vote]) //esto hace que se carguen los votos al principio?
 
   useEffect(() => {
     if (store.userDataVotes.length > 0) {
@@ -97,7 +99,7 @@ export const Beerdetail = (props) => {
         }
       });
     } else {""}
-  }, []);
+  }, [store.userDataVotes]);
   // ---------------- ------------ ----------------- \\
 
   return (

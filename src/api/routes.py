@@ -91,10 +91,10 @@ def add_Signup():
     }
 
     token = create_access_token(identity=data, expires_delta=timedelta(minutes=120))
-
+    
     db.session.add(user)
     db.session.commit()
-    return jsonify(token)
+    return jsonify(token), 200
 
 
 ##--------------------------------------------------------------------------##

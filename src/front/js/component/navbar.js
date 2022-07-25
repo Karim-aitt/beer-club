@@ -64,13 +64,14 @@ export const Navbar = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <a className="dropdown-item" href="#"
+              <Link className="dropdown-item" to="/"
               onClick={() => {
                 actions.logout()
+                
               }}
               >
                 Logout
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

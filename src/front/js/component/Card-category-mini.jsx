@@ -10,7 +10,7 @@ export const CardCategoryMini = (props) => {
     return (
         <div className="">
             <img src={props.image} alt="CategoryMiniImage" className="img-category-mini mx-auto"/>
-            <p className="col-12 mt-2 text-center fw-bold category-name-position">{props.nombre}</p>
+            <p className="col-12 mt-2 text-center fw-bold category-name-position capital">{props.nombre}</p>
         </div>
     )
 }

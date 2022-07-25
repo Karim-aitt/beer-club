@@ -23,8 +23,8 @@ export const Categories = () => {
   }, [])
 
     return (
-        // <>
-		// {store.token != null ? 
+        <>
+		{store.token != null ? 
         <>
         <Navbar />
         <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
@@ -50,7 +50,7 @@ export const Categories = () => {
         <Footer />
         </>
 
-        // : <Navigate to="/" />}
-        // </>
+        : <Navigate to="/" />}
+       </>
     )
 }

@@ -164,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", data)
 						setStore({token: data})
 						setStore({userVotes: true})
-						// getActions.getUsers()
+						getActions.getUsers()
 					}
 				})
 				.catch((error) => {
@@ -190,7 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						
 
 					} else {
-						setStore({loginEmailPassMatch: true}) // Para validar en form loginModal linea: 56
+						setStore({loginEmailPassMatch: true})
 						return "Usuario o clave incorrectas"
 					}
 					return res.json()
@@ -200,11 +200,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data})
 					setStore({userVotes: true}) //flagVotes
 					getActions.getVotes()
-					console.log("estoes userDataVotes", userDataVotes)
-					// To hide a modal, not in use actually
-					// const modal = document.getElementById("loginModal")
-					// const m = bootstrap.Modal.getInstance(modal)
-					// m.hide()
 				})
 				.catch(error => {error})
 			},

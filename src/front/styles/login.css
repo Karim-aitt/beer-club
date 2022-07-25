@@ -13,3 +13,19 @@ button.active{
 .container-width{
     max-width: 400px;
 }
+
+.video{
+    object-fit: cover;
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    
+}
+
+.btn-dark:hover{
+    background-color: rgb(226, 189, 54);
+    border-color: rgb(226, 189, 54);
+}

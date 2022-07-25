@@ -609,10 +609,12 @@ def get_average(beer_id):
     if(division == 0):
         return jsonify(0)
     
-    average = suma / division
-    
+    average = round(suma / division)
+    response = average
+    if average >= 6:
+        response = 5
 
-    return jsonify(round(average, 1))        
+    return jsonify(response)        
 
 #__________________________________DELETE VOTE BEER__________________________________#
 

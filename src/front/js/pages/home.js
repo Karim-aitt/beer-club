@@ -119,7 +119,13 @@ export const Home = () => {
 					<div className="mes-header fw-bold text-center bg-dark"><p className="py-2 px-2 text-white">Categories</p></div>
 					<CardCategory />
 				</div>
-				
+        
+        <div className="d-flex justify-content-evenly m-2">
+        <a className="fab fa-instagram fs-3 decor-link" aria-current="page" href="https://www.instagram.com" />
+        <a className="fab fa-twitter fs-3 decor-link" aria-current="page" href="https://www.twitter.com" />
+        </div>
+        <p className="text-secondary text-center">© 2022 BEER CLUB</p>   
+              
 			</div>
 			</div>
 			{/* COLOCAR DEBAJO DE CATEGORIAS */}

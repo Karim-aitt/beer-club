@@ -15,7 +15,7 @@ export const Beerdetail = (props) => {
   const [flagComment, setFlagComment] = useState();
   const [dataComment, setDataComment] = useState([]);
 
-  const getComments = () =>
+  const getComments = () =>{
     fetch(`${config.hostname}/api/comment`)
       .then((res) => {
         if (res.status == 200) {
@@ -25,19 +25,15 @@ export const Beerdetail = (props) => {
       .then((data) => {
         setDataComment(data);
       })
-      .catch((error) => console.log({ error }));
+      .catch((error) => console.log({ error }));}
 
-  const commentFetch = (commentValue, id_cerveza) => {
-    if (
-      commentValue != "" &&
-      commentValue != undefined &&
-      commentValue != null
-    ) {
+  const commentFetch = (commentValue) => {
+    if(commentValue) {
       const tok = localStorage.getItem("token");
       let comment = commentValue;
       let beer_id = props.id_cerveza;
 
-      // ---- TRIGGER SEGUNDARIO DEL FETCH dataComment l50 ---- \\
+      // ---- TRIGGER SEGUNDARIO DEL FETCH dataComment ---- \\
       if (flagComment == !0) {
         setFlagComment(!1);
       } else {

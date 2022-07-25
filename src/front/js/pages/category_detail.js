@@ -41,6 +41,7 @@ export const CategoryDetail = () => {
 
     return (
         <>
+		{store.token != null ? 
             <>
             <Navbar />
             <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
@@ -71,6 +72,7 @@ export const CategoryDetail = () => {
                 
             </div>
             </>
+        : <Navigate to="/" />}
         </>
         
     )

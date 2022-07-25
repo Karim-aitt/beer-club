@@ -29,10 +29,11 @@ export const CardDetail = (props) => {
     fetch(`${config.hostname}/api/comment/beer/${props.beer_id}`)
     .then(res => res.json())
     .then(data => {
-      if(data != undefined){
+      if(!data.length == 0){
       setLastComment({comment: data[data.length-1].comment})
       setId_user(data[data.length-1].user_id)
-    }})
+    } else return "No hay comentarios"
+  })
 
     fetch(`${config.hostname}/api/vote/average/${props.beer_id}`)
     .then(res => res.json())

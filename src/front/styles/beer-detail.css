@@ -32,6 +32,10 @@ max-height: 200px;
 .scrollhidden::-webkit-scrollbar {
     display: none;
 }
+
+.capital{
+    text-transform: capitalize;
+}
 /* .scrollhidden{
     -ms-overflow-style: none;
     scrollbar-width: none;

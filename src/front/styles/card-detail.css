@@ -28,3 +28,7 @@
     border-radius: 10px;
     padding: 5px;
 }
+
+.capital{
+    text-transform: capitalize;
+}

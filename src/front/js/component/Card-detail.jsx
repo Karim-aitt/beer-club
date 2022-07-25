@@ -59,7 +59,7 @@ let nameUser = ""
       <img className="beer-head-img" src={props.img}></img>
         <div className="div-prop bg-dark text-white d-flex py-3 shadow">
             <div className="col-5">
-            <h5 className="card-title ms-3">{props.name}</h5>
+            <h5 className="card-title ms-3 capital">{props.name}</h5>
             <h5 className="card-title ms-3">{props.type}</h5>
             </div>
 
@@ -71,7 +71,7 @@ let nameUser = ""
 
             <div className="col-5 ms-auto">
             <h5 className="card-title d-flex justify-content-end me-3">{props.alcohol} Alc.</h5>
-            <h5 className="card-title d-flex justify-content-end me-3">{props.company}</h5>
+            <h5 className="card-title d-flex justify-content-end me-3 capital">{props.company}</h5>
             </div>
         </div>
             <p className="card-text mt-3 px-5">

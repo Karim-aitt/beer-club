@@ -122,14 +122,14 @@ export const Beerdetail = (props) => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <h5 className="modal-title" id={`beerdetailLabel${props.CI}`}>
+              <h5 className="modal-title capital" id={`beerdetailLabel${props.CI}`}>
                 {beer.name}
                 {props.name}
               </h5>
               <div className="d-flex mt-2 fw-bold">
                 <p className="mx-1 px-1">{beer.alcohol} ALC</p>
-                <p className="border-p mx-2 px-3">{beer.source}</p>
-                <p className="mx-2 px-3">{beer.company}</p>
+                <p className="border-p mx-2 px-3 capital">{beer.source}</p>
+                <p className="mx-2 px-3 capital">{beer.company}</p>
               </div>
               {/* AQUI PONER LA MEDIA DE VOTOS */}
               <div className="col-2 d-flex align-items-end ">

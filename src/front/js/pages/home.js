@@ -35,7 +35,7 @@ export const Home = () => {
   actions.getVotes()
 }, [])
 
-  // Effect for API call
+  // Effect for API call in Search "Engine"
   useEffect(() => {
     if(debouncedSearchTerm){
       setIsSearching(true);
@@ -61,7 +61,8 @@ export const Home = () => {
 			</div>
 			<div className="d-flex flex-row justify-content-center px-0">
 			<div className="me-sm-3">
-				{/* AQUI SE GENERAN TODAS LAS CARDS PRINCIPALES */}
+				{/* AQUI SE GENERAN TODAS LAS CARDS PRINCIPALES Y LA CARD RESULTANTE DE LA BUSQUEDA*/}
+        {/* CARD RESULTANTE DE LA BUSQUEDA */}
         {results.length >0 ? 
         
         results.map((result, i) => {
@@ -80,6 +81,7 @@ export const Home = () => {
             <CardDetail databeer={result} key={i} beer_id={result.id} name={result.name} type={cat_name1} alcohol={result.alcohol} company={result.company} img={result.image} descrip={result.description}/> 
           )
         }) :
+        // TODAS LAS CARDS
         <div>
 				{store.beers.length >0 ? store.beers.map((elem, i) => {
 					
@@ -99,7 +101,9 @@ export const Home = () => {
                   )
                 })
                 : 
-                  <p className="text-center px-2 pt-2">No hay cervezas</p>
+                <div className="spinner-border text-danger m-auto" role="status">
+                <span className="sr-only">Loading...</span>
+                </div>
                 }
         </div>
         }

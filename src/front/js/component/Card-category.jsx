@@ -24,7 +24,9 @@ export const CardCategory = (props) => {
                   )
                 })
                 : 
-                  <p className="text-center px-2 pt-2">No hay categorias</p>
+                <div className="spinner-border text-dark m-auto" role="status">
+                <span className="sr-only">Loading...</span>
+                </div>
                 }
 
         {/* <div className="div-size m-2 p-2 fw-bold category-size">

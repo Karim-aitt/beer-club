@@ -213,7 +213,8 @@ def list_beer():
 
 @api.route('/beers/<search>', methods=['GET'])
 def search_beer(search):
-    word = '%{}%'.format(search)
+    palabra = search.lower()
+    word = '%{}%'.format(palabra)
 
     beer = Beer.query.filter(Beer.name.like(word)).all()
 
@@ -286,13 +287,13 @@ def add_Beer():
     beer = Beer(
         user_id=user_id, 
         category_id=category,
-        name=name,
+        name=name.lower(),
         image=url,
-        smell=smell,
-        source=source,
+        smell=smell.lower(),
+        source=source.lower(),
         alcohol=alcohol,
-        company=company,
-        description=description,
+        company=company.lower(),
+        description=description.lower(),
     )
 
     db.session.add(beer)

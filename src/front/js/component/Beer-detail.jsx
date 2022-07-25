@@ -15,7 +15,7 @@ export const Beerdetail = (props) => {
   const [flagComment, setFlagComment] = useState();
   const [dataComment, setDataComment] = useState([]);
 
-  const getComments = () =>{
+  const getComments = () => {
     fetch(`${config.hostname}/api/comment`)
       .then((res) => {
         if (res.status == 200) {
@@ -25,10 +25,11 @@ export const Beerdetail = (props) => {
       .then((data) => {
         setDataComment(data);
       })
-      .catch((error) => console.log({ error }));}
+      .catch((error) => console.log({ error }));
+  };
 
   const commentFetch = (commentValue) => {
-    if(commentValue) {
+    if (commentValue) {
       const tok = localStorage.getItem("token");
       let comment = commentValue;
       let beer_id = props.id_cerveza;
@@ -49,15 +50,17 @@ export const Beerdetail = (props) => {
         },
       })
         .then((res) => {
-          if (res.status == 200 || res.status == 201) {
-            return "Todo ok";
+          console.log({ res });
+          if (res.status == 201) {
+            return res.json();
           } else {
             return "Problema en respuesta fetch comment beer-detail";
           }
         })
         .then((data) => {
-          console.log("esto es datacomment", data)
+          console.log("esto es datacomment", { data });
           getComments();
+          props.onGetLastComment();
           return data;
         }) // No esta en uso
         .catch((error) => console.log({ error }));
@@ -67,7 +70,7 @@ export const Beerdetail = (props) => {
 
   useEffect(() => {
     getComments();
-  }, []); 
+  }, []);
 
   // ---------------- Get user name ----------------- \\
   const [username, setUsername] = useState("");
@@ -76,7 +79,7 @@ export const Beerdetail = (props) => {
   // ---------------- Voting system ----------------- \\
   const [beer, setBeer] = useState({});
   const [vote, setVote] = useState({});
-  const [average, setAverage] = useState()
+  const [average, setAverage] = useState();
 
   useEffect(() => {
     setBeer(props.databeer);
@@ -84,21 +87,23 @@ export const Beerdetail = (props) => {
 
   useEffect(() => {
     fetch(`${config.hostname}/api/vote/average/${props.id_cerveza}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log("esto es data",data)
-      setAverage(data)
-    })
-  }, [vote]) //esto hace que se carguen los votos al principio?
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("esto es data", data);
+        setAverage(data);
+      });
+  }, [vote]); //esto hace que se carguen los votos al principio?
 
   useEffect(() => {
-    if (store.userDataVotes.length > 0) {
+    if (store.userDataVotes?.length > 0) {
       store.userDataVotes.map((elem, i) => {
         if (elem.beer_id == props.id_cerveza) {
           setVote(elem);
         }
       });
-    } else {""}
+    } else {
+      ("");
+    }
   }, [store.userDataVotes]);
   // ---------------- ------------ ----------------- \\
 
@@ -120,7 +125,10 @@ export const Beerdetail = (props) => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <h5 className="modal-title capital" id={`beerdetailLabel${props.CI}`}>
+              <h5
+                className="modal-title capital"
+                id={`beerdetailLabel${props.CI}`}
+              >
                 {beer.name}
                 {props.name}
               </h5>
@@ -131,9 +139,9 @@ export const Beerdetail = (props) => {
               </div>
               {/* AQUI PONER LA MEDIA DE VOTOS */}
               <div className="col-2 d-flex align-items-end ">
-            <i className="fas fa-star d-flex pb-1 ms-auto me-1"></i>
-              <span className="d-flex me-auto">{average}</span>
-            </div>
+                <i className="fas fa-star d-flex pb-1 ms-auto me-1"></i>
+                <span className="d-flex me-auto">{average}</span>
+              </div>
             </div>
             <div className="modal-body d-flex">
               <div className="col-5">

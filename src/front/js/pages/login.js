@@ -35,7 +35,7 @@ export const Login = (props) => {
           <div className="">
             <video className="video" loop autoPlay muted>
               <source
-                src="https://assets.mixkit.co/videos/preview/mixkit-various-glass-bottles-viewed-in-detail-4928-large.mp4"
+                src="https://res.cloudinary.com/dztgp8g6w/video/upload/v1658771702/Login_nx4jmw.mp4"
                 type="video/mp4"
               />
               Your browser does not support the video tag.

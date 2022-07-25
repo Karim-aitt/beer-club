@@ -28,20 +28,6 @@ export const CardCategory = (props) => {
                 <span className="sr-only">Loading...</span>
                 </div>
                 }
-
-        {/* <div className="div-size m-2 p-2 fw-bold category-size">
-            <Link to="" className="link-style">BELGIUM ALE ABADIA</Link>
-        </div>
-        <div className="div-size m-2 p-2 fw-bold category-size">
-            <Link to="" className="link-style">PALEALE</Link>
-        </div>
-        <div className="div-size m-2 p-2 fw-bold category-size">
-            <Link to="" className="link-style">GERMAN ALE</Link>
-        </div>
-        <div className="div-size m-2 p-2 fw-bold category-size">
-            <Link to="" className="link-style">BELGIUM ALE ABADIA</Link>
-        </div> */}
-        
     </div>
   );
 };

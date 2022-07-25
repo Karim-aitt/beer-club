@@ -51,9 +51,9 @@ export const Navbar = () => {
             aria-labelledby="navbarDropdown"
           >
             <li>
-              <a className="dropdown-item" href="#">
+              <Link className="dropdown-item" to={`/userpage/${store.user_id}`}>
                 Personal Page
-              </a>
+              </Link>
             </li>
             <li>
               <a className="dropdown-item" href="#">

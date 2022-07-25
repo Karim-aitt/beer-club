@@ -227,9 +227,20 @@ def search_beer(search):
 @api.route('/beers/<int:id>' , methods=['GET'])
 def list_beers_category(id):
 
-        beers = Beer.query.filter_by(category_id=id)
-        all_beers_category = list(map(lambda beers: beers.serialize(), beers))
-        return jsonify(all_beers_category)
+    beers = Beer.query.filter_by(category_id=id)
+    all_beers_category = list(map(lambda beers: beers.serialize(), beers))
+    return jsonify(all_beers_category)
+
+# CERVEZAS DE LA USERPAGE
+@api.route('/beers/user/<int:id>', methods=['GET'])
+def user_beers(id):
+    beers = Beer.query.filter_by(user_id=id)
+    all_user_beers = list(map(lambda beers: beers.serialize(), beers))
+    return jsonify(all_user_beers)
+
+@api.route('/beers/user/<int:id>/like', methods=['GET'])
+def user_likes(id):
+    beers = Vote.query.filter()
 
 #__________________________________CREATE BEER__________________________________#
 

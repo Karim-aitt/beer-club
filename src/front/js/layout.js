@@ -8,6 +8,7 @@ import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { Categories } from "./pages/categories";
 import { CategoryDetail } from "./pages/category_detail";
+import { Userpage } from "./pages/user_page.js";
 
 import injectContext from "./store/appContext";
 
@@ -64,6 +65,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/" />
                         <Route element={<Categories />} path="/categories" />
                         <Route element={<CategoryDetail />} exact path="/categories/:id" />
+                        <Route element={<Userpage />} path="/userpage/:id" />
                         
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

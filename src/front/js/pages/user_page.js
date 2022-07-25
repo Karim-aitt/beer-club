@@ -1,46 +1,69 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Navigate, Link } from "react-router-dom";
 
-import { Card } from "../component/card"
-import { CardExpanded } from "../component/card-expanded.js";
-import { CreateBeer } from "../component/createbeerModal";
+import { Navbar } from "../component/navbar";
+import { Beerdetail } from "../component/Beer-detail.jsx";
+import { CardCategoryMini } from "../component/Card-category-mini.jsx";
 
 import "../../styles/home.css";
+import banner from "../../img/bannerWeb2.png"
+import config from "../config";
 
 export const Userpage = () => {
   const { store, actions } = useContext(Context);
-  const nombre = "Username"
+  const [userBeers, setUserBeers] = useState([])
+
+  const getUserBeers = () => {
+    const token = localStorage.getItem("token")
+    fetch(`${config.hostname}/beers/user/${store.user_id}`)
+    .then(res => res.json())
+    .then(data => setUserBeers(data))
+  }
+  useEffect(() => {
+    fetch(`${config.hostname}/api/beers/user/${store.user_id}`)
+    .then(res => {return res.json()})
+    .then(data => setUserBeers(data))
+    .catch(error => console.log({error}))
+  }, [])
 
   return (
     <>
-      <div className="navbar-width text-white bodybar-color mx-auto d-flex align-items-center py-3 mt-0">
-        {store.myAuthFlag == true ? 
-        <button 
-        className="btn btn-warning mx-auto"
-        aria-current="page"
-        data-bs-toggle="modal"
-        data-bs-target="#createbeerModal"
-        >
-          ADD A NEW BEER
-        </button>
-        : ""}
-        <CreateBeer />
-      </div>
-      <div className="home-width mx-auto py-3 bg-white">
-        <h4 className="text-center">Cervezas de {nombre}</h4>
-        <div className="container mt-3 mx-auto w-75 pb-3">
-            <div className="d-flex scrollmenu-x p-3">
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
-            <CardExpanded name={"Domus"} rating={"4.3"} type={"Trigo"} totalvotes={"47"} comments={"23"}/>
+      {/* {store.token != null ? */}
+      <>
+        <Navbar />
+        <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
+				<img className="img-fluid d-flex mx-auto" src={banner} />
+			  </div>
+			  <div className="d-flex flex-row justify-content-center px-0"></div>
+			  <div className="me-sm-3"></div>
+        <div>
+                {/* ZONA DE CATEGORIA Y EXPLICACION CATEGORIA */}
+                <h2 className="text-center my-3">Cervezas creadas por el usuario</h2>
+                <hr className="w-50 mx-auto"></hr>
             </div>
-        </div>
-      </div>
+
+        <div className="container w-75 d-flex div-category-mini justify-content-center">
+                {/* MAPEO DE BEERS */}
+                {userBeers.length >0 ? userBeers.map((elem, i) => {
+                    
+                    return(
+                        <div key={i}>
+                            <Beerdetail CI={i} id_cerveza={elem.id} databeer={elem} elemindex={i} image={elem.image} nombre={elem.name}/>
+                            <Link to="#" type="button" data-bs-toggle="modal" data-bs-target={`#beerdetail${i}`} data-bs-whatever={i} className="text-decoration-none text-dark">
+                                <CardCategoryMini image={elem.image} nombre={elem.name} />
+                            </Link>
+                        </div>
+                        )
+                })
+                : <p className="text-center mx-2">There aren't beers in this category</p>
+                }
+                
+            </div>
+      </>
+      {/* : "" */}
+       {/* <Navigate to="/" /> */}
+       {/* } */}
     </> 
   );
     

@@ -170,9 +170,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               setStore({ token: null });
               alert(data);
             } else {
-              localStorage.setItem("token", data);
-              setStore({ token: data });
-              setStore({ userVotes: true });
+              // localStorage.setItem("token", data);
+              // setStore({ token: data });
+              // setStore({ userVotes: true });
             }
           })
           .catch((error) => {

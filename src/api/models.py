@@ -113,7 +113,7 @@ class Vote(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "beer_id": self.beer_id,
-            "punctuation": self.punctuation,
+            "punctuation": self.punctuation
         }
 
 class Comment(db.Model):
@@ -136,4 +136,5 @@ class Comment(db.Model):
             "beer_id": self.beer_id,
             "comment": self.comment,
             "creation_date": self.creation_date,
+            "user": self.user.nickname if self.user is not None else 'UsuarioDefault'
         }

@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       // myAuthFlag: false,
       token: null,
       nombre: "",
+      nickname: "",
       userExist: false,
       emailExist: false,
       loginEmailPassMatch: false,
@@ -13,9 +14,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       beerscategory: [],
       beers: [],
       users: [],
-      user_id: 1,
+      user_id: 0,
       userVotes: false,
       userDataVotes: [],
+      userpage_id: 1,
 
       message: null,
       demo: [
@@ -62,6 +64,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             });
         }
       },
+      getUserpageId: (id) => {
+        setStore({userpage_id: id})
+      },
+      getNickname: (id) => {
+        fetch(`${config.hostname}/api/nickname/${id}`)
+        .then(res => {return res.json()})
+        .then(data => {setStore({nickname: data})})
+        .catch(error => console.log("error en gitNickname", error))
+        
+      },
 
       // Consigue las categorias existentes en la DB al entrar en la web
       getCategories: async () => {
@@ -80,7 +92,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
 
         const data = await res.json();
-        console.log({ beers: data });
         await setStore({ beers: data });
       },
 

@@ -36,7 +36,9 @@ max-height: 200px;
 .capital{
     text-transform: capitalize;
 }
-/* .scrollhidden{
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-} */
+.link-style-yellow{
+    color: black;
+}
+.link-style-yellow:hover{
+    color: rgb(250, 199, 16);
+}

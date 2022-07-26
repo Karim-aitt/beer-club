@@ -51,7 +51,9 @@ export const Navbar = () => {
             aria-labelledby="navbarDropdown"
           >
             <li>
-              <Link className="dropdown-item" to={`/userpage/${store.user_id}`}>
+              <Link className="dropdown-item" to={`/userpage/${store.user_id}`} onClick={() => {
+                actions.getUserpageId(store.user_id)
+              }}>
                 Personal Page
               </Link>
             </li>

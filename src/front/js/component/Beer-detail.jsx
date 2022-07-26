@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 import "../../styles/starsranking.css";
 import "../../styles/beer-detail.css";
@@ -89,7 +90,6 @@ export const Beerdetail = (props) => {
     fetch(`${config.hostname}/api/vote/average/${props.id_cerveza}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("esto es data", data);
         setAverage(data);
       });
   }, [vote]); //esto hace que se carguen los votos al principio?
@@ -160,20 +160,29 @@ export const Beerdetail = (props) => {
                     dataComment.length > 0 ? (
                       dataComment.map((elem, i) => {
                         if (elem.beer_id == props.id_cerveza) {
-                          let nameUser = "";
-                          function name(iduser) {
-                            store.users.map((elem) => {
-                              if (elem.id == iduser) {
-                                nameUser = elem.nickname;
-                              }
-                            });
-                          }
+                          // ANTIGUO SISTEMA DE CONSEGUIR USERNAME
+
+                          // let nameUser = "";
+                          // function name(iduser) {
+                          //   store.users.map((elem) => {
+                          //     if (elem.id == iduser) {
+                          //       nameUser = elem.nickname;
+                          //     }
+                          //   });
+                          // }
                           return (
                             <div key={i} className="d-flex">
-                              <p className="fw-bold mx-2">
-                                {name(elem.user_id)}
-                                {nameUser}
-                              </p>
+                              {/* LINK TO USERPAGE */}
+                              <Link className="fw-bold mx-2 link-style-yellow" to={`/userpage/${elem.user_id}`} onClick={() => {
+                                actions.getUserpageId(elem.user_id)
+                                const modal = document.getElementById(`beerdetail${props.CI}`)
+                                const m = bootstrap.Modal.getInstance(modal)
+                                m.hide()
+                              }}>
+                                {/* {name(elem.user_id)}
+                                {nameUser} */}
+                                {elem.user}
+                              </Link>
                               <p className="">{elem.comment}</p>
                             </div>
                           );

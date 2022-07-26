@@ -155,6 +155,13 @@ def forgot_password():
 ##----------------------------FRONT PAGE PROFILE----------------------------##
 ##--------------------------------------------------------------------------##
 
+#__________________________________GET NICKNAME BY USER ID__________________________________#
+@api.route('/nickname/<int:id>', methods=['GET'])
+def get_nickname(id):
+    user = User.query.filter_by(id=id).first()
+    print(user.nickname)
+    nickname = user.nickname
+    return jsonify(nickname),200
 
 #__________________________________UPDATE USER__________________________________#
 
@@ -237,10 +244,14 @@ def user_beers(id):
     beers = Beer.query.filter_by(user_id=id)
     all_user_beers = list(map(lambda beers: beers.serialize(), beers))
     return jsonify(all_user_beers)
-
+    
+# CERVEZAS QUE LE GUSTAN AL USUARIO
 @api.route('/beers/user/<int:id>/like', methods=['GET'])
 def user_likes(id):
-    beers = Vote.query.filter()
+    beer = Vote.query.filter(Vote.user_id == id , Vote.punctuation >= 5)
+    # Esto selecciona los votos del usuario X cuyo valor sean 5 o +
+    all_beers = list(map(lambda beer: beer.serialize(),beer))
+    return jsonify(all_beers),200
 
 #__________________________________CREATE BEER__________________________________#
 
@@ -428,11 +439,13 @@ def delete_category(id):
 
 @api.route('/comment' , methods=['GET'])
 def list_comment():
+    # task = Comment.query.filter_by(id=1).first()
+    # return jsonify(task.serialize()), 200
 
     comment = Comment.query.all()
-    all_comment = list(map(lambda comment: comment.serialize(),comment))
+    all_comment = list(map(lambda comment: comment.serialize(), comment))
 
-    return jsonify(all_comment)
+    return jsonify(all_comment), 200
 
 @api.route('/comment/beer/<int:id>', methods=['GET'])
 def get_comment_beer(id):

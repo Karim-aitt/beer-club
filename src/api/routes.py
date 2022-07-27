@@ -41,13 +41,14 @@ cloudinary.config(
 
 
 #__________________________________LIST USER__________________________________#
-
+# Devuelve todos los usuarios
 @api.route('/users' , methods=['GET']) 
 def list_user():
     users = User.query.all()
     all_users = list(map(lambda users: users.serialize(),users))
     return jsonify(all_users)
 
+#Devuelve el usuario con la id provista
 @api.route('/users/<int:id>' , methods=['GET']) 
 def get_user(id):
     user = User.query.get(id)
@@ -60,7 +61,7 @@ def get_user(id):
 
 
 #__________________________________CREATE USER__________________________________#
-
+# Registra al usuario en la db y devuelve un token, actualmente no se usa este token.
 @api.route('/signup', methods=['POST'])
 def add_Signup():
    
@@ -103,6 +104,7 @@ def add_Signup():
 
 #__________________________________POST USER__________________________________#
 
+# Busca el email en la db, si existe, comprueba la pass, devuelve un token.
 @api.route('/login' , methods=['POST']) 
 def login_user():
 
@@ -156,6 +158,7 @@ def forgot_password():
 ##--------------------------------------------------------------------------##
 
 #__________________________________GET NICKNAME BY USER ID__________________________________#
+# Consigue el nickname del usuario con la id provista
 @api.route('/nickname/<int:id>', methods=['GET'])
 def get_nickname(id):
     user = User.query.filter_by(id=id).first()
@@ -164,7 +167,7 @@ def get_nickname(id):
     return jsonify(nickname),200
 
 #__________________________________UPDATE USER__________________________________#
-
+# Actualiza los datos del usuario de la id provista
 @api.route('/users/<int:id>' , methods=['PUT'])
 def update_user(id):
 
@@ -184,7 +187,7 @@ def update_user(id):
     return jsonify(user.serialize())
 
 #__________________________________DELETE USER__________________________________#
-
+# Borra al usuario con la id provista
 @api.route('/users/<int:id>', methods=['DELETE'])
 def delete_user(id):
     user = User.query.get(id)
@@ -210,7 +213,7 @@ def delete_user(id):
 
 
 #__________________________________LIST BEER__________________________________#
-
+# Devuelve todas las beers de la db
 @api.route('/beers' , methods=['GET']) 
 def list_beer():
 
@@ -218,6 +221,7 @@ def list_beer():
     all_beers = list(map(lambda beers: beers.serialize(),beers))
     return jsonify(all_beers)
 
+# Busca la cerveza provista en search
 @api.route('/beers/<search>', methods=['GET'])
 def search_beer(search):
     palabra = search.lower()
@@ -245,7 +249,7 @@ def user_beers(id):
     all_user_beers = list(map(lambda beers: beers.serialize(), beers))
     return jsonify(all_user_beers)
     
-# CERVEZAS QUE LE GUSTAN AL USUARIO
+# CERVEZAS QUE LE GUSTAN AL USUARIO EN USERPAGE
 @api.route('/beers/user/<int:id>/like', methods=['GET'])
 def user_likes(id):
     beer = Vote.query.filter(Vote.user_id == id , Vote.punctuation >= 5)

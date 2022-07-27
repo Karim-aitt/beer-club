@@ -57,7 +57,7 @@ export const Home = () => {
             <img className="img-fluid d-flex mx-auto" src={banner} />
           </div>
           <div className="d-flex flex-row justify-content-center px-0">
-            <div className="me-sm-3">
+            <div className="me-sm-3 py-2">
               {/* AQUI SE GENERAN TODAS LAS CARDS PRINCIPALES Y LA CARD RESULTANTE DE LA BUSQUEDA*/}
               {/* CARD RESULTANTE DE LA BUSQUEDA */}
               {results.length > 0 ? (
@@ -130,18 +130,19 @@ export const Home = () => {
             </div>
 
             <div className="mt-5 ms-3">
+              <div className="sticky-top py-2">
               {/* ESTO ES EL DIV DONDE SE GENERAN TODAS LAS CARDS DE CATEGORIAS */}
               <form className="mb-2">
                 <input
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="form-control me-2 border-dark text-dark"
+                  className="form-control me-2 border-dark text-dark "
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
                 />
               </form>
 
-              <div className="d-none d-md-block mes me-auto borde back-color sticky-top">
+              <div className="d-none d-md-block mes me-auto borde back-color">
                 <div className="mes-header fw-bold text-center bg-dark">
                   <p className="py-2 px-2 text-white">Categories</p>
                 </div>
@@ -161,6 +162,7 @@ export const Home = () => {
                 />
               </div>
               <p className="text-secondary text-center">© 2022 BEER CLUB</p>
+            </div>
             </div>
           </div>
           {/* COLOCAR DEBAJO DE CATEGORIAS */}

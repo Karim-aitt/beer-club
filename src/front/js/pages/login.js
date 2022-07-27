@@ -24,6 +24,12 @@ export const Login = (props) => {
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [surname, setSurname] = useState("");
+  const [active, setActive] = useState("active")
+  const [noActive, setNoActive] = useState("")
+  const [sele, setSele] = useState("true")
+  const [lese, setLese] = useState("false")
+  let selected = true
+  
 
   //FLAGS
   const [passMatch, setPassMatch] = useState(false); //flag de "la password no coincide"
@@ -41,32 +47,32 @@ export const Login = (props) => {
               Your browser does not support the video tag.
             </video>
 
-            <div className="border border-3 border-secondary rounded w-25 ms-auto pos_login container-width">
+            <div className="rounded w-25 ms-auto pos_login container-width">
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li className="nav-item" role="presentation">
+                <li className="nav-item " role="presentation">
                   <button
-                    className="nav-link active text-dark m-2 border border-secondary"
+                    className={`nav-link btn-lg ${active} text-dark m-2 border border-secondary`}
                     id="pills-login-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-login"
                     type="button"
                     role="tab"
                     aria-controls="pills-login"
-                    aria-selected="true"
+                    aria-selected={`${sele}`}
                   >
                     Login
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link text-dark m-2 border border-secondary"
+                    className={`nav-link btn-lg ${noActive} text-dark m-2 border border-secondary`}
                     id="pills-register-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-register"
                     type="button"
                     role="tab"
                     aria-controls="pills-register"
-                    aria-selected="false"
+                    aria-selected={`${lese}`}
                   >
                     Register
                   </button>
@@ -80,31 +86,39 @@ export const Login = (props) => {
                   role="tabpanel"
                   aria-labelledby="pills-login-tab"
                 >
-                  <div className="text-center mb-3">
-                    <form className="d-flex flex-column p-3 text-center">
-                      <input
-                        className="m-2 p-1"
-                        type="text"
-                        //   id="login"
-                        //   name="login"
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="password"
-                        //   id="password"
-                        //   name="login"
-                        placeholder="Password"
-                        onChange={(e) => setPass(e.target.value)}
-                        value={pass}
-                        required
-                      ></input>
+                  <div className="mb-3">
+                    <form className="d-flex flex-column p-3">
+                      <div className="">
+                        <input
+                          className="form-control"
+                          id="loginEmailInput"
+                          aria-describedby="emailHelp"
+                          type="email"
+                          placeholder="name@example.com"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
+                          required
+                        ></input>
+                        <div id="emailHelp" className="form-text">
+                          <p className="ms-2">
+                            We'll never share your email with anyone else.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <input
+                          className="form-control"
+                          id="loginPassInput"
+                          type="password"
+                          placeholder="Password"
+                          onChange={(e) => setPass(e.target.value)}
+                          value={pass}
+                          required
+                        ></input>
+                      </div>
                       <input
                         type="submit" //esto estaba en submit
-                        className="btn btn-dark m-2"
+                        className="btn btn-dark"
                         value="Log In"
                         onClick={() => {
                           if (pass == "" || email == "") {
@@ -127,7 +141,10 @@ export const Login = (props) => {
                     )}
 
                     {/* HAY QUE HACER ESTA FUNCIONALIDAD */}
-                    <Link className="" to="">
+                    <Link
+                      className="d-flex justify-content-center link-style-yellow"
+                      to=""
+                    >
                       Forgot password?
                     </Link>
                   </div>
@@ -138,58 +155,85 @@ export const Login = (props) => {
                   role="tabpanel"
                   aria-labelledby="pills-register-tab"
                 >
-                  <div className="text-center mb-3">
+                  <div className="mb-1">
                     <form className="d-flex flex-column p-3">
-                      <input
-                        className="m-2 p-1"
-                        type="text"
-                        placeholder="Nickname"
-                        onChange={(e) => setNickname(e.target.value)}
-                        value={nickname}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="text"
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="text"
-                        placeholder="Name"
-                        onChange={(e) => setUsername(e.target.value)}
-                        autoFocus={true}
-                        value={username}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="text"
-                        placeholder="Surname"
-                        onChange={(e) => setSurname(e.target.value)}
-                        value={surname}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="password"
-                        placeholder="Password"
-                        onChange={(e) => setPass(e.target.value)}
-                        value={pass}
-                        required
-                      ></input>
-                      <input
-                        className="m-2 p-1"
-                        type="password"
-                        placeholder="Confirm Password"
-                        onChange={(e) => setConfirmPass(e.target.value)}
-                        value={confirmPass}
-                        required
-                      ></input>
-
+                      <div className="mb-1">
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="Nickname"
+                          onChange={(e) => setNickname(e.target.value)}
+                          value={nickname}
+                          aria-describedby="nicknameHelp"
+                          required
+                        ></input>
+                        <div id="nicknameHelp" className="form-text">
+                          <p className="ms-2">The name who everyone will see</p>
+                        </div>
+                      </div>
+                      <div className="">
+                        <input
+                          className="form-control"
+                          id="registerEmailInput"
+                          aria-describedby="registerEmailHelp"
+                          type="email"
+                          placeholder="name@example.com"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
+                          required
+                        ></input>
+                        <div id="registerEmailHelp" className="form-text">
+                          <p className="ms-2">
+                            We'll never share your email with anyone else.
+                          </p>
+                        </div>
+                      </div>
+                      <hr></hr>
+                      <div className="mb-3">
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="Name"
+                          onChange={(e) => setUsername(e.target.value)}
+                          autoFocus={true}
+                          value={username}
+                          required
+                        ></input>
+                      </div>
+                      <div className="mb-1">
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="Surname"
+                          onChange={(e) => setSurname(e.target.value)}
+                          value={surname}
+                          required
+                        ></input>
+                      </div>
+                      <hr></hr>
+                      <div className="mb-3">
+                        <input
+                          className="form-control"
+                          id="registerPassInput"
+                          type="password"
+                          placeholder="Password"
+                          onChange={(e) => setPass(e.target.value)}
+                          value={pass}
+                          required
+                        ></input>
+                      </div>
+                      <div className="mb-4">
+                        <input
+                          className="form-control"
+                          id="registerPassInput"
+                          type="password"
+                          placeholder="Confirm Password"
+                          onChange={(e) => setConfirmPass(e.target.value)}
+                          value={confirmPass}
+                          required
+                        ></input>
+                      </div>
+{/* TODO: QUE CUANDO SE PINCHE EL BOTON REGISTER SE TRASLADE AL LOGIN PILL */}
                       <input
                         type="button"
                         value="Register"
@@ -205,17 +249,20 @@ export const Login = (props) => {
                             setEmailValidation(true);
                           } else {
                             setPassMatch(false);
-                            actions.signup(
-                              nickname,
-                              username,
-                              surname,
-                              email,
-                              pass
-                            );
-
-                            // Reset de la flag EmailValidation
-                            //   setEmailValidation(false);
-                            //   actions.setMyAuthFlag(true)  //comprobar si esto funciona
+                            setEmailValidation(false); // Reset de la flag EmailValidation
+                            
+                            selected = false
+                            setActive("")
+                            setNoActive("active")
+                            setSele("true")
+                            setLese("false")
+                            // actions.signup(
+                            //   nickname,
+                            //   username,
+                            //   surname,
+                            //   email,
+                            //   pass
+                            // );
                           }
                         }}
                       ></input>

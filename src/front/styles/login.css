@@ -1,6 +1,6 @@
 .pos_login{
     position: absolute;
-    top: 100px;
+    top: 200px;
     right: 200px;
     background-color: rgb(224, 223, 223);
 }
@@ -29,3 +29,8 @@ button.active{
     background-color: rgb(226, 189, 54);
     border-color: rgb(226, 189, 54);
 }
+
+.form-control:focus { 
+    border-color: rgb(226, 189, 54); 
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.075), 0px 0px 8px 3px rgb(226, 189, 54); }
+

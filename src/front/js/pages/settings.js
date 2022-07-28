@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Navigate, Link, useParams } from "react-router-dom";
 
 import { Navbar } from "../component/navbar";
+import { Footer } from "../component/footer";
 import { Beerdetail } from "../component/Beer-detail.jsx";
 import { CardCategoryMini } from "../component/Card-category-mini.jsx";
 
@@ -268,16 +269,21 @@ export const Settings = () => {
           <hr className="w-50 mx-auto mb-4"></hr>
         </div>
 
-        <div className="container w-50 d-flex flex-column div-category-mini justify-content-center my-4">
-          <div
-            class="alert alert-danger d-flex align-items-center"
-            role="alert"
+        <div className="container d-flex flex-column align-items-center my-4">
+          <form
+            className="p-3 border rounded max text-center"
+            target="dummyframe"
           >
-            <p className="mx-auto p-0 m-0">
-              Caution, if you delete a beer it is not recuperable.
-            </p>
-          </div>
-          <form className="p-3 border rounded" target="dummyframe">
+            <div
+              class="alert alert-danger d-flex max align-items-center"
+              role="alert"
+            >
+              <i className="fas fa-exclamation-triangle"></i>
+              <p className="mx-auto p-0 m-0">
+                <strong>CAUTION</strong>, if you delete a beer it is not
+                recuperable.
+              </p>
+            </div>
             <select
               className="form-select"
               aria-label="Default select example"
@@ -327,6 +333,7 @@ export const Settings = () => {
         </div>
 
         <iframe name="dummyframe" id="dummyframe"></iframe>
+        <Footer></Footer>
       </>
       {/* :
         <Navigate to="/" />} */}
@@ -334,6 +341,7 @@ export const Settings = () => {
   );
 };
 
+// Esto es el Fetch que se hace al borrar una cerveza
 const deleteFetch = (beer_delete_id) => {
   const tok = localStorage.getItem("token");
   if (beer_delete_id) {

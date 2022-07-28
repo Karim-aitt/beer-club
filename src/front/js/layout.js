@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Context } from "./store/appContext";
@@ -9,7 +9,8 @@ import { Login } from "./pages/login";
 import { Categories } from "./pages/categories";
 import { CategoryDetail } from "./pages/category_detail";
 import { Userpage } from "./pages/user_page.js";
-import { Settings } from "./pages/settings.js"
+import { Settings } from "./pages/settings.js";
+import { Messages } from "./pages/messages";
 
 import injectContext from "./store/appContext";
 
@@ -18,77 +19,66 @@ import { Footer } from "./component/footer";
 
 //create your first component
 const Layout = () => {
-    const { store, actions } = useContext(Context);
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-    const basename = process.env.BASENAME || "";
-    const [loading, setLoading] = useState(false);
-    const [votes, getVotes] = useState(store.userVotes);
+  const { store, actions } = useContext(Context);
+  //the basename is used when your project is published in a subdirectory and not in the root of the domain
+  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  const basename = process.env.BASENAME || "";
+  const [loading, setLoading] = useState(false);
+  const [votes, getVotes] = useState(store.userVotes);
 
-    useEffect(() => {
-      if(store.userVotes == false){
-        ""
-      } else {
+  useEffect(() => {
+    if (store.userVotes == false) {
+      ("");
+    } else {
+      fetch(`${config.hostname}/api/vote`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + store.token,
+        },
+      })
+        .then((res) => {
+          if (res.status == 200) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          actions.saveUserDataVotes(data);
+        });
+    }
+  }, [store.userVotes]);
 
-        fetch(`${config.hostname}/api/vote`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': "Bearer " + store.token
-          }
-      })
-      .then(res => {
-          if(res.status == 200){
-            return res.json()
-          }
-      })
-      .then(data => {
-        actions.saveUserDataVotes(data)
-      })
-      }
-    }, [store.userVotes])
-    
-      if(loading){
-            return (
-                <div className="spinner-border text-danger m-auto" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            )
-          }
-
+  if (loading) {
     return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    {/* <Navbar /> */}
-                    <Routes>
-                        <Route element={<Home />} path="/home" />
-                        <Route element={<Login />} path="/" />
-                        <Route element={<Categories />} path="/categories" />
-                        <Route element={<CategoryDetail />} exact path="/categories/:id" />
-                        <Route element={<Userpage />} path="/userpage/:id" />
-                        <Route element={<Settings />} path="/settings"/>
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    {/* <Footer /> */}
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+      <div className="spinner-border text-danger m-auto" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
     );
+  }
+
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
+          {/* <Navbar /> */}
+          <Routes>
+            <Route element={<Home />} path="/home" />
+            <Route element={<Login />} path="/" />
+            <Route element={<Categories />} path="/categories" />
+            <Route element={<CategoryDetail />} exact path="/categories/:id" />
+            <Route element={<Userpage />} path="/userpage/:id" />
+            <Route element={<Settings />} path="/settings" />
+            <Route element={<Messages />} path="/mps" />
+            <Route element={<h1>Not found!</h1>} />
+          </Routes>
+          {/* <Footer /> */}
+        </ScrollToTop>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, {useEffect, useContext, useState} from "react";
 // import { Context } from "./store/appContext";
@@ -119,8 +109,6 @@ export default injectContext(Layout);
 //     const [loading, setLoading] = useState(false);
 //     const [votes, getVotes] = useState(store.userVotes);
 
-    
-
 //     useEffect(() => {
 //       if(store.userVotes == false){
 //         ""
@@ -145,20 +133,18 @@ export default injectContext(Layout);
 //       }
 //       console.log(store.userDataVotes)
 //     }, [store.userVotes])
-    
+
 //       if(loading){
-    //         return (
-    //             <div className="spinner-border text-danger m-auto" role="status">
-    //                 <span className="sr-only">Loading...</span>
-    //             </div>
-    //         )
-    //       }
-
-
+//         return (
+//             <div className="spinner-border text-danger m-auto" role="status">
+//                 <span className="sr-only">Loading...</span>
+//             </div>
+//         )
+//       }
 
 //     useEffect(() => {
 //         const token = localStorage.getItem("token")
-    
+
 //         if(token){
 //           fetch(`${config.hostname}/api/validation`, {
 //             method: 'GET',
@@ -168,25 +154,25 @@ export default injectContext(Layout);
 //             }
 //           })
 //           .then(res => {
-            
+
 //             res.json()
 
 //           })
 //           .then(data => {
 //             actions.setmyAuthFlag(true)
-            
+
 //             setLoading(false)
 //           })
 //           .catch((e) => {
-            
+
 //             console.log(e)
 //           })
-          
+
 //         }
-    
+
 //       },[])
 
-//       
+//
 
 //     return (
 //         <div className="backgroundColor">
@@ -195,7 +181,7 @@ export default injectContext(Layout);
 //                     <Navbar />
 //                     <Banner />
 //                     {/* <Bodybar /> */}
-                    
+
 //                     <Routes>
 //                         <Route element={<Home />} path="/" />
 //                         <Route element={<Userpage />} path="/userpage" />

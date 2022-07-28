@@ -129,40 +129,40 @@ export const Home = () => {
               )}
             </div>
 
-            <div className="mt-5 ms-3">
+            <div className="d-none d-md-block mt-5 ms-3">
               <div className="sticky-top py-2">
-              {/* ESTO ES EL DIV DONDE SE GENERAN TODAS LAS CARDS DE CATEGORIAS */}
-              <form className="mb-2">
-                <input
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="form-control me-2 border-dark text-dark "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </form>
+                {/* ESTO ES EL DIV DONDE SE GENERAN TODAS LAS CARDS DE CATEGORIAS */}
+                <form className="mb-2">
+                  <input
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-control me-2 border-dark text-dark "
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                </form>
 
-              <div className="d-none d-md-block mes me-auto borde back-color">
-                <div className="mes-header fw-bold text-center bg-dark">
-                  <p className="py-2 px-2 text-white">Categories</p>
+                <div className="d-none d-md-block mes me-auto borde back-color">
+                  <div className="mes-header fw-bold text-center bg-dark">
+                    <p className="py-2 px-2 text-white">Categories</p>
+                  </div>
+                  <CardCategory />
                 </div>
-                <CardCategory />
-              </div>
 
-              <div className="d-flex justify-content-evenly m-2">
-                <a
-                  className="fab fa-instagram fs-3 decor-link"
-                  aria-current="page"
-                  href="https://www.instagram.com"
-                />
-                <a
-                  className="fab fa-twitter fs-3 decor-link"
-                  aria-current="page"
-                  href="https://www.twitter.com"
-                />
+                <div className="d-flex justify-content-evenly m-2">
+                  <a
+                    className="fab fa-instagram fs-3 decor-link"
+                    aria-current="page"
+                    href="https://www.instagram.com"
+                  />
+                  <a
+                    className="fab fa-twitter fs-3 decor-link"
+                    aria-current="page"
+                    href="https://www.twitter.com"
+                  />
+                </div>
+                <p className="text-secondary text-center">© 2022 BEER CLUB</p>
               </div>
-              <p className="text-secondary text-center">© 2022 BEER CLUB</p>
-            </div>
             </div>
           </div>
           {/* COLOCAR DEBAJO DE CATEGORIAS */}

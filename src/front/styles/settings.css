@@ -6,3 +6,7 @@
 .alert-set{
     display: none;
 }
+
+.max{
+    max-width: 400px;
+}

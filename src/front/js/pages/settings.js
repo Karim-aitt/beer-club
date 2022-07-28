@@ -15,9 +15,9 @@ import config from "../config";
 export const Settings = () => {
   const { store, actions } = useContext(Context);
   const [userBeers, setUserBeers] = useState([]);
-  const [beer_id, setBeer_id] = useState()
-  const [beer_delete_id, setBeer_delete_id] = useState()
-  
+  const [beer_id, setBeer_id] = useState();
+  const [beer_delete_id, setBeer_delete_id] = useState();
+
   const [name, setName] = useState("");
   const [source, setSource] = useState("");
   const [alcohol, setAlcohol] = useState("");
@@ -27,7 +27,11 @@ export const Settings = () => {
   const [category, setCategory] = useState("1");
   const [image, setImage] = useState();
 
-// Esto es para cargar las cervezas del usuario
+  //Para las alertas al hacer submit
+  const [alert, setAlert] = useState("alert-set");
+  const [alert_delete, setAlert_delete] = useState("alert-set");
+
+  // Esto es para cargar las cervezas del usuario
   useEffect(() => {
     fetch(`${config.hostname}/api/beers/user/${store.userpage_id}`)
       .then((res) => {
@@ -35,9 +39,9 @@ export const Settings = () => {
       })
       .then((data) => setUserBeers(data))
       .catch((error) => console.log({ error }));
-  }, []);
+  }, [store.beers]);
 
-// Esto es para que funcione el tooltip
+  // Esto es para que funcione el tooltip
   var tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
@@ -45,25 +49,33 @@ export const Settings = () => {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
-// --------------------------------------
+  // --------------------------------------
 
-// const form = document.getElementById("updateForm")
-// const formData = new FormData();
-// const updateFetch = () => {
-//     // const formData = new FormData(form);
-//     // console.log(formData)
-//     formData.append("file", image)
-//     formData.append("name", name)
-//     formData.append("category", category)
-//     formData.append("smell", smell)
-//     formData.append("source", source)
-//     formData.append("alcohol", alcohol)
-//     formData.append("company", company)
-//     formData.append("description", description)
+  //POPOVER
+  var popoverTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="popover"]')
+  );
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
 
-//     fetch('https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}', method)
-    
-// }
+  // const form = document.getElementById("updateForm")
+  // const formData = new FormData();
+  // const updateFetch = () => {
+  //     // const formData = new FormData(form);
+  //     // console.log(formData)
+  //     formData.append("file", image)
+  //     formData.append("name", name)
+  //     formData.append("category", category)
+  //     formData.append("smell", smell)
+  //     formData.append("source", source)
+  //     formData.append("alcohol", alcohol)
+  //     formData.append("company", company)
+  //     formData.append("description", description)
+
+  //     fetch('https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}', method)
+
+  // }
 
   return (
     <>
@@ -81,27 +93,24 @@ export const Settings = () => {
           <hr className="w-50 mx-auto mb-4"></hr>
         </div>
         <div className="container w-75 d-flex div-category-mini justify-content-center">
-
           <form
-          id="updateForm"
-          target="dummyframe"
-          method="post"
-          action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
-          encType="multipart/form-data"
-          className="p-3 border rounded">
+            id="updateForm"
+            target="dummyframe"
+            method="post"
+            action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
+            encType="multipart/form-data"
+            className="p-3 border rounded"
+          >
             <input type="hidden" name="_method" value="put" />
-            <select 
-            className="form-select" 
-            aria-label="Default select example"
-            onChange={(e) => setBeer_id(e.target.value)}
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => setBeer_id(e.target.value)}
             >
-              <option value="0">
-                Select your beer
-              </option>
+              <option value="0">Select your beer</option>
               {userBeers.length > 0 ? (
                 userBeers.map((elem, i) => {
                   return (
-                    
                     <option key={elem.id} value={elem.id}>
                       {elem.name}
                     </option>
@@ -183,12 +192,13 @@ export const Settings = () => {
                 required
               />
             </div>
-            <select 
-            className="form-select" 
-            aria-label="Default select example"
-            name="category"
-            onChange={(e) => setCategory(e.target.value)}
-            required>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              name="category"
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
               <option>Select category</option>
               {store.categories.length > 0 ? (
                 store.categories.map((elem, i) => {
@@ -229,13 +239,27 @@ export const Settings = () => {
                 type="submit"
                 className="btn btn-dark px-5"
                 value="Submit"
-                // onClick={updateFetch}
+                onClick={() => setAlert("")}
               ></input>
             </div>
           </form>
+
+          <div
+            className={`mt-3 w-75 alert alert-success alert-dismissible fade show ${alert}`}
+            role="alert"
+          >
+            <strong>Beer updated!</strong>
+            <button
+              type="button"
+              className="btn-close ms-3"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+              onClick={() => setAlert("alert-set")}
+            ></button>
+          </div>
         </div>
 
-{/* ------------------------------------------  DELETE BEER ----------------------------------------
+        {/* ------------------------------------------  DELETE BEER ----------------------------------------
 -------------------------------------------------------------------- --------------------------------*/}
 
         <div>
@@ -244,16 +268,21 @@ export const Settings = () => {
           <hr className="w-50 mx-auto mb-4"></hr>
         </div>
 
-        <div className="container w-75 d-flex div-category-mini justify-content-center mt-4">
-          <form 
-          className="p-3 border rounded" 
-          target="dummyframe"
+        <div className="container w-50 d-flex flex-column div-category-mini justify-content-center my-4">
+          <div
+            class="alert alert-danger d-flex align-items-center"
+            role="alert"
           >
-            <select 
-            className="form-select" 
-            aria-label="Default select example"
-            onChange={(e) => setBeer_delete_id(e.target.value)}
-            required
+            <p className="mx-auto p-0 m-0">
+              Caution, if you delete a beer it is not recuperable.
+            </p>
+          </div>
+          <form className="p-3 border rounded" target="dummyframe">
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => setBeer_delete_id(e.target.value)}
+              required
             >
               <option defaultValue={"Select your Beer"}>
                 Select your beer
@@ -273,19 +302,55 @@ export const Settings = () => {
             <div className="text-center mt-4">
               <input
                 className="btn btn-danger px-5"
-                type="submit"
+                type="button"
                 value="Delete"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Be careful!! You can't recuperate your beer once it is deleted"
+                onClick={() => {
+                  deleteFetch(beer_delete_id);
+                  setAlert_delete("");
+                }}
               ></input>
             </div>
           </form>
+          <div
+            className={`mt-3 alert alert-success alert-dismissible fade show ${alert_delete}`}
+            role="alert"
+          >
+            <strong>Beer deleted!</strong>
+            <button
+              type="button"
+              className="btn-close ms-3"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+              onClick={() => setAlert_delete("alert-set")}
+            ></button>
+          </div>
         </div>
+
         <iframe name="dummyframe" id="dummyframe"></iframe>
       </>
       {/* :
         <Navigate to="/" />} */}
     </>
   );
+};
+
+const deleteFetch = (beer_delete_id) => {
+  const tok = localStorage.getItem("token");
+  if (beer_delete_id) {
+    fetch(
+      `https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/${beer_delete_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tok,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        data;
+      })
+      .catch((error) => console.log({ error }));
+  }
 };

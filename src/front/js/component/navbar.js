@@ -58,9 +58,9 @@ export const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
-                Settings
-              </a>
+              <Link className="dropdown-item" to="/settings/">
+              Settings
+              </Link>
             </li>
             <li>
               <hr className="dropdown-divider" />

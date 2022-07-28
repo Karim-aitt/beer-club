@@ -8,7 +8,7 @@ export const CardCategoryMini = (props) => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="">
+        <div className="mx-1">
             <img src={props.image} alt="CategoryMiniImage" className="img-category-mini mx-auto"/>
             <p className="col-12 mt-2 text-center fw-bold category-name-position capital">{props.nombre}</p>
         </div>

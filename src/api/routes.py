@@ -405,12 +405,18 @@ def update_beer(id):
 def delete_beer(id):
 
     beer = Beer.query.get(id)
-    print(beer)
-    return ""
+    votes = Vote.query.filter_by(beer_id=id).delete()
+    comments = Comment.query.filter_by(beer_id=id).delete()
+    
+
     if id is None:
-        raise APIException("BEER DELETE")
+        raise APIException("No existe esa beer")
+
     db.session.delete(beer)
+    # db.session.delete(votes)
+    # db.session.delete(comments)
     db.session.commit()
+
     return jsonify(beer.serialize())
 
 

@@ -328,26 +328,72 @@ def add_Beer():
 
 #__________________________________UPDATE BEER__________________________________#
 
-@api.route('/beers/<int:id>' , methods=['PUT'])
+@api.route('/beers/update/<int:id>' , methods=['POST'])
 def update_beer(id):
 
     beer = Beer.query.get(id)
+    user_id = beer.user_id
+
+    print(">>>>>>>>>>> 1")
+
+    image_to_load = request.files["file"]
+    if not image_to_load:
+        return jsonify("imagen no existe")
+
+    print(">>>>>>>>>>> 2")
+
+    result = cloudinary.uploader.upload(image_to_load)
+    url=result['url']
+
+    print(">>>>>>>>>>> 3")
+    category=int(request.form["category"])
+    name=request.form["name"]
+    smell=request.form["smell"]
+    source=request.form["source"]
+    alcohol=request.form["alcohol"]
+    company=request.form["company"]
+    description=request.form["description"]
+
+    print(">>>>>>>>>>> 4")
+
+    print(">>>>>>>>>>> 5")
     
-    body = request.get_json()
-    if "image" in body:
-        beer.image = body["image"]
-    elif "name" in body:
-        beer.name = body["name"]
-    elif "smell" in body:
-        beer.smell = body["smell"]
-    elif "source" in body:
-        beer.source = body["source"]
-    elif "alcohol" in body:
-        beer.alcohol = body["alcohol"]
-    elif "company" in body:
-        beer.company = body["company"]
-    elif "description" in body:
-        beer.description = body["description"]
+    beer.user_id = user_id
+    beer.category_id = category
+
+    if name != beer.name: 
+        beer.name = name.lower()
+    else:
+        beer.name = beer.name
+
+    beer.image = url
+    beer.smell = smell.lower()
+    beer.source = source.lower()
+    beer.alcohol = alcohol
+    beer.company = company.lower()
+    beer.description = description.lower()
+    
+    print(">>>>>>>>>>> 6")
+    db.session.commit()
+    
+    print(">>>>>>>>>>> 7")
+    return jsonify("ok"), 201
+    
+    # body = request.get_json()
+    # if "image" in body:
+    #     beer.image = body["image"]
+    # elif "name" in body:
+    #     beer.name = body["name"]
+    # elif "smell" in body:
+    #     beer.smell = body["smell"]
+    # elif "source" in body:
+    #     beer.source = body["source"]
+    # elif "alcohol" in body:
+    #     beer.alcohol = body["alcohol"]
+    # elif "company" in body:
+    #     beer.company = body["company"]
+    # elif "description" in body:
+    #     beer.description = body["description"]
 
     db.session.commit()
 

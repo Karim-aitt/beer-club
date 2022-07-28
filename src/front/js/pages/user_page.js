@@ -71,7 +71,7 @@ export const Userpage = () => {
 			  <div className="me-sm-3"></div>
         <div>
                 {/* ZONA DE TITULO */}
-                <h2 className="text-center my-3">Cervezas creadas por {`${userNickname}`}</h2>
+                <h2 className="text-center my-3">Beers created by {`${userNickname}`}</h2>
                 <hr className="w-50 mx-auto"></hr>
             </div>
 
@@ -94,7 +94,7 @@ export const Userpage = () => {
             </div>
             <div>
                 {/* ZONA DE TITULO */}
-                <h2 className="text-center my-3">Cervezas que le gustan a {`${userNickname}`}</h2>
+                <h2 className="text-center my-3">Beers that {`${userNickname}`} likes</h2>
                 <hr className="w-50 mx-auto"></hr>
             </div>
             <div className="container w-75 d-flex div-category-mini justify-content-center">

@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import { Categories } from "./pages/categories";
 import { CategoryDetail } from "./pages/category_detail";
 import { Userpage } from "./pages/user_page.js";
+import { Settings } from "./pages/settings.js"
 
 import injectContext from "./store/appContext";
 
@@ -66,7 +67,7 @@ const Layout = () => {
                         <Route element={<Categories />} path="/categories" />
                         <Route element={<CategoryDetail />} exact path="/categories/:id" />
                         <Route element={<Userpage />} path="/userpage/:id" />
-                        
+                        <Route element={<Settings />} path="/settings"/>
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     {/* <Footer /> */}

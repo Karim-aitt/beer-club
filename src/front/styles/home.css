@@ -43,44 +43,6 @@
     #----------------- BANNER    -----------------#
     #---------------------------------------------# */
 
-    /* .banner-img{
-        filter: grayscale(100%); 
-        position:  relative;
-        bottom: 40px; 
-    } */
-
-    /* @media only screen and (max-width: 2560px){
-        .banner-img{
-            position: relative;
-            bottom: 550px;
-        }
-    }
-
-    @media only screen and (max-width: 1920px){
-        .banner-img{
-            position: relative;
-            bottom: 350px;
-        }
-    }
-
-    @media only screen and (max-width: 1440px){
-        .banner-img{
-            position: relative;
-            bottom: 265px;
-        }
-    }
-    @media only screen and (max-width: 1024px){
-        .banner-img{
-            position: relative;
-            bottom: 150px;
-        }
-    }
-    @media only screen and (max-width: 483px){
-        .banner-img{
-            position: relative;
-            bottom: 20px;
-        }
-    } */
     
 
     .banner-container{
@@ -127,6 +89,12 @@
     width: 300px;
     
 } */
+.asd{
+    width: 100%;
+}
+.ddd{
+    display: inline;
+}
 
 .mes-header{
     border-top-left-radius: 5px;

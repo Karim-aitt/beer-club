@@ -52,7 +52,7 @@ export const CardDetail = (props) => {
   }
 
   return (
-    <div className="card custom-style-detail mx-auto mt-5">
+    <div className="card custom-style-detail mx-auto mt-5"> 
       <div className="card-header p-0">
         <img className="img-fluid img-card-banner" src={fondo}></img>
       </div>

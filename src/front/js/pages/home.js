@@ -74,10 +74,9 @@ export const Home = () => {
                   getNameCategory(result.category_id);
 
                   return (
-                    <div className="bounce-in-top rounded">
+                    <div key={i} className="bounce-in-top rounded">
                       <CardDetail
                         databeer={result}
-                        key={i}
                         beer_id={result.id}
                         name={result.name}
                         type={cat_name1}

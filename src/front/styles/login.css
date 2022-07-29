@@ -22,6 +22,10 @@ button.active{
     color: white;
 }
 
+.mux{
+    max-height: 347px;
+}
+
 .h-center{
     height: 100%;
 }
@@ -58,4 +62,3 @@ div className="rounded w-25 ms-auto pos_login container-width"
 .form-control:focus { 
     border-color: rgb(226, 189, 54); 
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.075), 0px 0px 8px 3px rgb(226, 189, 54); }
-

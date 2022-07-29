@@ -46,22 +46,22 @@ export const Login = (props) => {
           </video>
 
           <div className="container d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
-            <div className="col-5 bg-color d-flex justify-content-center align-items-center rounded">
-            <div className="">
+            <div className="col-5 bg-color mux d-flex justify-content-center align-items-center rounded">
+            <div className=" rounded">
               <span className="text-center">
                 <h1 className="fec pe-4 m-0 h-color">BEER</h1>
                 <h1 className="fec ps-4 m-0 mb-4">CLUB</h1>
               </span>
               <div className="d-flex align-items-center justify-content-center">
-              <i className="fas fa-search px-3 pb-1 fs-4"></i><h5 className="fs-5">Explore new beers.</h5>
+              <i className="fas fa-search pe-1 pb-1 fs-4"></i><h5 className="fs-5">Explore new beers.</h5>
               </div>
               <div className="d-flex align-items-center justify-content-center">
-              <i className="far fa-comment px-3 pb-1 fs-4 text-dark"></i><h5 className="fs-5">Comment, rate, contact.</h5>
+              <i className="far fa-comment pe-1 pb-1 fs-4 text-dark"></i><h5 className="fs-5">Comment, rate, contact.</h5>
               </div>
               <div className="d-flex align-items-center justify-content-center mb-5">
-              <i className="fas fa-beer px-3 pb-1 fs-4"></i><h5 className="fs-5 jello-horizontal"><span className="text-white">Join</span> the club.</h5>
+              <i className="fas fa-beer pe-1 fs-3"></i><h5 className="fs-3 jello-horizontal"><span className="text-white">Join</span> the club.</h5>
               </div>
-              
+              <p className="text-secondary text-center">© 2022 BEER CLUB</p>
             </div>
             </div>
             <div className="col-5 puff-in-center">
@@ -190,7 +190,7 @@ export const Login = (props) => {
                             required
                           ></input>
                           <div id="nicknameHelp" className="form-text">
-                            <p className="ms-2">
+                            <p className="ms-2 text-dark">
                               The name who everyone will see
                             </p>
                           </div>
@@ -207,7 +207,7 @@ export const Login = (props) => {
                             required
                           ></input>
                           <div id="registerEmailHelp" className="form-text">
-                            <p className="ms-2">
+                            <p className="ms-2 text-dark">
                               We'll never share your email with anyone else.
                             </p>
                           </div>

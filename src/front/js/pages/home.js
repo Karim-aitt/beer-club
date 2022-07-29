@@ -74,17 +74,19 @@ export const Home = () => {
                   getNameCategory(result.category_id);
 
                   return (
-                    <CardDetail
-                      databeer={result}
-                      key={i}
-                      beer_id={result.id}
-                      name={result.name}
-                      type={cat_name1}
-                      alcohol={result.alcohol}
-                      company={result.company}
-                      img={result.image}
-                      descrip={result.description}
-                    />
+                    <div className="bounce-in-top rounded">
+                      <CardDetail
+                        databeer={result}
+                        key={i}
+                        beer_id={result.id}
+                        name={result.name}
+                        type={cat_name1}
+                        alcohol={result.alcohol}
+                        company={result.company}
+                        img={result.image}
+                        descrip={result.description}
+                      />
+                    </div>
                   );
                 })
               ) : (

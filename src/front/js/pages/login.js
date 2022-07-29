@@ -59,12 +59,12 @@ export const Login = (props) => {
               <i className="far fa-comment px-3 pb-1 fs-4 text-dark"></i><h5 className="fs-5">Comment, rate, contact.</h5>
               </div>
               <div className="d-flex align-items-center justify-content-center mb-5">
-              <i className="fas fa-beer px-3 pb-1 fs-4"></i><h5 className="fs-5">Join the club.</h5>
+              <i className="fas fa-beer px-3 pb-1 fs-4"></i><h5 className="fs-5 jello-horizontal">Join the club.</h5>
               </div>
               
             </div>
             </div>
-            <div className="col-5">
+            <div className="col-5 puff-in-center">
               <div className="rounded mx-auto pos_login container-form-width bg-color p-2">
                 <ul
                   className="nav nav-pills mb-3"

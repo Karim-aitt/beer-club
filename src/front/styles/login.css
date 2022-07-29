@@ -1,16 +1,27 @@
-.pos_login{
+/* .pos_login{
     position: absolute;
     top: 200px;
     right: 200px;
     background-color: rgb(224, 223, 223);
-}
+} */
 
 button.active{
     background-color: black !important;
     color: white !important;
 }
 
-.container-width{
+.bg-color{
+    background-color: rgba(224, 223, 223, 0.446);
+}
+.h-color{
+    color: white;
+}
+
+.h-center{
+    height: 100%;
+}
+
+.container-form-width{
     max-width: 400px;
 }
 
@@ -24,6 +35,15 @@ button.active{
     left: 0;
     
 }
+
+/* .video{
+    width: 100%;
+    height: auto;
+} */
+
+/* 
+div className="rounded w-25 ms-auto pos_login container-width"
+*/
 
 .btn-dark:hover{
     background-color: rgb(226, 189, 54);

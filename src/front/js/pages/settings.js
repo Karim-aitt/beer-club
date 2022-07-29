@@ -50,7 +50,7 @@ export const Settings = () => {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
-  // --------------------------------------
+ // --------------------------------------
 
   //POPOVER
   var popoverTriggerList = [].slice.call(
@@ -78,6 +78,28 @@ export const Settings = () => {
 
   // }
 
+  // const [data, setData] = useState({});
+
+  // const handleChange = (event) => {
+  //   setData({ ...data, [event.target.name]: event.target.value });
+  // };
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("name", data.name);
+  //   formData.append("email", data.email);
+  //   formData.append("file", data.file);
+    
+  //   let response = await fetch('URL', {
+  //     method: 'PUT',
+  //     body: formData,
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data;'
+  //     }
+  //   })
+  // };
+
   return (
     <>
       {/* {store.token != null ? */}
@@ -93,6 +115,16 @@ export const Settings = () => {
           <h2 className="text-center my-3">Update your Beer</h2>
           <hr className="w-50 mx-auto mb-4"></hr>
         </div>
+        {/* AQUI FORM PRUEBA
+        <div>
+          <form onSubmit={handleSubmit}>
+            <input type="text" name="name" onChange={handleChange} />
+            <input type="text" name="email" onChange={handleChange} />
+            <input type="file" name="fichero" onChange={handleChange} />
+            <button>Registrar</button>
+          </form>
+        </div> */}
+
         <div className="container w-75 d-flex div-category-mini justify-content-center">
           <form
             id="updateForm"
@@ -275,7 +307,7 @@ export const Settings = () => {
             target="dummyframe"
           >
             <div
-              class="alert alert-danger d-flex max align-items-center"
+              className="alert alert-danger d-flex max align-items-center"
               role="alert"
             >
               <i className="fas fa-exclamation-triangle"></i>

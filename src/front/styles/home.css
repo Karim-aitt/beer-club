@@ -18,6 +18,9 @@
         background: rgb(204, 168, 40);
     }
     
+    .custom-container{
+        max-width: 900px;
+    }
     .custom-img{
     max-height: 90%;
     max-width: 170%;
@@ -89,12 +92,7 @@
     width: 300px;
     
 } */
-.asd{
-    width: 100%;
-}
-.ddd{
-    display: inline;
-}
+
 
 .mes-header{
     border-top-left-radius: 5px;

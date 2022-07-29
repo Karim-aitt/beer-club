@@ -57,7 +57,7 @@ export const Home = () => {
             <img className="img-fluid d-flex mx-auto" src={banner} />
           </div>
           <div className="d-flex flex-row justify-content-center px-0">
-            <div className="me-sm-3 py-2">
+            <div className="me-sm-3 py-2 custom-container">
               {/* AQUI SE GENERAN TODAS LAS CARDS PRINCIPALES Y LA CARD RESULTANTE DE LA BUSQUEDA*/}
               {/* CARD RESULTANTE DE LA BUSQUEDA */}
               {results.length > 0 ? (
@@ -90,7 +90,7 @@ export const Home = () => {
                 })
               ) : (
                 // TODAS LAS CARDS
-                <div>
+                <div className="d-flex flex-wrap justify-content-center">
                   {store.beers.length > 0 ? (
                     store.beers.map((elem, i) => {
                       let cat_name2 = "";
@@ -130,10 +130,10 @@ export const Home = () => {
               )}
             </div>
 
-            <div className="d-none d-md-block mt-5 ms-3">
+            <div className="d-none d-md-block mt-5 ">
               <div className="sticky-top py-2">
                 {/* ESTO ES EL DIV DONDE SE GENERAN TODAS LAS CARDS DE CATEGORIAS */}
-                <form className="mb-2">
+                <form className="mb-2" onSubmit={(e) => {e.preventDefault()}}>
                   <input
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="form-control me-2 border-dark text-dark "

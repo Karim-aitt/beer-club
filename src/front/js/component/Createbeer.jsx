@@ -22,37 +22,6 @@ export const Createbeer = () => {
   const [allfill, setAllfill] = useState(false); //flag de "rellenar todos los campos"
   const [allDone, setAllDone] = useState(false); //flag Registro completado
 
-  //subir Imagen
-   //para manejar las imagenes subidas
-  
-
-// const handleSend = (event) => {
-//   event.preventDefault()
-//   const token = localStorage.getItem("token")
-
-//   const formData = new FormData();
-//   formData.append("file", imagen)
-//   formData.append("name", nombre)
-//   formData.append("category", category)
-//   formData.append("source", source)
-//   formData.append("alcohol", alcohol)
-//   formData.append("smell", aroma)
-//   formData.append("company", autor)
-//   formData.append("description", descrip)
-
-//   console.log("esto es formData",formData, {formData})
-//   fetch(`${config.hostname}/api/beers`, {
-//     method: "POST",
-//     body: JSON.stringify({formData}),
-//     headers: {
-//       'Content-Type': 'multipart/form-data',
-//       'Authorization': "Bearer " + token
-//     } 
-//   })
-//   .then(res => res.json())
-//   .then(data => data)
-//   .catch(error => {console.log("esto es error",error, {error})})
-// }
 
   return (
     <div
@@ -61,7 +30,7 @@ export const Createbeer = () => {
       tabIndex="-1"
       aria-labelledby="createbeerModalLabel"
       aria-hidden="true"
-    >
+    > 
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header bg-dark rounded">
@@ -69,11 +38,11 @@ export const Createbeer = () => {
               Beer register form
             </h5>
             <button
-              type="button"
-              className="btn-close white"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+                type="button"
+                className="text-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >x</button>
           </div>
           <div className="modal-body color-back">
 {/* FORM */}

@@ -24,6 +24,7 @@ export const Messages = () => {
         <div className="me-sm-3"></div>
         <div>
           {/* ZONA DE TITULO */}
+          
           <h2 className="text-center my-3">Private Messages</h2>
           <hr className="w-50 mx-auto"></hr>
         </div>

@@ -8,13 +8,27 @@ border-left: 1px solid rgb(167, 167, 167);
     border-bottom: 1px solid rgb(167, 167, 167);
 }
 
+.color-bg-header{
+    background-color: rgb(224, 223, 223);
+}
+
+.button-opacity{
+}
+
 .body-w{
     width: 700px;
 }
 
 .modal-image{
-
+    border-radius: 200px;
     height: 250px;
+    overflow: hidden;
+}
+.div-image{
+    overflow: hidden;
+    border-radius: 200px;
+    display: flex;
+    justify-content: center;
 }
 
 .input-comment{

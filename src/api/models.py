@@ -26,7 +26,6 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
-
 class Category(db.Model):
     __tablename__="category"
     id = db.Column(db.Integer, primary_key=True)
@@ -137,4 +136,31 @@ class Comment(db.Model):
             "comment": self.comment,
             "creation_date": self.creation_date,
             "user": self.user.nickname if self.user is not None else 'UsuarioDefault'
+        }
+
+
+class Messages(db.Model):
+    __tablename__="messages"
+    id = db.Column(db.Integer, primary_key=True)
+    # body
+    sender_id = db.Column(db.Integer)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    title_message = db.Column(db.String(80))
+    message = db.Column(db.String(255))
+    # info
+    date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    user = db.relationship('User')
+
+    def __repr__(self):
+        return f'<Messages {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sender_id": self.sender_id,
+            "receiver_id": self.receiver_id,
+            "sender_nickname": self.user.nickname,
+            "title_message": self.title_message,
+            "message": self.message,
+            "date": self.date,
         }

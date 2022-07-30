@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment
+from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages
 from api.utils import generate_sitemap, APIException
 import  bcrypt
 from flask_jwt_extended import create_access_token
@@ -719,3 +719,69 @@ def token_validation():
     usuarioData = get_jwt_identity()
     user_id = usuarioData['id']
     return jsonify(user_id)
+
+
+@api.route('/mp', methods=['GET'])
+@jwt_required()
+def get_messages():
+
+    usuarioData = get_jwt_identity()
+    user_id = usuarioData['id']
+
+    mp = Messages.query.filter_by(receiver_id=user_id).all()
+    all_user_mp = list(map(lambda mp: mp.serialize(), mp))
+    # print(">>>>>>>>>>>>>",all_user_mp)
+    return jsonify(all_user_mp)
+
+
+@api.route('/mp', methods=['POST'])
+@jwt_required()
+def post_message():
+    print(">>>>>> 0")
+
+    usuarioData = get_jwt_identity()
+    s_id = usuarioData['id']
+
+    print(">>>>>> 1")
+
+    body = request.get_json()
+
+    print(">>>>>> 2")
+
+    sender_id=int(s_id)
+
+    # if(body["id"] == None):
+    #     receiver_id=int(body['otra_id'])
+    # else:
+    receiver_id=int(body["id"])
+    title_message=body["title"]
+    message_text=body["message"]
+
+    print(">>>>>> 3")
+
+    m_post = Messages(
+        sender_id= sender_id,
+        receiver_id= receiver_id,
+        title_message= title_message.lower(),
+        message= message_text
+    )
+
+    print(">>>>>> 4")
+
+    db.session.add(m_post)
+    db.session.commit()
+
+    print(">>>>>> 5")
+    return jsonify("mensaje enviado")
+
+@api.route('/mp', methods=['DELETE'])
+@jwt_required()
+def delete_message():
+
+    body = request.get_json()
+    mp = Messages.query.filter_by(id=body["id"]).first()
+    # user_mp = list(map(lambda mp: mp.serialize(), mp))
+
+    db.session.delete(mp)
+    db.session.commit()
+    return jsonify("ok")

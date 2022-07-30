@@ -18,10 +18,6 @@ export const Createbeer = () => {
   const [autor, setAutor] = useState("");
   const [descrip, setDescrip] = useState("");
 
-  //flags
-  const [allfill, setAllfill] = useState(false); //flag de "rellenar todos los campos"
-  const [allDone, setAllDone] = useState(false); //flag Registro completado
-
 
   return (
     <div

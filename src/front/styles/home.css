@@ -111,3 +111,7 @@ color: black;
 .decor-link:hover{
     color:rgb(204, 168, 40)
 }
+
+.cont-wid{
+    max-width: 800px;
+}

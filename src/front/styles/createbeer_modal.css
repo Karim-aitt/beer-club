@@ -10,3 +10,12 @@
 #dummyframe{
     display: none;
 }
+
+.max-h{
+    max-height: 200px;
+}
+
+.pum{
+    overflow-y: auto;
+    white-space: wrap;
+}

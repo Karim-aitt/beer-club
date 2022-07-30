@@ -26,22 +26,6 @@ export const Createmessage = (props) => {
   const handleFetch = () => {
     const token = localStorage.getItem("token");
 
-    // if(id == undefined){
-    //     fetch(`${config.hostname}/api/mp`, {
-    //         method: "POST",
-    //         body: JSON.stringify({message, title, otra_id}),
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": "Bearer " + token,
-    //           },
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => data)
-    //     .catch(error => console.log("error createMessage fetch", {error}))
-
-    //   } 
-    //   else {
-    //     console.log(">>>>", id)
         fetch(`${config.hostname}/api/mp`, {
             method: "POST",
             body: JSON.stringify({message, title, id}),
@@ -107,7 +91,14 @@ export const Createmessage = (props) => {
               <button 
               type="button" 
               className="btn btn-dark"
-              onClick={() => handleFetch()}
+              onClick={() => 
+                {handleFetch()
+                    const modal = document.getElementById("messageModal")
+                    const m = bootstrap.Modal.getInstance(modal)
+                    m.hide()
+                }
+
+            }
               >
                 Submit
               </button>

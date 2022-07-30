@@ -81,7 +81,7 @@ export const Messages = () => {
               return (
                 <div
                   key={i}
-                  className="toast fade show m-4"
+                  className="toast fade show m-4 max-h pum"
                   role="alert"
                   aria-live="assertive"
                   aria-atomic="true"
@@ -98,14 +98,14 @@ export const Messages = () => {
                         {nick}
                       </Link>
                     </strong>
-                    <small>Delete</small>
+                    <small className="text-danger">DELETE</small>
                     <button
                       type="button"
-                      className="btn-close"
+                      className="text-danger fw-bold"
                       data-bs-dismiss="toast"
                       aria-label="Close"
                       onClick={() => handleDelete(elem.id)}
-                    ></button>
+                    >X</button>
                   </div>
                   <div className="toast-body">
                     <h5 className="">

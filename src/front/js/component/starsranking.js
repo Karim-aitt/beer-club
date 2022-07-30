@@ -46,8 +46,8 @@ export const Stars = (props) => {
             key={index}
             className={
               index <= (hover || props.punctuation)
-                ? "fa fa-star"
-                : "far fa-star"
+                ? "fa fa-star fs-5"
+                : "far fa-star fs-5"
             }
             onClick={() => {
               if (!props.punctuation) {

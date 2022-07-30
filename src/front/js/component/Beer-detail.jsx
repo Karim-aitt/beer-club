@@ -157,7 +157,7 @@ export const Beerdetail = (props) => {
               </div>
 
               <div className="col-7">
-                <div className="description py-3 mb-2">{beer.description}</div>
+                <div className="description py-3 mb-2"><strong>About:</strong><br></br>{beer.description}</div>
 
                 <div className="my-3 div-comments-body scrollhidden">
                   {
@@ -218,7 +218,7 @@ export const Beerdetail = (props) => {
               <form>
                 <input
                   type="text"
-                  className="p-2 pb-0 input-comment rounded"
+                  className="p-2  input-comment rounded"
                   placeholder="Post your comment..."
                   onChange={(e) => {
                     setComment(e.target.value);
@@ -229,8 +229,8 @@ export const Beerdetail = (props) => {
                   type="button"
                   className={
                     comment == ""
-                      ? "btn btn-sm mx-2 align-bottom disabled"
-                      : "btn btn-dark btn-sm mx-2 align-bottom"
+                      ? "btn btn-sm mx-2 mb-1 align-bottom disabled"
+                      : "btn btn-dark btn-sm mb-1 mx-2 align-bottom"
                   }
                   value="Submit"
                   onClick={() => {

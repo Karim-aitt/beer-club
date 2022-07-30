@@ -11,32 +11,37 @@ export const Createmessage = (props) => {
 
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
-  let { id } = useParams();
 
+  let { id } = useParams();
   const otra_id = props.other_id
 
+    console.log(">>>> otra_id", otra_id)
+    console.log(">>> id", id)
+  
+    if(!id){
+        id = otra_id
+    }
+
+    console.log(">>> id despues del if", id)
   const handleFetch = () => {
     const token = localStorage.getItem("token");
-    
-    console.log(">>>>", otra_id)
-    console.log(">>> DASD", id)
 
-    if(id == undefined){
-        fetch(`${config.hostname}/api/mp`, {
-            method: "POST",
-            body: JSON.stringify({message, title, otra_id}),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token,
-              },
-        })
-        .then(res => res.json())
-        .then(data => data)
-        .catch(error => console.log("error createMessage fetch", {error}))
+    // if(id == undefined){
+    //     fetch(`${config.hostname}/api/mp`, {
+    //         method: "POST",
+    //         body: JSON.stringify({message, title, otra_id}),
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": "Bearer " + token,
+    //           },
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => data)
+    //     .catch(error => console.log("error createMessage fetch", {error}))
 
-      } 
-      else {
-        console.log(">>>>", id)
+    //   } 
+    //   else {
+    //     console.log(">>>>", id)
         fetch(`${config.hostname}/api/mp`, {
             method: "POST",
             body: JSON.stringify({message, title, id}),
@@ -48,7 +53,7 @@ export const Createmessage = (props) => {
         .then(res => res.json())
         .then(data => data)
         .catch(error => console.log("error createMessage fetch", {error}))
-      }
+    //   }
 
     }
     

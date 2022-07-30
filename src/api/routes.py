@@ -747,13 +747,16 @@ def post_message():
     body = request.get_json()
 
     print(">>>>>> 2")
+    print(">>>>>>>>>> body", body)
+    
+    # id1 = body["otra_id"]
+    # id2 = body["id"]
 
-    sender_id=int(s_id)
-
-    # if(body["id"] == None):
-    #     receiver_id=int(body['otra_id'])
+    # if(id1 is not None):
+    #     receiver_id=int(id1)
     # else:
     receiver_id=int(body["id"])
+    sender_id=int(s_id)
     title_message=body["title"]
     message_text=body["message"]
 

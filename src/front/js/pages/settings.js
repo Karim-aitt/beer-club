@@ -19,6 +19,8 @@ export const Settings = () => {
   const [beer_id, setBeer_id] = useState();
   const [beer_delete_id, setBeer_delete_id] = useState();
 
+  //Beer update variables
+
   const [name, setName] = useState("");
   const [source, setSource] = useState("");
   const [alcohol, setAlcohol] = useState("");
@@ -27,6 +29,12 @@ export const Settings = () => {
   const [description, setDescrip] = useState("");
   const [category, setCategory] = useState("1");
   const [image, setImage] = useState();
+
+  // Profile update variables
+
+  const [website, setWebsite] = useState("");
+  const [user_description, setUser_Description] = useState("");
+  const [user_image, setUser_Image] = useState();
 
   //Para las alertas al hacer submit
   const [alert, setAlert] = useState("alert-set");
@@ -50,9 +58,9 @@ export const Settings = () => {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
- // --------------------------------------
+  // --------------------------------------
 
-  //POPOVER
+  //Para que funcione un popover
   var popoverTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="popover"]')
   );
@@ -90,7 +98,7 @@ export const Settings = () => {
   //   formData.append("name", data.name);
   //   formData.append("email", data.email);
   //   formData.append("file", data.file);
-    
+
   //   let response = await fetch('URL', {
   //     method: 'PUT',
   //     body: formData,
@@ -108,13 +116,7 @@ export const Settings = () => {
         <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
           <img className="img-fluid d-flex mx-auto" src={banner} />
         </div>
-        <div className="d-flex flex-row justify-content-center px-0"></div>
-        <div className="me-sm-3"></div>
-        <div>
-          {/* ZONA DE TITULO */}
-          <h2 className="text-center my-3">Update your Beer</h2>
-          <hr className="w-50 mx-auto mb-4"></hr>
-        </div>
+
         {/* AQUI FORM PRUEBA
         <div>
           <form onSubmit={handleSubmit}>
@@ -124,15 +126,83 @@ export const Settings = () => {
             <button>Registrar</button>
           </form>
         </div> */}
-
+        <div>
+          {/* ZONA DE TITULO */}
+          <h2 className="text-center my-3">Profile Settings</h2>
+          <hr className="w-50 mx-auto mb-4"></hr>
+        </div>
         <div className="container w-75 d-flex div-category-mini justify-content-center">
+          <form
+            target="dummyframe"
+            method="post"
+            action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/profile/update`}
+            encType="multipart/form-data"
+            className="p-3 border rounded"
+          >
+            <div className="input-group my-3">
+              <span className="input-group-text" id="basic-addon3">
+                www.website.com
+              </span>
+              <input
+                className="form-control"
+                aria-describedby="basic-addon3"
+                name="website"
+                type="text"
+                onChange={(e) => setWebsite(e.target.value)}
+                value={website}
+              ></input>
+            </div>
+
+            <div className="input-group my-3">
+              <span className="input-group-text">Description</span>
+              <textarea
+                className="form-control"
+                aria-label="Description"
+                name="user_description"
+                onChange={(e) => setUser_Description(e.target.value)} //setUser_Description
+                value={user_description} //user_description
+              ></textarea>
+            </div>
+            <div className="input-group mb-3">
+              <label className="input-group-text" htmlFor="inputGroupFile01">
+                Profile image
+              </label>
+              <input
+                type="file"
+                name="file"
+                className="form-control"
+                id="inputGroupFile01"
+                onChange={(e) => setUser_Image(e.target.files[0])}
+              />
+            </div>
+            <input type="hidden" name="user_id" value={store.user_id}></input>
+
+            <div className="text-center mt-4">
+              <input
+                type="submit"
+                className="btn btn-dark px-5"
+                value="Submit"
+              ></input>
+            </div>
+          </form>
+        </div>
+
+        {/* ----------------------------- UPDATE BEER ----------------------------------------
+  ---------------------------------------------------------------------------------*/}
+        <div>
+          {/* ZONA DE TITULO */}
+          <h2 className="text-center my-3">Update or Delete your Beer</h2>
+          <hr className="w-50 mx-auto mb-4"></hr>
+        </div>
+
+        <div className="container w-75 d-flex flex-row div-category-mini justify-content-center">
           <form
             id="updateForm"
             target="dummyframe"
             method="post"
             action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
             encType="multipart/form-data"
-            className="p-3 border rounded"
+            className="p-3 border rounded me-4"
           >
             <input type="hidden" name="_method" value="put" />
             <select
@@ -265,6 +335,7 @@ export const Settings = () => {
                 className="form-control"
                 id="inputGroupFile01"
                 onChange={(e) => setImage(e.target.files[0])}
+                required
               />
             </div>
             <div className="text-center mt-4">
@@ -275,35 +346,25 @@ export const Settings = () => {
                 onClick={() => setAlert("")}
               ></input>
             </div>
+            <div
+              className={`mt-5 w-75 mx-auto alert alert-success alert-dismissible fade show ${alert}`}
+              role="alert"
+            >
+              <strong>Beer updated!</strong>
+              <button
+                type="button"
+                className="btn-close ms-3"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+                onClick={() => setAlert("alert-set")}
+              ></button>
+            </div>
           </form>
 
-          <div
-            className={`mt-3 w-75 alert alert-success alert-dismissible fade show ${alert}`}
-            role="alert"
-          >
-            <strong>Beer updated!</strong>
-            <button
-              type="button"
-              className="btn-close ms-3"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-              onClick={() => setAlert("alert-set")}
-            ></button>
-          </div>
-        </div>
+          {/* ----------------------   DELETE YOUR BEER ------------------------ */}
 
-        {/* ------------------------------------------  DELETE BEER ----------------------------------------
--------------------------------------------------------------------- --------------------------------*/}
-
-        <div>
-          {/* ZONA DE TITULO */}
-          <h2 className="text-center mt-5 mb-3">Delete your Beer</h2>
-          <hr className="w-50 mx-auto mb-4"></hr>
-        </div>
-
-        <div className="container d-flex flex-column align-items-center my-4">
           <form
-            className="p-3 border rounded max text-center"
+            className="p-3 border rounded max hex text-center ms-4"
             target="dummyframe"
           >
             <div
@@ -348,20 +409,20 @@ export const Settings = () => {
                 }}
               ></input>
             </div>
+            <div
+              className={`mt-5 alert alert-success alert-dismissible fade show ${alert_delete}`}
+              role="alert"
+            >
+              <strong>Beer deleted!</strong>
+              <button
+                type="button"
+                className="btn-close ms-3"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+                onClick={() => setAlert_delete("alert-set")}
+              ></button>
+            </div>
           </form>
-          <div
-            className={`mt-3 alert alert-success alert-dismissible fade show ${alert_delete}`}
-            role="alert"
-          >
-            <strong>Beer deleted!</strong>
-            <button
-              type="button"
-              className="btn-close ms-3"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-              onClick={() => setAlert_delete("alert-set")}
-            ></button>
-          </div>
         </div>
 
         <iframe name="dummyframe" id="dummyframe"></iframe>

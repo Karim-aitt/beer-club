@@ -26,6 +26,27 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class UserDetail(db.Model):
+    __tablename__="userdetail"
+    id_detail = db.Column(db.Integer, primary_key=True)
+    user_image = db.Column(db.String(120))
+    website = db.Column(db.String(250))
+    description = db.Column (db.String(250))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User')
+
+    def __repr__(self):
+        return f'<UserDetail {self.user}>'
+
+    def serialize(self):
+        return {
+            "user_image": self.user_image,
+            "website": self.website,
+            "description": self.description,
+            "user_id": self.user_id,
+        }
+
 class Category(db.Model):
     __tablename__="category"
     id = db.Column(db.Integer, primary_key=True)

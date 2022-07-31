@@ -20,10 +20,31 @@ export const Userpage = () => {
   const [userBeersLikes, setUserBeersLikes] = useState([]);
   const [userNickname, setUserNickname] = useState("");
 
+  //Get profile variable
+  const [profile, setProfile] = useState({});
+
   let { id } = useParams();
 
   useEffect(() => {
     actions.getUserpageId(id);
+
+    const token = localStorage.getItem("token");
+    fetch(`${config.hostname}/api/profile/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setProfile(data);
+      })
+      .catch((error) =>
+        console.log("error en get profile userpage", { error })
+      );
   }, []);
 
   useEffect(() => {
@@ -65,31 +86,41 @@ export const Userpage = () => {
     setUserBeersLikes(aux);
   }, [userLikes]);
 
-  // FORM MESSAGE
-
   return (
     <>
       {store.token != null ? (
         <>
           <Navbar />
           <div className="container-fluid mx-0 px-0 banner-container shadow-lg banner-h d-flex">
-            <div className="name-size mx-auto perfil-bg my-4 text-white col-5 row">
+            <div className="name-size mx-auto my-4 text-dark col-5 row">
               <div className="col-4 text-center my-2">
-                <h1 className="text-warning">{`${userNickname}`}</h1>
-                <Link
-                  type="button"
-                  className="link-style-yellow-2"
-                  to="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#messageModal"
-                >
-                  <i className="fas fa-envelope me-2"></i>Send me a message.
-                </Link>
-                <Createmessage user_name={userNickname} />
+                <img
+                  className="img-profile my-2"
+                  src={profile.user_image}
+                ></img>
               </div>
-              <div className="col-8 text-center">
-                <h5 className="mt-2 ">About me</h5>
-                <p className="border rounded">Descripcion</p>
+              <div className="col-8">
+                <div className="d-flex flex-row">
+                  <h4 className="mt-2 me-5">{`${userNickname}`}</h4>
+                  <Link
+                    type="button"
+                    className="link-style-yellow-2 d-flex align-items-center"
+                    to="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#messageModal"
+                  >
+                    <i className="fas fa-envelope me-2"></i>Send me a message.
+                  </Link>
+                  <Createmessage user_name={userNickname} />
+                </div>
+
+                <span>
+                  <strong className="me-2">Website</strong>
+                </span>
+                <a 
+                aria-current="page"
+                href={`https://${profile.website}`}>{profile.website}</a>
+                <p className="">{profile.description}</p>
               </div>
             </div>
 

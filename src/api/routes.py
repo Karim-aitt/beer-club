@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages
+from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages, UserDetail
 from api.utils import generate_sitemap, APIException
 import  bcrypt
 from flask_jwt_extended import create_access_token
@@ -721,6 +721,8 @@ def token_validation():
     return jsonify(user_id)
 
 
+#__________________________________PRIVATE MESSAGES__________________________________#
+
 @api.route('/mp', methods=['GET'])
 @jwt_required()
 def get_messages():
@@ -788,3 +790,36 @@ def delete_message():
     db.session.delete(mp)
     db.session.commit()
     return jsonify("ok")
+
+@api.route('profile/update', methods=['POST'])
+def update_profile():
+    print(">>>>>>>>>> 1")
+    image = request.files["file"]
+    if not image:
+        return jsonify("imagen no existe")
+    print(">>>>>>>>>> 2")
+    result = cloudinary.uploader.upload(image)
+    url=result['url']
+    print(">>>>>>>>>> 3")
+    user_website = request.form["website"]
+    user_description = request.form["user_description"]
+    user_id = request.form["user_id"]
+    print(">>>>>>>>>> 4")
+    user_detail = UserDetail(
+        user_image=url, 
+        website=user_website, 
+        description=user_description,
+        user_id=user_id
+        )
+    db.session.add(user_detail)
+    db.session.commit()
+    print(">>>>>>>>>> 5")
+    return jsonify("ok")
+
+@api.route('profile/<int:id>', methods=['GET'])
+@jwt_required()
+def get_profile(id):
+    
+    profile = UserDetail.query.filter_by(user_id=id).first()
+    print(">>>>>>>>>>>>>>>>>>>", profile)
+    return jsonify(profile.serialize())

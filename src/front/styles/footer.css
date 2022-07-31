@@ -1,15 +1,4 @@
 /* FOOTER */
-
-.footer-width{
-    max-width: 1140px;
-    font-family: 'Bree Serif', serif;
-}
-
-.border-navbar-footer{
-    border: 2px dashed white;
-    border-radius: 15px;
-}
-
-.footer-color{
-    background-color: #302f31;
+.h-foot{
+    height: 150px;
 }

@@ -6,7 +6,7 @@ import { Navbar } from "../component/navbar";
 import { Beerdetail } from "../component/Beer-detail.jsx";
 import { CardCategoryMini } from "../component/Card-category-mini.jsx";
 import { Footer } from "../component/footer";
-import { Createmessage } from "../component/CreateMessage.jsx"
+import { Createmessage } from "../component/CreateMessage.jsx";
 
 import "../../styles/home.css";
 import "../../styles/userpage.css";
@@ -73,18 +73,24 @@ export const Userpage = () => {
         <>
           <Navbar />
           <div className="container-fluid mx-0 px-0 banner-container shadow-lg banner-h d-flex">
-            <div className="name-size mx-auto perfil-bg my-4 text-center text-white">
-              <h1 className="m-0 p-0">{`${userNickname}`}</h1>
-              <Link 
-              type="button" 
-              className="link-style-yellow-2" 
-              to="#"
-              data-bs-toggle="modal" 
-              data-bs-target="#messageModal"
-              >
-                <i className="fas fa-envelope me-2"></i>Send me a message.
-              </Link> 
-              <Createmessage user_name={userNickname}/>
+            <div className="name-size mx-auto perfil-bg my-4 text-white col-5 row">
+              <div className="col-4 text-center my-2">
+                <h1 className="text-warning">{`${userNickname}`}</h1>
+                <Link
+                  type="button"
+                  className="link-style-yellow-2"
+                  to="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#messageModal"
+                >
+                  <i className="fas fa-envelope me-2"></i>Send me a message.
+                </Link>
+                <Createmessage user_name={userNickname} />
+              </div>
+              <div className="col-8 text-center">
+                <h5 className="mt-2 ">About me</h5>
+                <p className="border rounded">Descripcion</p>
+              </div>
             </div>
 
             {/* <div className="me-auto">

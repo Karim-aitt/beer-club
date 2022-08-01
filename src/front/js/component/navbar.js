@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 import { Createbeer } from "./Createbeer.jsx";
@@ -8,6 +8,29 @@ import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+
+  const [notify, setNotifies] = useState([])  
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch(
+      "https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/mp",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setNotifies(data);
+        
+      })
+      .catch((error) => console.log("error en messages.js fetch", { error }));
+  }, [store.messageNumber]);
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark d-flex ">
@@ -50,6 +73,10 @@ export const Navbar = () => {
           >
             {/* ICONO DE PERFIL DE USUARIO */}
             <i className="fas fa-user-circle user-icon-size"></i>
+            <span className={`position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger ${notify.length == 0 ? "visually-hidden" : ""}`}>
+              {notify.length >0 ? notify.length : ""}
+              <span className="visually-hidden">unread messages</span>
+            </span>
           </a>
           <ul
             className="dropdown-menu dropdown-menu-start"

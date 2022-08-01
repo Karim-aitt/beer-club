@@ -15,8 +15,8 @@ export const Createmessage = (props) => {
   let { id } = useParams();
   const otra_id = props.other_id
 
-    console.log(">>>> otra_id", otra_id)
-    console.log(">>> id", id)
+    // console.log(">>>> otra_id", otra_id)
+    // console.log(">>> id", id)
   
     if(!id){
         id = otra_id
@@ -35,7 +35,9 @@ export const Createmessage = (props) => {
               },
         })
         .then(res => res.json())
-        .then(data => data)
+        .then(data => {
+          actions.getMessageNumber(data + Math.floor(Math.random()*200))
+          })
         .catch(error => console.log("error createMessage fetch", {error}))
     //   }
 
@@ -96,6 +98,8 @@ export const Createmessage = (props) => {
                     const modal = document.getElementById("messageModal")
                     const m = bootstrap.Modal.getInstance(modal)
                     m.hide()
+                    setMessage("")
+                    setTitle("")
                 }
 
             }

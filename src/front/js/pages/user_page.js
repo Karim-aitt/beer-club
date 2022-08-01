@@ -86,21 +86,25 @@ export const Userpage = () => {
     setUserBeersLikes(aux);
   }, [userLikes]);
 
+  console.log("thisssssssssss",store.messageNumber)
+
   return (
     <>
       {store.token != null ? (
         <>
           <Navbar />
-          <div className="container-fluid mx-0 px-0 banner-container shadow-lg banner-h d-flex">
-            <div className="name-size mx-auto my-4 text-dark col-5 row">
-              <div className="col-4 text-center my-2">
+          <div className="container-fluid mx-0 px-0 banner-container shadow-lg  d-flex">
+            <div className="name-size mx-auto my-4 text-dark col-5  d-md-flex flex-row">
+              {/* d-sm-block */}
+              <div className="col-md-4 text-center my-nd-2">
                 <img
-                  className="img-profile my-2"
+                  className="img-profile my-md-2"
                   src={profile.user_image}
                 ></img>
               </div>
-              <div className="col-8">
-                <div className="d-flex flex-row">
+              
+              <div className="col-md-8 ms-3">
+                <div className="d-md-flex flex-row">
                   <h4 className="mt-2 me-5">{`${userNickname}`}</h4>
                   <Link
                     type="button"
@@ -109,13 +113,13 @@ export const Userpage = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#messageModal"
                   >
-                    <i className="fas fa-envelope me-2"></i>Send me a message.
+                    <i className="fas fa-envelope me-2 my-md-2"></i>Send me a message.
                   </Link>
                   <Createmessage user_name={userNickname} />
                 </div>
 
                 <span>
-                  <strong className="me-2">Website</strong>
+                  <strong className="me-2 my-md-3">Website</strong>
                 </span>
                 <a 
                 aria-current="page"

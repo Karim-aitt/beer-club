@@ -47,7 +47,10 @@ export const Messages = () => {
           Authorization: "Bearer " + tok,
         },
       }
-    ).catch((error) => console.log("error en delete message.js", { error }));
+    )
+    .then(res => {return res.json()})
+    .then(data => {actions.getMessageNumber(data + Math.floor(Math.random()*200))})
+    .catch((error) => console.log("error en delete message.js", { error }));
   };
 
   return (
@@ -65,7 +68,7 @@ export const Messages = () => {
           <h2 className="text-center my-3">Private Messages</h2>
           <hr className="w-50 mx-auto"></hr>
         </div>
-        <div className="toast-container d-flex flex-wrap cont-wid mx-auto">
+        <div className="toast-container d-md-flex flex-wrap cont-wid mx-auto">
           {arrayMessages.length > 0 ? (
             arrayMessages.map((elem, i) => {
               let nick = "";

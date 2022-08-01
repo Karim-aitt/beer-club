@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userVotes: false,
       userDataVotes: [],
       userpage_id: 1,
+      messageNumber: {},
 
       message: null,
       demo: [
@@ -64,6 +65,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             });
         }
       },
+
+      getMessageNumber: (data) => {
+        setStore({messageNumber: data})
+      },
+
       getUserpageId: (id) => {
         setStore({userpage_id: id})
       },

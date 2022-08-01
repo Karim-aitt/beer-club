@@ -111,13 +111,13 @@ export const Settings = () => {
   return (
     <>
       {store.token != null ? (
-      <>
-        <Navbar />
-        <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
-          <img className="img-fluid d-flex mx-auto" src={banner} />
-        </div>
+        <>
+          <Navbar />
+          <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
+            <img className="img-fluid d-flex mx-auto" src={banner} />
+          </div>
 
-        {/* AQUI FORM PRUEBA
+          {/* AQUI FORM PRUEBA
         <div>
           <form onSubmit={handleSubmit}>
             <input type="text" name="name" onChange={handleChange} />
@@ -126,313 +126,315 @@ export const Settings = () => {
             <button>Registrar</button>
           </form>
         </div> */}
-        <div>
-          {/* ZONA DE TITULO */}
-          <h2 className="text-center my-3">Profile Settings</h2>
-          <hr className="w-50 mx-auto mb-4"></hr>
-        </div>
-        <div className="container w-75 d-flex div-category-mini justify-content-center">
-          <form
-            target="dummyframe"
-            method="post"
-            action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/profile/update`}
-            encType="multipart/form-data"
-            className="p-3 border rounded"
-          >
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                www.website.com
-              </span>
-              <input
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="website"
-                type="text"
-                onChange={(e) => setWebsite(e.target.value)}
-                value={website}
-                required
-              ></input>
-            </div>
+          <div>
+            {/* ZONA DE TITULO */}
+            <h2 className="text-center my-3">Profile Settings</h2>
+            <hr className="w-50 mx-auto mb-4"></hr>
+          </div>
+          <div className="container w-75 d-flex div-category-mini justify-content-center">
+            <form
+              target="dummyframe"
+              method="post"
+              action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/profile/update`}
+              encType="multipart/form-data"
+              className="p-3 border rounded"
+            >
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  www.website.com
+                </span>
+                <input
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="website"
+                  type="text"
+                  onChange={(e) => setWebsite(e.target.value)}
+                  value={website}
+                  required
+                ></input>
+              </div>
 
-            <div className="input-group my-3">
-              <span className="input-group-text">Description</span>
-              <textarea
-                className="form-control"
-                aria-label="Description"
-                name="user_description"
-                onChange={(e) => setUser_Description(e.target.value)} //setUser_Description
-                value={user_description} //user_description
-                required
-              ></textarea>
-            </div>
-            <div className="input-group mb-3">
-              <label className="input-group-text" htmlFor="inputGroupFile01">
-                Profile image
-              </label>
-              <input
-                type="file"
-                name="file"
-                className="form-control"
-                id="inputGroupFile01"
-                onChange={(e) => setUser_Image(e.target.files[0])}
-                required
-              />
-            </div>
-            <input type="hidden" name="user_id" value={store.user_id}></input>
+              <div className="input-group my-3">
+                <span className="input-group-text">Description</span>
+                <textarea
+                  className="form-control"
+                  aria-label="Description"
+                  name="user_description"
+                  onChange={(e) => setUser_Description(e.target.value)} //setUser_Description
+                  value={user_description} //user_description
+                  required
+                ></textarea>
+              </div>
+              <div className="input-group mb-3">
+                <label className="input-group-text" htmlFor="inputGroupFile01">
+                  Profile image
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  className="form-control"
+                  id="inputGroupFile01"
+                  onChange={(e) => setUser_Image(e.target.files[0])}
+                  required
+                />
+              </div>
+              <input type="hidden" name="user_id" value={store.user_id}></input>
 
-            <div className="text-center mt-4">
-              <input
-                type="submit"
-                className="btn btn-dark px-5"
-                value="Submit"
-              ></input>
-            </div>
-          </form>
-        </div>
+              <div className="text-center mt-4">
+                <input
+                  type="submit"
+                  className="btn btn-dark px-5"
+                  value="Submit"
+                ></input>
+              </div>
+            </form>
+          </div>
 
-        {/* ----------------------------- UPDATE BEER ----------------------------------------
+          {/* ----------------------------- UPDATE BEER ----------------------------------------
   ---------------------------------------------------------------------------------*/}
-        <div>
-          {/* ZONA DE TITULO */}
-          <h2 className="text-center my-3">Update or Delete your Beer</h2>
-          <hr className="w-50 mx-auto mb-4"></hr>
-        </div>
+          <div>
+            {/* ZONA DEE TITULO */}
+            <h2 className="text-center my-3">Update or Delete your Beer</h2>
+            <hr className="w-50 mx-auto mb-4"></hr>
+          </div>
 
-        <div className="container w-75 d-flex flex-row div-category-mini justify-content-center">
-          <form
-            id="updateForm"
-            target="dummyframe"
-            method="post"
-            action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
-            encType="multipart/form-data"
-            className="p-3 border rounded me-4"
-          >
-            <label className="text-center fw-bold">YOU MUST FILL ALL FIELDS</label>
-            <input type="hidden" name="_method" value="put" />
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={(e) => setBeer_id(e.target.value)}
+          <div className="container w-75 d-flex flex-row div-category-mini justify-content-center">
+            <form
+              id="updateForm"
+              target="dummyframe"
+              method="post"
+              action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
+              encType="multipart/form-data"
+              className="p-3 border rounded me-4"
             >
-              <option value="0">Select your beer</option>
-              {userBeers.length > 0 ? (
-                userBeers.map((elem, i) => {
-                  return (
-                    <option key={elem.id} value={elem.id}>
-                      {elem.name}
-                    </option>
-                  );
-                })
-              ) : (
-                <option>Loading...</option>
-              )}
-            </select>
-
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                Beer name
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                required
-              />
-            </div>
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                Smell
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="smell"
-                onChange={(e) => setSmell(e.target.value)}
-                value={smell}
-                required
-              />
-            </div>
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                Alcohol
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="alcohol"
-                onChange={(e) => setAlcohol(e.target.value)}
-                value={alcohol}
-                required
-              />
-              <span className="input-group-text">ALC</span>
-            </div>
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                Source / Origen
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="source"
-                onChange={(e) => setSource(e.target.value)}
-                value={source}
-                required
-              />
-            </div>
-            <div className="input-group my-3">
-              <span className="input-group-text" id="basic-addon3">
-                Owner / Company
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-describedby="basic-addon3"
-                name="company"
-                onChange={(e) => setCompany(e.target.value)}
-                value={company}
-                required
-              />
-            </div>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              name="category"
-              onChange={(e) => setCategory(e.target.value)}
-              required
-            >
-              <option>Select category</option>
-              {store.categories.length > 0 ? (
-                store.categories.map((elem, i) => {
-                  return (
-                    <option key={elem.id} value={elem.id}>
-                      {elem.name}
-                    </option>
-                  );
-                })
-              ) : (
-                <option>Loading...</option>
-              )}
-            </select>
-            <div className="input-group my-3">
-              <span className="input-group-text">Description</span>
-              <textarea
-                className="form-control"
-                aria-label="Description"
-                name="description"
-                onChange={(e) => setDescrip(e.target.value)}
-                value={description}
-              ></textarea>
-            </div>
-            <div className="input-group mb-3">
-              <label className="input-group-text" htmlFor="inputGroupFile01">
-                Beer image
+              <label className="text-center fw-bold">
+                YOU MUST FILL ALL FIELDS
               </label>
-              <input
-                type="file"
-                name="file"
-                className="form-control"
-                id="inputGroupFile01"
-                onChange={(e) => setImage(e.target.files[0])}
+              <input type="hidden" name="_method" value="put" />
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={(e) => setBeer_id(e.target.value)}
+              >
+                <option value="0">Select your beer</option>
+                {userBeers.length > 0 ? (
+                  userBeers.map((elem, i) => {
+                    return (
+                      <option key={elem.id} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>Loading...</option>
+                )}
+              </select>
+
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  Beer name
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  required
+                />
+              </div>
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  Smell
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="smell"
+                  onChange={(e) => setSmell(e.target.value)}
+                  value={smell}
+                  required
+                />
+              </div>
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  Alcohol
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="alcohol"
+                  onChange={(e) => setAlcohol(e.target.value)}
+                  value={alcohol}
+                  required
+                />
+                <span className="input-group-text">ALC</span>
+              </div>
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  Source / Origen
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="source"
+                  onChange={(e) => setSource(e.target.value)}
+                  value={source}
+                  required
+                />
+              </div>
+              <div className="input-group my-3">
+                <span className="input-group-text" id="basic-addon3">
+                  Owner / Company
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon3"
+                  name="company"
+                  onChange={(e) => setCompany(e.target.value)}
+                  value={company}
+                  required
+                />
+              </div>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                name="category"
+                onChange={(e) => setCategory(e.target.value)}
                 required
-              />
-            </div>
-            <div className="text-center mt-4">
-              <input
-                type="submit"
-                className="btn btn-dark px-5"
-                value="Submit"
-                onClick={() => setAlert("")}
-              ></input>
-            </div>
-            <div
-              className={`mt-5 w-75 mx-auto alert alert-success alert-dismissible fade show ${alert}`}
-              role="alert"
-            >
-              <strong>Beer updated!</strong>
-              <button
-                type="button"
-                className="btn-close ms-3"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-                onClick={() => setAlert("alert-set")}
-              ></button>
-            </div>
-          </form>
+              >
+                <option>Select category</option>
+                {store.categories.length > 0 ? (
+                  store.categories.map((elem, i) => {
+                    return (
+                      <option key={elem.id} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>Loading...</option>
+                )}
+              </select>
+              <div className="input-group my-3">
+                <span className="input-group-text">Description</span>
+                <textarea
+                  className="form-control"
+                  aria-label="Description"
+                  name="description"
+                  onChange={(e) => setDescrip(e.target.value)}
+                  value={description}
+                ></textarea>
+              </div>
+              <div className="input-group mb-3">
+                <label className="input-group-text" htmlFor="inputGroupFile01">
+                  Beer image
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  className="form-control"
+                  id="inputGroupFile01"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  required
+                />
+              </div>
+              <div className="text-center mt-4">
+                <input
+                  type="submit"
+                  className="btn btn-dark px-5"
+                  value="Submit"
+                  onClick={() => setAlert("")}
+                ></input>
+              </div>
+              <div
+                className={`mt-5 w-75 mx-auto alert alert-success alert-dismissible fade show ${alert}`}
+                role="alert"
+              >
+                <strong>Beer updated!</strong>
+                <button
+                  type="button"
+                  className="btn-close ms-3"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                  onClick={() => setAlert("alert-set")}
+                ></button>
+              </div>
+            </form>
 
-          {/* ----------------------   DELETE YOUR BEER ------------------------ */}
+            {/* ----------------------   DELETE YOUR BEER ------------------------ */}
 
-          <form
-            className="p-3 border rounded max hex text-center ms-4"
-            target="dummyframe"
-          >
-            <div
-              className="alert alert-danger d-flex max align-items-center"
-              role="alert"
+            <form
+              className="p-3 border rounded max hex text-center ms-4"
+              target="dummyframe"
             >
-              <i className="fas fa-exclamation-triangle"></i>
-              <p className="mx-auto p-0 m-0">
-                <strong>CAUTION</strong>, if you delete a beer it is not
-                recuperable.
-              </p>
-            </div>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={(e) => setBeer_delete_id(e.target.value)}
-              required
-            >
-              <option defaultValue={"Select your Beer"}>
-                Select your beer
-              </option>
-              {userBeers.length > 0 ? (
-                userBeers.map((elem, i) => {
-                  return (
-                    <option key={elem.id} value={elem.id}>
-                      {elem.name}
-                    </option>
-                  );
-                })
-              ) : (
-                <option>There aren't beers</option>
-              )}
-            </select>
-            <div className="text-center mt-4">
-              <input
-                className="btn btn-danger px-5"
-                type="button"
-                value="Delete"
-                onClick={() => {
-                  deleteFetch(beer_delete_id);
-                  setAlert_delete("");
-                }}
-              ></input>
-            </div>
-            <div
-              className={`mt-5 alert alert-success alert-dismissible fade show ${alert_delete}`}
-              role="alert"
-            >
-              <strong>Beer deleted!</strong>
-              <button
-                type="button"
-                className="btn-close ms-3"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-                onClick={() => setAlert_delete("alert-set")}
-              ></button>
-            </div>
-          </form>
-        </div>
+              <div
+                className="alert alert-danger d-flex max align-items-center"
+                role="alert"
+              >
+                <i className="fas fa-exclamation-triangle"></i>
+                <p className="mx-auto p-0 m-0">
+                  <strong>CAUTION</strong>, if you delete a beer it is not
+                  recuperable.
+                </p>
+              </div>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={(e) => setBeer_delete_id(e.target.value)}
+                required
+              >
+                <option defaultValue={"Select your Beer"}>
+                  Select your beer
+                </option>
+                {userBeers.length > 0 ? (
+                  userBeers.map((elem, i) => {
+                    return (
+                      <option key={elem.id} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>There aren't beers</option>
+                )}
+              </select>
+              <div className="text-center mt-4">
+                <input
+                  className="btn btn-danger px-5"
+                  type="button"
+                  value="Delete"
+                  onClick={() => {
+                    deleteFetch(beer_delete_id);
+                    setAlert_delete("");
+                  }}
+                ></input>
+              </div>
+              <div
+                className={`mt-5 alert alert-success alert-dismissible fade show ${alert_delete}`}
+                role="alert"
+              >
+                <strong>Beer deleted!</strong>
+                <button
+                  type="button"
+                  className="btn-close ms-3"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                  onClick={() => setAlert_delete("alert-set")}
+                ></button>
+              </div>
+            </form>
+          </div>
 
-        <iframe name="dummyframe" id="dummyframe"></iframe>
-        <Footer></Footer>
-      </>
-       ) : (
+          <iframe name="dummyframe" id="dummyframe"></iframe>
+          <Footer></Footer>
+        </>
+      ) : (
         <Navigate to="/" />
       )}
     </>

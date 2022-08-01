@@ -45,7 +45,7 @@ export const Createbeer = () => {
 {/* Para prevenir el redireción del submit, establecí como target 
 un iframe vacío dentro del propio modal que se cierra automaticamente cuando 
 se hace click por lo que no se ve la respuesta */}
-            <form target="dummyframe" className="" method="POST" action="https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers" encType="multipart/form-data">
+            <form target="dummyframe" className="" method="POST" action={`${config.hostname}/api/beers`} encType="multipart/form-data">
               <input
                 className="m-2 p-1"
                 type="text"

@@ -135,7 +135,7 @@ export const Settings = () => {
             <form
               target="dummyframe"
               method="post"
-              action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/profile/update`}
+              action={`${config.hostname}/api/profile/update`}
               encType="multipart/form-data"
               className="p-3 border rounded"
             >
@@ -203,7 +203,7 @@ export const Settings = () => {
               id="updateForm"
               target="dummyframe"
               method="post"
-              action={`https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}`}
+              action={`${config.hostname}/api/beers/update/${beer_id}`}
               encType="multipart/form-data"
               className="p-3 border rounded me-4"
             >

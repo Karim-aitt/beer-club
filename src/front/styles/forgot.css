@@ -1,0 +1,15 @@
+.alert-set{
+    display: none;
+}
+
+.max-f-alert{
+    max-width: 500px;
+    height: 80px;
+}
+
+.forgot-div{
+    width: 450px;
+}
+.b-h{
+    height: 38px;
+}

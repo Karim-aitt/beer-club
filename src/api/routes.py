@@ -64,25 +64,25 @@ def get_user(id):
 # Registra al usuario en la db y devuelve un token, actualmente no se usa este token.
 @api.route('/signup', methods=['POST'])
 def add_Signup():
-   
+    print(">>>>>>>>>> 1")
     body = request.get_json()
     user_check_email = User.query.filter_by(email=body['email']).first()
-
+    print(">>>>>>>>>> 2")
     if user_check_email != None:
         return jsonify("Ya existe este email"), 402
-    
+    print(">>>>>>>>>> 3")
     user_check_nickname = User.query.filter_by(nickname=body['nickname']).first()
-
+    print(">>>>>>>>>> 4")
     if user_check_nickname != None:
         return jsonify("Ya existe este nickname"), 403
-    
+    print(">>>>>>>>>> 5")
     # la funcion checkpw usa BYTES no STRINGS por eso hay que hacer enconde !!!!!!!
     user_password = request.json.get('password')
     hashed = bcrypt.hashpw(user_password.encode('utf-8'), bcrypt.gensalt())
-
+    print(">>>>>>>>>> 6")
     # hashed = generador.generate_password_hash(request.json.get('password')) // de flask_bcrypt -> no usar
     user = User(nickname=body["nickname"],name=body["name"],surnames=body["surnames"],email=body["email"],password=hashed.decode('utf-8'),is_active=True)
-    
+    print(">>>>>>>>>> 7")
     data = {
         'email': user.email,
         'nickname': user.nickname,
@@ -90,11 +90,12 @@ def add_Signup():
         'surname': user.surnames,
         'id': user.id
     }
-
+    print(">>>>>>>>>> 8")
     token = create_access_token(identity=data, expires_delta=timedelta(minutes=120))
     
     db.session.add(user)
     db.session.commit()
+    print(">>>>>>>>>> 9")
     return jsonify(token), 200
 
 
@@ -794,23 +795,36 @@ def delete_message():
 @api.route('profile/update', methods=['POST'])
 def update_profile():
     print(">>>>>>>>>> 1")
-    image = request.files["file"]
-    if not image:
-        return jsonify("imagen no existe")
-    print(">>>>>>>>>> 2")
-    result = cloudinary.uploader.upload(image)
-    url=result['url']
-    print(">>>>>>>>>> 3")
+
+    user_id = request.form["user_id"]
     user_website = request.form["website"]
     user_description = request.form["user_description"]
-    user_id = request.form["user_id"]
-    print(">>>>>>>>>> 4")
+
+    old_userdetail = UserDetail.query.filter_by(user_id=user_id).first()
+    
+    print(">>>>>>>>>> 2")
+
+    image = request.files["file"]
+    if image is not None:
+        print(">>>>>>>>>> 2 inside if")
+        result = cloudinary.uploader.upload(image)
+        url=result['url']
+    else:
+        print(">>>>>>>>>> 2 inside ELSE")
+        url = old_userdetail.user_image
+
+
+    print(">>>>>>>>>> 3")
+    
     user_detail = UserDetail(
         user_image=url, 
         website=user_website, 
         description=user_description,
         user_id=user_id
         )
+
+    print(">>>>>>>>>> 4")
+    db.session.delete(old_userdetail)
     db.session.add(user_detail)
     db.session.commit()
     print(">>>>>>>>>> 5")

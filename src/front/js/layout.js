@@ -11,6 +11,7 @@ import { CategoryDetail } from "./pages/category_detail";
 import { Userpage } from "./pages/user_page.js";
 import { Settings } from "./pages/settings.js";
 import { Messages } from "./pages/messages";
+import { Forgot } from "./component/forgot.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -69,6 +70,7 @@ const Layout = () => {
             <Route element={<Userpage />} path="/userpage/:id" />
             <Route element={<Settings />} path="/settings" />
             <Route element={<Messages />} path="/mps" />
+            <Route element={<Forgot />} path="/forgot" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           {/* <Footer /> */}

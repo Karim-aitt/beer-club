@@ -45,7 +45,7 @@ export const Userpage = () => {
       .catch((error) =>
         console.log("error en get profile userpage", { error })
       );
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetch(`${config.hostname}/api/beers/user/${store.userpage_id}`)

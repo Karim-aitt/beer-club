@@ -150,6 +150,7 @@ export const Settings = () => {
                 type="text"
                 onChange={(e) => setWebsite(e.target.value)}
                 value={website}
+                required
               ></input>
             </div>
 
@@ -161,6 +162,7 @@ export const Settings = () => {
                 name="user_description"
                 onChange={(e) => setUser_Description(e.target.value)} //setUser_Description
                 value={user_description} //user_description
+                required
               ></textarea>
             </div>
             <div className="input-group mb-3">
@@ -173,6 +175,7 @@ export const Settings = () => {
                 className="form-control"
                 id="inputGroupFile01"
                 onChange={(e) => setUser_Image(e.target.files[0])}
+                required
               />
             </div>
             <input type="hidden" name="user_id" value={store.user_id}></input>

@@ -165,7 +165,7 @@ export const Login = (props) => {
                       {/* HAY QUE HACER ESTA FUNCIONALIDAD */}
                       <Link
                         className="d-flex justify-content-center link-style-yellow"
-                        to=""
+                        to="/forgot"
                       >
                         Forgot password?
                       </Link>
@@ -280,13 +280,13 @@ export const Login = (props) => {
                               setNoActive("active");
                               setSele("true");
                               setLese("false");
-                              // actions.signup(
-                              //   nickname,
-                              //   username,
-                              //   surname,
-                              //   email,
-                              //   pass
-                              // );
+                              actions.signup(
+                                nickname,
+                                username,
+                                surname,
+                                email,
+                                pass
+                              );
                             }
                           }}
                         ></input>

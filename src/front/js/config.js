@@ -1,5 +1,5 @@
 export default {
   hostname:
-    "https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io",
+    process.env.BACKEND_URL,
     
 };

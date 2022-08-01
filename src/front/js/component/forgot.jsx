@@ -25,9 +25,7 @@ const Forgot = () => {
       .then((res) => res.json())
       .catch((err) => console.error(err));
   };
-  // useEffect(() => {
-  //   sendEmail()
-  //  }, []);
+  
   return (
     <>
       <video className="video" loop autoPlay muted>

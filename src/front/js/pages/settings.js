@@ -110,7 +110,7 @@ export const Settings = () => {
 
   return (
     <>
-      {/* {store.token != null ? */}
+      {store.token != null ? (
       <>
         <Navbar />
         <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
@@ -207,6 +207,7 @@ export const Settings = () => {
             encType="multipart/form-data"
             className="p-3 border rounded me-4"
           >
+            <label className="text-center fw-bold">YOU MUST FILL ALL FIELDS</label>
             <input type="hidden" name="_method" value="put" />
             <select
               className="form-select"
@@ -431,8 +432,9 @@ export const Settings = () => {
         <iframe name="dummyframe" id="dummyframe"></iframe>
         <Footer></Footer>
       </>
-      {/* :
-        <Navigate to="/" />} */}
+       ) : (
+        <Navigate to="/" />
+      )}
     </>
   );
 };

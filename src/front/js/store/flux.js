@@ -218,28 +218,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
-      // createbeer: (image, name, smell, category, source, alcohol, company, description) => {
-      // 	let tokenRequired = localStorage.getItem("token")
-      // 	console.log("esto es IMAGE", image)
-
-      // 	fetch(`${config.hostname}/api/beers`, {
-      // 		method: 'POST',
-      // 		body: JSON.stringify({image, name, smell, category, source, alcohol, company, description}),
-      // 		headers: {
-      // 			'Content-Type': 'application/json',
-      // 			'Authorization': "Bearer " + tokenRequired
-      // 		}
-      // 	})
-      // 	.then(res => {
-      // 		if(res.status == 200 || res.status == 201){
-      // 			const modal = document.getElementById("createbeerModal")
-      // 			const m = bootstrap.Modal.getInstance(modal)
-      // 			m.hide()
-      // 		} else (alert("Error en backend"))
-      // 	})
-
-      // },
-
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
@@ -255,20 +233,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log("Error loading message from backend", error);
         }
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
     },
   };

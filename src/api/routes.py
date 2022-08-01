@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages, UserDetail
 from api.utils import generate_sitemap, APIException
 import  bcrypt
@@ -837,3 +837,55 @@ def get_profile(id):
     profile = UserDetail.query.filter_by(user_id=id).first()
     print(">>>>>>>>>>>>>>>>>>>", profile)
     return jsonify(profile.serialize())
+
+##------------------------------------------------------------------------------##
+##----------------------------FORGOT YOUR PASSWORD ?----------------------------##
+##------------------------------------------------------------------------------##
+
+
+
+@api.route('/forgot' , methods=['POST'])
+def forgot_pass():
+ 
+  print('hola.------------------------------1')
+  body = request.get_json()
+  user_check_email = body['email']
+  print('hola.------------------------------2')
+  user = User.query.filter_by(email=user_check_email).first()
+  print(user)
+  if user is None and user.email != user_check_email:
+    print('hola.------------------------------3')
+    # raise APIException('Email no encontrado')
+    return ('email no encontrado en la base de datos')
+  else:
+    print('hola.------------------------------4')
+    password_cambiada = gen_pass()
+    hashed = bcrypt.hashpw(password_cambiada.encode('utf-8'), bcrypt.gensalt())
+    print('hola.------------------------------5')
+    new_user = User(
+      id = user.id,
+      nickname = user.nickname,
+      name = user.name,
+      surnames = user.surnames,
+      email = user.email,
+      password = hashed.decode('utf-8'),
+      is_active = True,
+    )
+    print('hola.------------------------------6')
+    db.session.delete(user)
+    db.session.add(new_user)
+    db.session.commit()
+    print('hola.------------------------------7')
+
+# Inicializacion de mail desde current_app 
+    mail = Mail(current_app)  
+
+    msg = Message('Nueva contraseña', 
+    sender='beerclubenvio@gmail.com', 
+    recipients=[user_check_email])
+
+    msg.body = "Tu nueva contraseña es" + ' ' + password_cambiada
+    mail.send(msg)
+
+
+  return jsonify("enviado"), 200

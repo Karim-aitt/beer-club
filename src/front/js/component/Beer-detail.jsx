@@ -119,18 +119,22 @@ export const Beerdetail = (props) => {
         <div className="modal-dialog text-dark">
           <div className="modal-content body-w">
             <div className="modal-header bg-dark">
-            <h5 className="modal-title text-white" id={`beerdetail${props.CI}`}>
-              Beer view
-            </h5>
-            <button
+              <h5
+                className="modal-title text-white"
+                id={`beerdetail${props.CI}`}
+              >
+                Beer view
+              </h5>
+              <button
                 type="button"
                 className="text-white"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >x</button>
+              >
+                x
+              </button>
             </div>
             <div className="modal-header d-flex flex-column text-dark">
-              
               <h5
                 className="modal-title capital"
                 id={`beerdetailLabel${props.CI}`}
@@ -144,9 +148,8 @@ export const Beerdetail = (props) => {
                 <p className="mx-1 px-1 capital">{beer.company}</p>
               </div>
               {/* AQUI PONER LA MEDIA DE VOTOS */}
-              
+
               <div className="col-2 d-flex align-items-end ">
-                
                 <i className="fas fa-star d-flex pb-1 ms-auto me-1"></i>
                 <span className="d-flex me-auto">{average}</span>
               </div>
@@ -157,7 +160,11 @@ export const Beerdetail = (props) => {
               </div>
 
               <div className="col-7">
-                <div className="description py-3 mb-2"><strong>About:</strong><br></br>{beer.description}</div>
+                <div className="description py-3 mb-2">
+                  <strong>About:</strong>
+                  <br></br>
+                  {beer.description}
+                </div>
 
                 <div className="my-3 div-comments-body scrollhidden">
                   {
@@ -181,12 +188,18 @@ export const Beerdetail = (props) => {
                           return (
                             <div key={i} className="d-flex">
                               {/* LINK TO USERPAGE */}
-                              <Link className="fw-bold mx-2 link-style-yellow" to={`/userpage/${elem.user_id}`} onClick={() => {
-                                actions.getUserpageId(elem.user_id)
-                                const modal = document.getElementById(`beerdetail${props.CI}`)
-                                const m = bootstrap.Modal.getInstance(modal)
-                                m.hide()
-                              }}>
+                              <Link
+                                className="fw-bold mx-2 link-style-yellow"
+                                to={`/userpage/${elem.user_id}`}
+                                onClick={() => {
+                                  actions.getUserpageId(elem.user_id);
+                                  const modal = document.getElementById(
+                                    `beerdetail${props.CI}`
+                                  );
+                                  const m = bootstrap.Modal.getInstance(modal);
+                                  m.hide();
+                                }}
+                              >
                                 {/* {name(elem.user_id)}
                                 {nameUser} */}
                                 {elem.user}
@@ -207,7 +220,9 @@ export const Beerdetail = (props) => {
             </div>
             <div className="modal-footer d-flex justify-content-around">
               <div className="mt-3 mb-1 d-flex">
-                <p className="pe-1 text-secondary d-flex align-self-end">Your vote:</p>
+                <p className="pe-1 text-secondary d-flex align-self-end">
+                  Your vote:
+                </p>
                 <Stars
                   punctuation={vote.punctuation}
                   value={0}
@@ -215,7 +230,11 @@ export const Beerdetail = (props) => {
                 />
               </div>
               {/* HACER COMENTARIOS */}
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
                 <input
                   type="text"
                   className="p-2  input-comment rounded"

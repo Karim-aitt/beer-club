@@ -1,5 +1,5 @@
 export default {
   hostname:
-    process.env.BACKEND_URL,
+  "https://project-beer-club.herokuapp.com/api",
     
 };

@@ -35,6 +35,10 @@ cloudinary.config(
 # generador = Bcrypt() // de la libreria Flask_bcrypt NO ES IGUAL que bcrypt
 
 
+@api.route('/hello' , methods=['GET']) 
+def hello():
+    return jsonify("hello, heroku")
+
 ##------------------------------------------------------------------------##
 ##-------------------------------TABLE USER-------------------------------##
 ##------------------------------------------------------------------------##
@@ -260,29 +264,6 @@ def user_likes(id):
 
 #__________________________________CREATE BEER__________________________________#
 
-# @api.route('/beers', methods=['POST'])
-# @jwt_required()
-# def add_Beer():
-#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1")
-#     dataUser = get_jwt_identity()
-#     body = request.get_json()
-#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2")
-#     image_to_load = body['image']
-#     print(image_to_load)
-#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>3")
-#     result = cloudinary.uploader.upload(image_to_load)
-#     print(result)
-#     url=result['url']
-#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>4")
-#     beer_check_name = Beer.query.filter_by(name=body['name']).first()
-#     if beer_check_name != None:
-#         raise APIException('Ya existe este nombre de cerveza')
-     
-#     beer = Beer(user_id=dataUser["id"], category_id=int(body["category"]),image=url,name=body["name"],smell=body["smell"],source=body["source"],alcohol=body["alcohol"],company=body["company"],description=body["description"])
-#     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>5")
-#     db.session.add(beer)
-#     db.session.commit()
-#     return jsonify("ok")
 
 @api.route('/beers', methods=['POST'])
 # @jwt_required()

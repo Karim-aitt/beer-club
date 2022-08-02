@@ -445,16 +445,13 @@ export const Settings = () => {
 const deleteFetch = (beer_delete_id) => {
   const tok = localStorage.getItem("token");
   if (beer_delete_id) {
-    fetch(
-      `https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/${beer_delete_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + tok,
-        },
-      }
-    )
+    fetch(`${config.hostname}/api/beers/${beer_delete_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + tok,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         data;

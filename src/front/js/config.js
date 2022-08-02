@@ -1,5 +1,3 @@
 export default {
-  hostname:
-  "https://project-beer-club.herokuapp.com/api",
-    
+  hostname: "https://project-beer-club.herokuapp.com",
 };

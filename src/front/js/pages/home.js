@@ -158,20 +158,30 @@ export const Home = () => {
                   </div>
                   <CardCategory />
                 </div>
-
+              </div><div>
                 {/* EVENTOS */}
 
                 <div className="d-none d-md-block mes me-auto borde back-color my-3">
                   <div className="mes-header fw-bold text-center bg-dark">
                     <p className="py-2 px-2 text-white">Events</p>
                   </div>
-                  {/* BOTON DE CREAR UN EVENTO */}
+                  <button
+                    to="#"
+                    aria-current="page"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#createEventModal"
+                    className="btn btn-success d-flex text-center mx-auto my-2"
+                  >
+                    Add Event
+                  </button>
+                  <CreateEvent />
                   
                   {/* LISTA DE EVENTOS */}
-                  <EventCard />
+                  <EventCard/>
                   
                 </div>
-
+                  
                 <div className="d-flex justify-content-evenly m-2">
                   <a
                     className="fab fa-instagram fs-3 decor-link"
@@ -186,17 +196,9 @@ export const Home = () => {
                 </div>
                 <p className="text-secondary text-center">© 2022 BEER CLUB</p>
               </div>
-              <button
-                    to="#"
-                    aria-current="page"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#createEventModal"
-                    className="btn btn-success d-flex text-center mx-auto my-2"
-                  >
-                    Add Event
-                  </button>
-                  <CreateEvent />
+              
+              {/* BOTON DE CREAR UN EVENTO */}
+              
             </div>
             
           </div>

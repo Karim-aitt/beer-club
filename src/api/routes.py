@@ -930,20 +930,25 @@ def post_useryes():
     # get user ID from token
     dataUser = get_jwt_identity()
     user_id = dataUser['id']
-
+    print(">>>>>>>>>>>>> 1")
     # get form data
-    body = request.form
+    body = request.get_json()
     event_id = body["event_id"]
+    print(">>>>>>>>>>>>> 2")
 
     # Check if user has voted "no" in the event before
-    user_exist = Noeventpeople.query.filter(Noeventpeople.id_user==user_id, Noeventpeople.id_event==event_id)
+    user_exist = Noeventpeople.query.filter(Noeventpeople.id_user==user_id, Noeventpeople.id_event==event_id).first()
+    print(">>>>>>>>>>>>> 3")
+    # all_user_events = list(map(lambda user_exist: user_exist.serialize(),user_exist))
+    print(">>>>>>>>>>>>> 4")
     if user_exist is not None:
         db.session.delete(user_exist)
 
+    print(">>>>>>>>>>>>> 5")
     res = Yeseventpeople(id_user=user_id,id_event=event_id)
     db.session.add(res)
     db.session.commit()
-
+    print(">>>>>>>>>>>>> 6")
     return jsonify("User assist")
 
 @api.route('usereventno', methods=['POST'])
@@ -955,11 +960,11 @@ def post_userno():
     user_id = dataUser['id']
 
     # get form data
-    body = request.form
+    body = request.get_json()
     event_id = body["event_id"]
 
     # Check if user has voted "yes" in the event before
-    user_exist = Yeseventpeople.query.filter(Yeseventpeople.id_user==user_id, Yeseventpeople.id_event==event_id)
+    user_exist = Yeseventpeople.query.filter(Yeseventpeople.id_user==user_id, Yeseventpeople.id_event==event_id).first()
     if user_exist is not None:
         db.session.delete(user_exist)
 
@@ -968,3 +973,15 @@ def post_userno():
     db.session.commit()
 
     return jsonify("User no assist")
+
+@api.route('usereventno', methods=['GET'])
+@jwt_required()
+def user_dismisses():
+    print(">>>>>>>>>>>>> 1")
+    dataUser = get_jwt_identity()
+    user_id = dataUser['id']
+    print(">>>>>>>>>>>>> 2")
+    userNoes = Noeventpeople.query.filter_by(id_user=user_id).all()
+    all_noes = list(map(lambda userNoes: userNoes.serialize(),userNoes))
+    print(">>>>>>>>>>>>> 3")
+    return jsonify(all_noes)

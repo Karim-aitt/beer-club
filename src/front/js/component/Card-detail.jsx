@@ -98,7 +98,7 @@ export const CardDetail = (props) => {
               data-bs-target={`#beerdetail${props.beer_id}`}
               data-bs-whatever={props.beer_id}
             >
-              Ver más comentarios
+              All comments
             </Link>
             <Beerdetail
               className="text-dark"

@@ -156,7 +156,7 @@ class Comment(db.Model):
             "beer_id": self.beer_id,
             "comment": self.comment,
             "creation_date": self.creation_date,
-            "user": self.user.nickname if self.user is not None else 'UsuarioDefault'
+            "user": self.user.nickname if self.user is not None else 'UsuarioDesconocido'
         }
 
 
@@ -184,4 +184,67 @@ class Messages(db.Model):
             "title_message": self.title_message,
             "message": self.message,
             "date": self.date,
+        }
+
+class Userevent(db.Model):
+    __tablename__="userevent"
+    id_event = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User')
+    event_name = db.Column(db.String(80))
+    event_place = db.Column(db.String(80))
+    event_date = db.Column(db.String(80))
+    event_time = db.Column(db.String(80))
+    event_image = db.Column(db.String(255))
+    event_description = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'<Userevent {self.id_event}>'
+    
+    def serialize(self):
+        return {
+            "id_event": self.id_event,
+            "id_user": self.id_user,
+            "event_name": self.event_name,
+            "event_place": self.event_place,
+            "event_date": self.event_date,
+            "event_image": self.event_image,
+            "event_time": self.event_time,
+            "event_description": self.event_description,
+        }
+
+class Yeseventpeople(db.Model):
+    __tablename__="yeseventpeople"
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User')
+    id_event = db.Column(db.Integer, db.ForeignKey('userevent.id_event'))
+    event = db.relationship('Userevent')
+
+    def __repr__(self):
+        return f'<Yeseventpeople {self.id_user}>'
+    
+    def serialize(self):
+        return {
+            "id_user": self.id_user,
+            "id_event": self.id_event,
+            "user_nickname": self.user.nickname
+        }
+
+class Noeventpeople(db.Model):
+    __tablename__="noeventpeople"
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User')
+    id_event = db.Column(db.Integer, db.ForeignKey('userevent.id_event'))
+    event = db.relationship('Userevent')
+
+    def __repr__(self):
+        return f'<Noeventpeople {self.id_user}>'
+    
+    def serialize(self):
+        return {
+            "id_user": self.id_user,
+            "id_event": self.id_event,
+            "user_nickname": self.user.nickname
         }

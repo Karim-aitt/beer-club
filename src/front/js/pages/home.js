@@ -1,12 +1,15 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Context } from "../store/appContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 import { CardCategory } from "../component/Card-category.jsx";
 import { CardDetail } from "../component/Card-detail.jsx";
+import { EventCard } from "../component/Card-events.jsx";
+import { CreateEvent } from "../component/CreateEvent.jsx";
 
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
+
 
 import "../../styles/home.css";
 import banner from "../../img/bannerWeb2.png";
@@ -133,7 +136,12 @@ export const Home = () => {
             <div className="d-none d-md-block mt-5 ">
               <div className="sticky-top py-2">
                 {/* ESTO ES EL DIV DONDE SE GENERAN TODAS LAS CARDS DE CATEGORIAS */}
-                <form className="mb-2" onSubmit={(e) => {e.preventDefault()}}>
+                <form
+                  className="mb-2"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                >
                   <input
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="form-control me-2 border-dark text-dark "
@@ -150,6 +158,18 @@ export const Home = () => {
                   <CardCategory />
                 </div>
 
+                {/* EVENTOS */}
+
+                <div className="d-none d-md-block mes me-auto borde back-color my-3">
+                  <div className="mes-header fw-bold text-center bg-dark">
+                    <p className="py-2 px-2 text-white">Events</p>
+                  </div>
+                  {/* BOTON DE CREAR UN EVENTO */}
+                  
+                  {/* LISTA DE EVENTOS */}
+                  <EventCard />
+                </div>
+
                 <div className="d-flex justify-content-evenly m-2">
                   <a
                     className="fab fa-instagram fs-3 decor-link"
@@ -164,8 +184,21 @@ export const Home = () => {
                 </div>
                 <p className="text-secondary text-center">© 2022 BEER CLUB</p>
               </div>
+              <button
+                    to="#"
+                    aria-current="page"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#createEventModal"
+                    className="btn btn-success d-flex text-center mx-auto my-2"
+                  >
+                    Add Event
+                  </button>
+                  <CreateEvent />
             </div>
+            
           </div>
+          
           {/* COLOCAR DEBAJO DE CATEGORIAS */}
           <Footer />
         </>

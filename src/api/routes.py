@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages, UserDetail
+from api.models import db, User, Beer, Category, ILikeIt, Vote, Comment, Messages, UserDetail, Userevent, Yeseventpeople, Noeventpeople
 from api.utils import generate_sitemap, APIException
 import  bcrypt
 from flask_jwt_extended import create_access_token
@@ -807,7 +807,7 @@ def update_profile():
     print(">>>>>>>>>> 4")
     if old_userdetail is not None:
         db.session.delete(old_userdetail)
-        
+
     db.session.add(user_detail)
     db.session.commit()
     print(">>>>>>>>>> 5")
@@ -872,3 +872,99 @@ def forgot_pass():
 
 
   return jsonify("enviado"), 200
+
+@api.route('event', methods=['POST'])
+@jwt_required()
+def post_event():
+    print(">>>>>>>>>>>>> 1")
+
+    # get data form
+    body = request.form
+    print(body)
+    print(">>>>>>>>>>>>> 2")
+
+    # get user ID from token
+    dataUser = get_jwt_identity()
+    user_id=dataUser['id']
+    print(">>>>>>>>>>>>> 3")
+
+    # TESTSSSSSSSSSSSSSSSSSSSSSSS
+    test = body["event_name"]
+    print(">>>>>>>>>>>>>>>> TEST ", test)
+
+    # getting image and uploading to cloudinary
+    image = request.files["file"]
+    if image is not None:
+        print(">>>>>>>>>> image inside if")
+        result = cloudinary.uploader.upload(image)
+        url=result['url']
+    else:
+        url="Image not found"
+    print(">>>>>>>>>>>>> 4")
+    event = Userevent(
+        id_user=user_id,
+        event_name=body["event_name"],
+        event_place=body["event_place"],
+        event_date=body["event_date"],
+        event_time=body["event_time"],
+        event_image=url,
+        event_description=body["event_description"]
+    )
+    print(">>>>>>>>>>>>> 5")
+    db.session.add(event)
+    db.session.commit()
+    print(">>>>>>>>>>>>> 6")
+    return jsonify("Event posted")
+
+@api.route('event', methods=['GET'])
+def get_events():
+
+    events = Userevent.query.all()
+    all_events = list(map(lambda events: events.serialize(),events))
+    return jsonify(all_events)
+
+@api.route('usereventyes', methods=['POST'])
+@jwt_required()
+def post_useryes():
+
+    # get user ID from token
+    dataUser = get_jwt_identity()
+    user_id = dataUser['id']
+
+    # get form data
+    body = request.form
+    event_id = body["event_id"]
+
+    # Check if user has voted "no" in the event before
+    user_exist = Noeventpeople.query.filter(Noeventpeople.id_user==user_id, Noeventpeople.id_event==event_id)
+    if user_exist is not None:
+        db.session.delete(user_exist)
+
+    res = Yeseventpeople(id_user=user_id,id_event=event_id)
+    db.session.add(res)
+    db.session.commit()
+
+    return jsonify("User assist")
+
+@api.route('usereventno', methods=['POST'])
+@jwt_required()
+def post_userno():
+
+    # get user ID from token
+    dataUser = get_jwt_identity()
+    user_id = dataUser['id']
+
+    # get form data
+    body = request.form
+    event_id = body["event_id"]
+
+    # Check if user has voted "yes" in the event before
+    user_exist = Yeseventpeople.query.filter(Yeseventpeople.id_user==user_id, Yeseventpeople.id_event==event_id)
+    if user_exist is not None:
+        db.session.delete(user_exist)
+
+    res = Noeventpeople(id_user=user_id,id_event=event_id)
+    db.session.add(res)
+    db.session.commit()
+
+    return jsonify("User no assist")

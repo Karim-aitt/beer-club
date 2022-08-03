@@ -24,14 +24,18 @@ export const EventCard = (props) => {
     <div className="category-item">
       {allEvents.length > 0 ? (
         allEvents.map((elem, i) => {
+          console.log("esto es id event", elem.id_event)
+          console.log("esto es id event", elem.event_name)
+          console.log("esto es id event", elem.event_image)
           return (
             <div key={i}>
               <Link
-            
+                aria-current="page"
                 to="#"
+                type="button"
                 data-bs-toggle="modal"
                 data-bs-target={`#eventModal${elem.id_event}`}
-                data-bs-whatever={elem.id_event}
+                data-bs-whatever={`#eventModal${elem.id_event}`}
                 className="d-flex flex-column div-size m-2 
                     p-2 fw-bold category-size link-style"
               >

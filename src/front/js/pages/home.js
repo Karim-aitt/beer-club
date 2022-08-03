@@ -6,6 +6,7 @@ import { CardCategory } from "../component/Card-category.jsx";
 import { CardDetail } from "../component/Card-detail.jsx";
 import { EventCard } from "../component/Card-events.jsx";
 import { CreateEvent } from "../component/CreateEvent.jsx";
+import { EventModal } from "../component/event-modal.jsx";
 
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
@@ -168,6 +169,7 @@ export const Home = () => {
                   
                   {/* LISTA DE EVENTOS */}
                   <EventCard />
+                  
                 </div>
 
                 <div className="d-flex justify-content-evenly m-2">

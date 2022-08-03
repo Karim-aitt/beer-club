@@ -805,7 +805,9 @@ def update_profile():
         )
 
     print(">>>>>>>>>> 4")
-    db.session.delete(old_userdetail)
+    if old_userdetail is not None:
+        db.session.delete(old_userdetail)
+        
     db.session.add(user_detail)
     db.session.commit()
     print(">>>>>>>>>> 5")

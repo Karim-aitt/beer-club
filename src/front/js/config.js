@@ -1,3 +1,4 @@
 export default {
-  hostname: "https://project-beer-club.herokuapp.com",
+  hostname: "https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io"
+  // "https://project-beer-club.herokuapp.com",
 };

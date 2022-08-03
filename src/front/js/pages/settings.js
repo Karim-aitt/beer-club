@@ -39,6 +39,7 @@ export const Settings = () => {
   //Para las alertas al hacer submit
   const [alert, setAlert] = useState("alert-set");
   const [alert_delete, setAlert_delete] = useState("alert-set");
+  const [alertprofile, setAlertprofile] = useState("alert-set");
 
   // Esto es para cargar las cervezas del usuario
   useEffect(() => {
@@ -68,46 +69,6 @@ export const Settings = () => {
     return new bootstrap.Popover(popoverTriggerEl);
   });
 
-  // const form = document.getElementById("updateForm")
-  // const formData = new FormData();
-  // const updateFetch = () => {
-  //     // const formData = new FormData(form);
-  //     // console.log(formData)
-  //     formData.append("file", image)
-  //     formData.append("name", name)
-  //     formData.append("category", category)
-  //     formData.append("smell", smell)
-  //     formData.append("source", source)
-  //     formData.append("alcohol", alcohol)
-  //     formData.append("company", company)
-  //     formData.append("description", description)
-
-  //     fetch('https://3001-karimaitt-beerclub-rgk13idq1ch.ws-eu54.gitpod.io/api/beers/update/${beer_id}', method)
-
-  // }
-
-  // const [data, setData] = useState({});
-
-  // const handleChange = (event) => {
-  //   setData({ ...data, [event.target.name]: event.target.value });
-  // };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("name", data.name);
-  //   formData.append("email", data.email);
-  //   formData.append("file", data.file);
-
-  //   let response = await fetch('URL', {
-  //     method: 'PUT',
-  //     body: formData,
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data;'
-  //     }
-  //   })
-  // };
-
   return (
     <>
       {store.token != null ? (
@@ -116,16 +77,6 @@ export const Settings = () => {
           <div className="container-fluid mx-0 px-0 banner-container shadow-lg">
             <img className="img-fluid d-flex mx-auto" src={banner} />
           </div>
-
-          {/* AQUI FORM PRUEBA
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input type="text" name="name" onChange={handleChange} />
-            <input type="text" name="email" onChange={handleChange} />
-            <input type="file" name="fichero" onChange={handleChange} />
-            <button>Registrar</button>
-          </form>
-        </div> */}
           <div>
             {/* ZONA DE TITULO */}
             <h2 className="text-center my-3">Profile Settings</h2>
@@ -138,6 +89,7 @@ export const Settings = () => {
               action={`${config.hostname}/api/profile/update`}
               encType="multipart/form-data"
               className="p-3 border rounded"
+              onSubmit={() => {setAlertprofile("")}}
             >
               <div className="input-group my-3">
                 <span className="input-group-text" id="basic-addon3">
@@ -187,6 +139,19 @@ export const Settings = () => {
                   value="Submit"
                 ></input>
               </div>
+              <div
+                className={`mt-5 alert alert-success alert-dismissible fade show ${alertprofile}`}
+                role="alert"
+              >
+                <strong>Profile updated!</strong>
+                <button
+                  type="button"
+                  className="btn-close ms-3"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                  onClick={() => setAlertprofile("alert-set")}
+                ></button>
+              </div>
             </form>
           </div>
 
@@ -206,6 +171,7 @@ export const Settings = () => {
               action={`${config.hostname}/api/beers/update/${beer_id}`}
               encType="multipart/form-data"
               className="p-3 border rounded me-4"
+              onSubmit={() => {setAlert("")}}
             >
               <label className="text-center fw-bold">
                 YOU MUST FILL ALL FIELDS
@@ -349,7 +315,7 @@ export const Settings = () => {
                   type="submit"
                   className="btn btn-dark px-5"
                   value="Submit"
-                  onClick={() => setAlert("")}
+                  
                 ></input>
               </div>
               <div
@@ -411,7 +377,7 @@ export const Settings = () => {
                   value="Delete"
                   onClick={() => {
                     deleteFetch(beer_delete_id);
-                    setAlert_delete("");
+                    setAlert_delete("")
                   }}
                 ></input>
               </div>
@@ -457,5 +423,7 @@ const deleteFetch = (beer_delete_id) => {
         data;
       })
       .catch((error) => console.log({ error }));
+      
   }
+  
 };

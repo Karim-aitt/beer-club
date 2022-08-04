@@ -147,7 +147,7 @@ export const Home = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="form-control me-2 border-dark text-dark "
                     type="search"
-                    placeholder="Search"
+                    placeholder="Search for beer name"
                     aria-label="Search"
                   />
                 </form>
@@ -161,7 +161,7 @@ export const Home = () => {
               </div><div>
                 {/* EVENTOS */}
 
-                <div className="d-none d-md-block mes me-auto borde back-color my-3">
+                {/* <div className="d-none d-md-block mes me-auto borde back-color my-3">
                   <div className="mes-header fw-bold text-center bg-dark">
                     <p className="py-2 px-2 text-white">Events</p>
                   </div>
@@ -175,10 +175,10 @@ export const Home = () => {
                   >
                     Add Event
                   </button>
-                  <CreateEvent />
+                  <CreateEvent /> */}
                   
                   {/* LISTA DE EVENTOS */}
-                  <EventCard/>
+                  {/* <EventCard/> */}
                   
                 </div>
                   
@@ -201,7 +201,7 @@ export const Home = () => {
               
             </div>
             
-          </div>
+          {/* </div> */}
           
           {/* COLOCAR DEBAJO DE CATEGORIAS */}
           <Footer />

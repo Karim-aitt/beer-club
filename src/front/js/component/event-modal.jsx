@@ -6,6 +6,7 @@ import config from "../config";
 
 export const EventModal = (props) => {
   const { store, actions } = useContext(Context);
+  const [who, setWho] = useState([])
 
   const handleYes = () => {
     const token = localStorage.getItem("token")
@@ -35,6 +36,10 @@ export const EventModal = (props) => {
     })
     .catch(error => console.log("error handleYes event modal", {error}))
   }
+
+  useEffect(() => {
+    
+  })
 
   return (
     
@@ -71,7 +76,12 @@ export const EventModal = (props) => {
                 <p>People who assist:</p>
                 </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-danger" onClick={handleNo}>
+              <button type="button" className="btn btn-danger" onClick={() => {
+                handleNo()
+                const modal = document.getElementById(`eventModal${props.id_event}`)
+						      const m = bootstrap.Modal.getInstance(modal)
+						      m.hide()
+                }}>
                 Dismiss
               </button>
               <button type="button" className="btn btn-dark" onClick={handleYes}>

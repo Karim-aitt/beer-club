@@ -32,6 +32,7 @@ export const Login = (props) => {
 
   //FLAGS
   const [passMatch, setPassMatch] = useState(false); //flag de "la password no coincide"
+  const [flagreg, setFlagreg] = useState(false)
 
   return (
     <>
@@ -149,6 +150,7 @@ export const Login = (props) => {
                               actions.login(email, pass);
                               setEmail("");
                               setPass("");
+                              setFlagreg(false)
                             }
                           }}
                         ></input>
@@ -258,7 +260,7 @@ export const Login = (props) => {
                           ></input>
                         </div>
                         {/* TODO: QUE CUANDO SE PINCHE EL BOTON REGISTER SE TRASLADE AL LOGIN PILL */}
-                        <input
+                        <button
                           type="button"
                           value="Register"
                           className="btn btn-dark m-2"
@@ -274,7 +276,7 @@ export const Login = (props) => {
                             } else {
                               setPassMatch(false);
                               setEmailValidation(false); // Reset de la flag EmailValidation
-
+                              
                               selected = false;
                               setActive("");
                               setNoActive("active");
@@ -287,9 +289,13 @@ export const Login = (props) => {
                                 email,
                                 pass
                               );
+                              setFlagreg(true)
                             }
+                            
                           }}
-                        ></input>
+                        >Register</button>
+                        {flagreg == true ? <p className="text-success bg-white border rounded text-center mt-2">Register successfull! Please login in</p> : ""}
+                        
                       </form>
 
                       <div className="">

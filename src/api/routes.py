@@ -936,6 +936,11 @@ def post_useryes():
     event_id = body["event_id"]
     print(">>>>>>>>>>>>> 2")
 
+    user_already_vote = Yeseventpeople.query.filter(Yeseventpeople.id_user==user_id, Yeseventpeople.id_event==event_id)
+    print(">>>>>>>>>>>>>>>>>>>>print",user_already_vote)
+    if user_already_vote is not None:
+        return jsonify("User has already voted")
+
     # Check if user has voted "no" in the event before
     user_exist = Noeventpeople.query.filter(Noeventpeople.id_user==user_id, Noeventpeople.id_event==event_id).first()
     print(">>>>>>>>>>>>> 3")
@@ -954,7 +959,7 @@ def post_useryes():
 @api.route('usereventno', methods=['POST'])
 @jwt_required()
 def post_userno():
-
+# TODO: HACER QUE SI YA HA VOTADO NO NO SE PUEDA VOLVER A VOTAR NO
     # get user ID from token
     dataUser = get_jwt_identity()
     user_id = dataUser['id']
@@ -962,6 +967,11 @@ def post_userno():
     # get form data
     body = request.get_json()
     event_id = body["event_id"]
+
+    # Check if user has already voted no
+    user_already_vote = Noeventpeople.query.filter(Noeventpeople.id_user==user_id, Noeventpeople.id_event==event_id)
+    if user_already_vote is not None:
+        return jsonify("User has already voted")
 
     # Check if user has voted "yes" in the event before
     user_exist = Yeseventpeople.query.filter(Yeseventpeople.id_user==user_id, Yeseventpeople.id_event==event_id).first()
@@ -985,3 +995,20 @@ def user_dismisses():
     all_noes = list(map(lambda userNoes: userNoes.serialize(),userNoes))
     print(">>>>>>>>>>>>> 3")
     return jsonify(all_noes)
+
+@api.route('event', methods=['DELETE'])
+@jwt_required()
+def delete_event():
+
+    body = request.get_json()
+    event_id = body["event_id"]
+
+    evento = Userevent.query.filter_by(id_event=event_id).first()
+    if evento is None:
+        return jsonify("No event with this id")
+    yes = Yeseventpeople.query.filter_by(id_event=event_id).delete()
+    no = Noeventpeople.query.filter_by(id_event=event_id).delete()
+
+    db.session.delete(evento)
+    db.session.commit()
+    return jsonify("event deleted")
